@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import { useCallback, useState, useEffect } from "react";
 import NavLinks from "./navigation/NavLinks";
-import Acceuil from "./accueil/Acceuil";
+import Acceuil from "./acceuil/Acceuil";
 import LoginForm from "./loginForm/LoginForm";
 import ErrorPage from "./pageErreur/PageErreur";
 import { AuthContext } from "./context/auth-context";
