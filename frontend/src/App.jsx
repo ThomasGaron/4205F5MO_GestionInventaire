@@ -8,6 +8,7 @@ import NavLinks from "./navigation/NavLinks";
 import Acceuil from "./acceuil/Acceuil";
 import LoginForm from "./loginForm/LoginForm";
 import ErrorPage from "./pageErreur/PageErreur";
+import PageInventaire from "./pageInventaire/PageInventaire";
 import { AuthContext } from "./context/auth-context";
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
         { path: "", element: <Acceuil /> },
         { path: "/login", element: <Navigate to="/acceuil" replace /> },
         { path: "/acceuil", element: <Acceuil /> },
+        { path: "/inventaire", element: <PageInventaire /> },
       ],
     },
   ]);

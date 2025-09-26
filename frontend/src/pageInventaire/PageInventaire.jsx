@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import "./PageInventaire.css";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/auth-context";
 import { useInventaire } from "../context/InventaireContext";
 import { useAlert } from "../context/AlertContext";
 import { getAllItems } from "../api/inventaireApi";
