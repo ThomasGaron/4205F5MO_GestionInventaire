@@ -16,7 +16,6 @@ import { AlertProvider } from "./context/alert-context";
 function App() {
   // état de la connexion
   const connecter = localStorage.getItem("statutConnexion");
-  const connecter = localStorage.getItem("statutConnexion");
   const [isLoggedIn, setIsLoggedIn] = useState(
     connecter ? JSON.parse(connecter) : false
   );
@@ -86,12 +85,6 @@ function App() {
       }}
     >
       <RouterProvider router={isLoggedIn ? routerLogin : router} />
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, token }}>
-      <InventaireProvider>
-        <AlertProvider>
-          <RouterProvider router={isLoggedIn ? routerLogin : router} />
-        </AlertProvider>
-      </InventaireProvider>
     </AuthContext.Provider>
   );
 }
