@@ -8,7 +8,9 @@ import NavLinks from "./navigation/NavLinks";
 import Acceuil from "./acceuil/Acceuil";
 import LoginForm from "./loginForm/LoginForm";
 import ErrorPage from "./pageErreur/PageErreur";
+import PageInventaire from "./pageInventaire/PageInventaire";
 import { AuthContext } from "./context/auth-context";
+import { AlertProvider } from "./context/alert-context";
 
 function App() {
   // état de la connexion
@@ -19,8 +21,7 @@ function App() {
 
   const tokenExist = localStorage.getItem("token");
   const [token, setToken] = useState(
-    // tokenExist ? JSON.parse(tokenExist) : null
-    tokenExist == false
+    tokenExist ? JSON.parse(tokenExist) : null
   );
 
   // Fonctions de connexion
@@ -53,6 +54,7 @@ function App() {
         { path: "", element: <Acceuil /> },
         { path: "/login", element: <Navigate to="/acceuil" replace /> },
         { path: "/acceuil", element: <Acceuil /> },
+        { path: "/inventaire", element: <PageInventaire /> },
       ],
     },
   ]);
