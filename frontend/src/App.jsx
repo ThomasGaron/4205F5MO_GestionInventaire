@@ -16,13 +16,15 @@ import { AlertProvider } from "./context/alert-context";
 function App() {
   // état de la connexion
   const connecter = localStorage.getItem("statutConnexion");
+  const connecter = localStorage.getItem("statutConnexion");
   const [isLoggedIn, setIsLoggedIn] = useState(
     connecter ? JSON.parse(connecter) : false
   );
 
   const tokenExist = localStorage.getItem("token");
   const [token, setToken] = useState(
-    tokenExist ? JSON.parse(tokenExist) : null
+    // tokenExist ? JSON.parse(tokenExist) : null
+    tokenExist == false
   );
 
   // Fonctions de connexion
@@ -40,6 +42,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem("statutConnexion", JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
+
   useEffect(() => {
     localStorage.setItem("token", JSON.stringify(token));
   }, [token]);
@@ -74,6 +77,15 @@ function App() {
   ]);
 
   return (
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: isLoggedIn,
+        login: login,
+        logout: logout,
+        token: token,
+      }}
+    >
+      <RouterProvider router={isLoggedIn ? routerLogin : router} />
     <AuthContext.Provider value={{ isLoggedIn, login, logout, token }}>
       <InventaireProvider>
         <AlertProvider>
