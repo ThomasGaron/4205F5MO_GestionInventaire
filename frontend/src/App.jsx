@@ -10,7 +10,6 @@ import LoginForm from "./loginForm/LoginForm";
 import ErrorPage from "./pageErreur/PageErreur";
 import PageInventaire from "./pageInventaire/PageInventaire";
 import { AuthContext } from "./context/auth-context";
-import { InventaireProvider } from "./context/inventaire-context";
 import { AlertProvider } from "./context/alert-context";
 
 function App() {
