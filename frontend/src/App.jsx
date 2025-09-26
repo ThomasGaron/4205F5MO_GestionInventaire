@@ -1,35 +1,79 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
+import { useCallback, useState, useEffect } from "react";
+import NavLinks from "./navigation/NavLinks";
+import Acceuil from "./acceuil/Acceuil";
+import LoginForm from "./loginForm/LoginForm";
+import ErrorPage from "./pageErreur/PageErreur";
+import { AuthContext } from "./context/auth-context";
 
 function App() {
-  const [count, setCount] = useState(0)
+  // état de la connexion
+  const connecter = localStorage.getItem("statuConnexion");
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    connecter ? JSON.parse(connecter) : false
+  );
+
+  const tokenExist = localStorage.getItem("token");
+  const [token, setToken] = useState(
+    tokenExist ? JSON.parse(tokenExist) : null
+  );
+
+  // Fonctions de connexion
+  const login = useCallback((token) => {
+    setToken(token);
+    setIsLoggedIn(true);
+  }, []);
+
+  const logout = useCallback(() => {
+    setToken(null);
+    setIsLoggedIn(false);
+  }, []);
+
+  // Stockage, sauvegarde local storage
+  useEffect(() => {
+    localStorage.setItem("statutConnexion", JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
+  useEffect(() => {
+    localStorage.setItem("token", JSON.stringify(token));
+  }, [token]);
+
+  // Routes connecté
+  const routerLogin = createBrowserRouter([
+    {
+      path: "/",
+      element: <NavLinks />,
+      errorElement: <ErrorPage />,
+      children: [
+        { path: "", element: <Acceuil /> },
+        { path: "/login", element: <Navigate to="/acceuil" replace /> },
+        { path: "/acceuil", element: <Acceuil /> },
+      ],
+    },
+  ]);
+
+  // Routes pas connecté
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <NavLinks />,
+      errorElement: <ErrorPage />,
+      children: [
+        { path: "", element: <Acceuil /> },
+        { path: "/acceuil", element: <Acceuil /> },
+        { path: "/login", element: <LoginForm /> },
+      ],
+    },
+  ]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, token }}>
+      <RouterProvider router={isLoggedIn ? routerLogin : router} />
+    </AuthContext.Provider>
+  );
 }
 
-export default App
+export default App;

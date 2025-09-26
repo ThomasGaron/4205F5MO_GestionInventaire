@@ -9,8 +9,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
 app.get("/", (req, res) => res.send("API OK"));
 
+// Auth
 app.use("/api/auth", authRoutes);
 
 // Exemple de route admin protégée
@@ -18,11 +20,7 @@ app.get("/api/admin/ping", requireAuth, requireRole("admin"), (req, res) => {
   res.json({ ok: true, user: req.user });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`Backend lancé sur http://localhost:${PORT}`)
-);
-
+// Ping DB (debug)
 app.get("/ping-db", async (req, res) => {
   try {
     const { rows } = await db.query("SELECT NOW()");
@@ -30,4 +28,9 @@ app.get("/ping-db", async (req, res) => {
   } catch (e) {
     res.status(500).json({ ok: false, error: e.message });
   }
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Backend lancé sur http://localhost:${PORT}`);
 });
