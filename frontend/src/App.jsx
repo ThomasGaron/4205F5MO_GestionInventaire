@@ -22,8 +22,7 @@ function App() {
 
   const tokenExist = localStorage.getItem("token");
   const [token, setToken] = useState(
-    // tokenExist ? JSON.parse(tokenExist) : null
-    tokenExist == false
+    tokenExist ? JSON.parse(tokenExist) : null
   );
 
   // Fonctions de connexion
