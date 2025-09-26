@@ -2,11 +2,11 @@ import { Pool } from "pg";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.DATABASE_URL?.includes("supabase")
-    ? { rejectUnauthorized: false }
-    : undefined,
+  ssl: { rejectUnauthorized: false },
 });
 
-export default {
-  query: (texte, params) => pool.query(texte, params),
-};
+pool.connect()
+  .then(() => console.log("✅ Connecté à la base de données"))
+  .catch(err => console.error("❌ Erreur de connexion BD:", err));
+
+export default pool;

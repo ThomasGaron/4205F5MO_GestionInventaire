@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import authRoutes from "./routes/auth.routes.js";
 import { requireAuth, requireRole } from "./middleware/auth.js";
+import db from "./db.js";
 
 const app = express();
 app.use(cors());
@@ -21,3 +22,12 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
   console.log(`Backend lancé sur http://localhost:${PORT}`)
 );
+
+app.get("/ping-db", async (req, res) => {
+  try {
+    const { rows } = await db.query("SELECT NOW()");
+    res.json({ ok: true, now: rows[0].now });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});

@@ -48,17 +48,22 @@ router.post(
   }
 );
 
-/** Connexion */
+/** Connexion : username OU email (avec fallback clair temporaire) */
 router.post(
   "/login",
-  body("email").isEmail(),
   body("password").notEmpty(),
+  // s'assurer qu'au moins l'un des deux est fourni
+  body().custom((v) => {
+    if (!v.username && !v.email) throw new Error("username ou email requis");
+    return true;
+  }),
   async (req, res) => {
     const erreurs = validationResult(req);
     if (!erreurs.isEmpty())
       return res.status(400).json({ erreurs: erreurs.array() });
 
-    const { email, password } = req.body;
+    const ident = (req.body.username || req.body.email || "").trim();
+    const byEmail = /\S+@\S+\.\S+/.test(ident);
 
     const { rows } = await db.query(
       `select id,
@@ -67,14 +72,22 @@ router.post(
               mdp as password_hash,
               role
          from utilisateurs
-        where utilisateur_email=$1`,
-      [email]
+        where ${byEmail ? "utilisateur_email" : "utilisateur_nom"} = $1`,
+      [ident]
     );
+
     if (!rows.length)
       return res.status(401).json({ message: "Identifiants invalides" });
 
     const u = rows[0];
-    const ok = await bcrypt.compare(password, u.password_hash);
+    const supplied = String(req.body.password || "");
+    const stored = String(u.password_hash || "");
+
+    // Si c'est un hash bcrypt, on compare bcrypt. Sinon (mdp en clair) on compare en clair.
+    const isBcrypt = /^\$2[aby]\$/.test(stored);
+    const ok = isBcrypt ? await bcrypt.compare(supplied, stored)
+                        : supplied === stored; // ⚠️ TEMPORAIRE : à retirer une fois les mdp hashés
+
     if (!ok) return res.status(401).json({ message: "Identifiants invalides" });
 
     const token = genererToken(u);
