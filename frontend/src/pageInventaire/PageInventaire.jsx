@@ -22,12 +22,14 @@ export default function PageInventaire() {
   const getAllItems = async () => {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/produit/tousLesProduits",
+        import.meta.env.VITE_BACKEND_URI + "/api/produit/tousLesProduits",
         {
           method: "GET",
         }
       );
+      console.log(res);
       const json = await res.json();
+      console.log("test");
       console.log("API data:", json);
 
       // Supabase renvoie { data: [...] }
