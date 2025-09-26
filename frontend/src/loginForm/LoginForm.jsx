@@ -10,26 +10,26 @@ export default function LoginForm() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // APPEL BACKEND
-      const response = await fetch("http://localhost:5000/api/login", {
+      // APPEL BACKEND (corrigé: /api/auth/login)
+      const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
-      if (!response.ok) {
+     if (!response.ok) {
         throw new Error("Identifiants invalides");
       }
 
       const data = await response.json();
 
+     
       auth.login(data.token);
 
       navigate("/acceuil");
