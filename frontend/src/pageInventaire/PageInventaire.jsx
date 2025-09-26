@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import "./PageInventaire.css";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/auth-context";
-import { useInventaire } from "../context/InventaireContext";
-import { useAlert } from "../context/AlertContext";
-import { getAllItems } from "../api/inventaireApi";
+import { useContext } from "react";
+import { AuthContext } from "../context/auth-context";
+import { useInventaire } from "../context/inventaire-context";
+import { useAlert } from "../context/alert-context";
+import { getAllItems } from "../api/inventaireApi.jsx";
 import ItemCard from "../components/ItemCard";
 
 export default function PageInventaire() {
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useContext(AuthContext);
   const { items, setItems } = useInventaire();
   const { setAlert } = useAlert();
 

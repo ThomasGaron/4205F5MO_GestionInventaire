@@ -1,14 +1,14 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, createElement } from "react";
 
 const InventaireContext = createContext();
 
 export function InventaireProvider({ children }) {
   const [items, setItems] = useState([]);
 
-  return (
-    <InventaireContext.Provider value={{ items, setItems }}>
-      {children}
-    </InventaireContext.Provider>
+  return createElement(
+    InventaireContext.Provider,
+    { value: { items, setItems } },
+    children
   );
 }
 
