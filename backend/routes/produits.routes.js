@@ -4,6 +4,8 @@ import { body, validationResult } from "express-validator";
 
 const router = Router();
 
+
+/** Ajouter un produit */
 router.post(
   "/",
   body("nom").trim().notEmpty().isLength({ max: 120 }),
@@ -40,5 +42,21 @@ router.post(
     res.status(201).json(rows[0]);
   }
 );
+
+
+/** Liste des produits */
+router.get("/", async (req, res) => {
+  try {
+    const { rows } = await db.query(
+      `SELECT id, produit_nom, produit_prix, produit_quantiter, disponible
+       FROM produits
+       ORDER BY produit_nom ASC`
+    );
+    res.json(rows);
+  } catch (err) {
+    console.error("Erreur récupération produits:", err.message);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+});
 
 export default router;

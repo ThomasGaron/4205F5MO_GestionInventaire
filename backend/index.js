@@ -19,6 +19,7 @@ app.use("/api/auth", authRoutes);
 // Produits 
 app.use("/api/produits", requireAuth, requireRole("admin"), produitsRoutes);
 
+
 // Exemple de route admin protégée
 app.get("/api/admin/ping", requireAuth, requireRole("admin"), (req, res) => {
   res.json({ ok: true, user: req.user });
