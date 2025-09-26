@@ -1,38 +1,36 @@
 import express from "express";
-import dotenv from "dotenv";
-import { createClient } from "@supabase/supabase-js";
-
-dotenv.config();
+import cors from "cors";
+import "dotenv/config";
+import authRoutes from "./routes/auth.routes.js";
+import { requireAuth, requireRole } from "./middleware/auth.js";
+import db from "./db.js";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
-const PORT = process.env.PORT;
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+app.get("/", (req, res) => res.send("API OK"));
 
-app.get("/", async (req, res) => {
+// Auth
+app.use("/api/auth", authRoutes);
+
+// Exemple de route admin protégée
+app.get("/api/admin/ping", requireAuth, requireRole("admin"), (req, res) => {
+  res.json({ ok: true, user: req.user });
+});
+
+// Ping DB (debug)
+app.get("/ping-db", async (req, res) => {
   try {
-    const { data, error } = await supabase
-      .from("produits")
-      .select("*")
-      .limit(1);
-    if (error) throw error;
-
-    res.json({
-      message: "Connexion réussie",
-      data,
-    });
-  } catch (err) {
-    res.status(500).json({
-      message: "Erreur de connexion",
-      error: err.message || err.toString(),
-    });
+    const { rows } = await db.query("SELECT NOW()");
+    res.json({ ok: true, now: rows[0].now });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message });
   }
 });
 
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Serveur lancé sur le port ${PORT}`);
+  console.log(`Backend lancé sur http://localhost:${PORT}`);
 });
