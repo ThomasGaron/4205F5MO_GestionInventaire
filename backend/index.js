@@ -1,39 +1,20 @@
 import express from "express";
+
+import dotenv from "dotenv";
+import userRoute from "./routes/user-routes.js";
 import cors from "cors";
-import "dotenv/config";
-import authRoutes from "./routes/auth.routes.js";
-import { requireAuth, requireRole } from "./middleware/auth.js";
-import db from "./db.js";
-import produitsRoutes from "./routes/produits.routes.js";
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 
-app.get("/", (req, res) => res.send("API OK"));
+app.use(cors());
 
-// Auth
-app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoute);
 
-// Produits 
-app.use("/api/produits", requireAuth, requireRole("admin"), produitsRoutes);
-
-
-// Exemple de route admin protégée
-app.get("/api/admin/ping", requireAuth, requireRole("admin"), (req, res) => {
-  res.json({ ok: true, user: req.user });
-});
-
-// Ping DB (debug)
-app.get("/ping-db", async (req, res) => {
-  try {
-    const { rows } = await db.query("SELECT NOW()");
-    res.json({ ok: true, now: rows[0].now });
-  } catch (e) {
-    res.status(500).json({ ok: false, error: e.message });
-  }
-});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
