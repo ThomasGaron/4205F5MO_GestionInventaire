@@ -35,7 +35,7 @@ export default function LoginForm() {
         throw new Error("Identifiants invalides");
       }
 
-      const data = await response.json();
+      // const data = await response.json();
 
       // auth.login(data.token);
 
