@@ -8,7 +8,7 @@ export default function LoginForm() {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState(null);
@@ -16,12 +16,20 @@ export default function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const fd = new FormData(event.target);
+    const data = Object.fromEntries(fd.entries());
+
+    const connexion = {
+      email: data.email,
+      mdp: data.password,
+    };
+
     try {
       // APPEL BACKEND
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch("http://localhost:5000/api/user/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify(connexion),
       });
 
       if (!response.ok) {
@@ -30,7 +38,9 @@ export default function LoginForm() {
 
       const data = await response.json();
 
-      auth.login(data.token);
+      // auth.login(data.token);
+
+      auth.login("123");
 
       navigate("/acceuil");
     } catch (err) {
@@ -42,12 +52,12 @@ export default function LoginForm() {
     <form className="form" onSubmit={handleSubmit}>
       <h2>Connexion</h2>
       <div>
-        <label htmlFor="username">Nom d'utilisateur</label>
+        <label htmlFor="email">Nom d'utilisateur</label>
         <input
-          name="username"
+          name="email"
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
       </div>

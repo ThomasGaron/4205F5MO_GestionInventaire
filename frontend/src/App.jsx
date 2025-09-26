@@ -19,7 +19,8 @@ function App() {
 
   const tokenExist = localStorage.getItem("token");
   const [token, setToken] = useState(
-    tokenExist ? JSON.parse(tokenExist) : null
+    // tokenExist ? JSON.parse(tokenExist) : null
+    tokenExist == false
   );
 
   // Fonctions de connexion
@@ -37,6 +38,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem("statutConnexion", JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
+
   useEffect(() => {
     localStorage.setItem("token", JSON.stringify(token));
   }, [token]);
@@ -70,7 +72,14 @@ function App() {
   ]);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, token }}>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: isLoggedIn,
+        login: login,
+        logout: logout,
+        token: token,
+      }}
+    >
       <RouterProvider router={isLoggedIn ? routerLogin : router} />
     </AuthContext.Provider>
   );
