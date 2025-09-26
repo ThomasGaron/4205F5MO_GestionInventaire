@@ -4,6 +4,7 @@ import "dotenv/config";
 import authRoutes from "./routes/auth.routes.js";
 import { requireAuth, requireRole } from "./middleware/auth.js";
 import db from "./db.js";
+import produitsRoutes from "./routes/produits.routes.js";
 
 const app = express();
 app.use(cors());
@@ -14,6 +15,9 @@ app.get("/", (req, res) => res.send("API OK"));
 
 // Auth
 app.use("/api/auth", authRoutes);
+
+// Produits 
+app.use("/api/produits", requireAuth, requireRole("admin"), produitsRoutes);
 
 // Exemple de route admin protégée
 app.get("/api/admin/ping", requireAuth, requireRole("admin"), (req, res) => {
