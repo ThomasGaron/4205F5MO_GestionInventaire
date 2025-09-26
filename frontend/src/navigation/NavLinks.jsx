@@ -11,14 +11,26 @@ export default function NavLinks() {
     <>
       <h1>Gestion d'inventaire</h1>
       <ul className="affichage-navigation">
-        {/* Bouton logout seulement affiché si connecté*/}
-        <Link to="/login">
-          {auth.isLoggedIn && (
-            <button className="bouton" onClick={auth.logout}>
-              Déconnexion
-            </button>
-          )}
-        </Link>
+        {/* Si connecté */}
+        {auth.isLoggedIn && (
+          <>
+            <li>
+              <NavLink to="/inventaire">
+                <h2>Inventaire</h2>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/profil">
+                <h2>Mon Profil</h2>
+              </NavLink>
+            </li>
+            <li>
+              <button className="bouton" onClick={auth.logout}>
+                Déconnexion
+              </button>
+            </li>
+          </>
+        )}
 
         {/* Lien page acceuil */}
         <li>
@@ -29,13 +41,11 @@ export default function NavLinks() {
 
         {/** Si pas connecté -> lien vers connexion */}
         {!auth.isLoggedIn && (
-          <>
-            <li>
-              <NavLink to="/login">
-                <h2>Connexion</h2>
-              </NavLink>
-            </li>
-          </>
+          <li>
+            <NavLink to="/login">
+              <h2>Connexion</h2>
+            </NavLink>
+          </li>
         )}
       </ul>
       {/** Pour afficher les sous routes */}

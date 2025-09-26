@@ -12,7 +12,7 @@ import { AuthContext } from "./context/auth-context";
 
 function App() {
   // état de la connexion
-  const connecter = localStorage.getItem("statuConnexion");
+  const connecter = localStorage.getItem("statutConnexion");
   const [isLoggedIn, setIsLoggedIn] = useState(
     connecter ? JSON.parse(connecter) : false
   );
