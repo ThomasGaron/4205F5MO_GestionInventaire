@@ -12,6 +12,8 @@ import PageInventaire from "./pageInventaire/PageInventaire";
 import { AuthContext } from "./context/auth-context";
 import { AlertProvider } from "./context/alert-context";
 
+import "./App.css";
+
 function App() {
   // état de la connexion
   const connecter = localStorage.getItem("statutConnexion");

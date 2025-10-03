@@ -1,0 +1,26 @@
+.header {
+  background-color: var(--color-primary);
+  padding: 10px 20px;
+}
+
+/* La nav est en ligne */
+.nav {
+  display: flex; /* aligne en ligne */
+  gap: 20px; /* espace entre boutons */
+  justify-content: center; /* centre horizontalement */
+  align-items: center; /* aligne verticalement */
+}
+
+/* Style des boutons de nav */
+.nav-btn {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.nav-btn:hover {
+  background-color: var(--color-info);
+}

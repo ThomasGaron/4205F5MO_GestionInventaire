@@ -9,47 +9,47 @@ export default function NavLinks() {
 
   return (
     <>
-      <h1>Gestion d'inventaire</h1>
-      <ul className="affichage-navigation">
-        {/* Si connecté */}
-        {auth.isLoggedIn && (
-          <>
-            <li>
-              <NavLink to="/inventaire">
-                <h2>Inventaire</h2>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/profil">
-                <h2>Mon Profil</h2>
-              </NavLink>
-            </li>
-            <li>
-              <button className="bouton" onClick={auth.logout}>
-                Déconnexion
-              </button>
-            </li>
-          </>
-        )}
+      <header className="header">
+        <h1 className="logo">Gestion d'inventaire</h1>
+        <nav>
+          <ul className="affichage-navigation">
+            {/* Si connecté */}
+            {auth.isLoggedIn && (
+              <>
+                <li>
+                  <NavLink to="/inventaire">
+                    <h2>Inventaire</h2>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/profil">Mon Profil</NavLink>
+                </li>
+                <li>
+                  <button className="bouton" onClick={auth.logout}>
+                    Déconnexion
+                  </button>
+                </li>
+              </>
+            )}
 
-        {/* Lien page acceuil */}
-        <li>
-          <NavLink to="/acceuil">
-            <h2>Acceuil</h2>
-          </NavLink>
-        </li>
+            {/* Lien page acceuil */}
+            <li>
+              <NavLink to="/acceuil">Acceuil</NavLink>
+            </li>
 
-        {/** Si pas connecté -> lien vers connexion */}
-        {!auth.isLoggedIn && (
-          <li>
-            <NavLink to="/login">
-              <h2>Connexion</h2>
-            </NavLink>
-          </li>
-        )}
-      </ul>
+            {/** Si pas connecté -> lien vers connexion */}
+            {!auth.isLoggedIn && (
+              <li>
+                <NavLink to="/login">Connexion</NavLink>
+              </li>
+            )}
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <Outlet />
+      </main>
       {/** Pour afficher les sous routes */}
-      <Outlet />
     </>
   );
 }

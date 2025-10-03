@@ -6,9 +6,17 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  transition: background 0.2s ease;
 }
 
 .btn:hover {
   background-color: var(--color-info);
+}
+
+.btn-success {
+  background-color: var(--color-success);
+}
+
+.btn-warning {
+  background-color: var(--color-warning);
+  color: var(--color-text);
 }
