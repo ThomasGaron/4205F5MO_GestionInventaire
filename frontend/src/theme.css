@@ -8,3 +8,7 @@
   --color-success: #22c55e; /* vert succès */
   --color-warning: #facc15; /* jaune warning */
 }
+
+body {
+  font-family: "Oswald", sans-serif;
+}

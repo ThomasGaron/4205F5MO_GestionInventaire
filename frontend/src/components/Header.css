@@ -1,6 +1,7 @@
 .header {
-  background-color: var(--color-primary);
+  background-color: var(--color-panel);
   padding: 10px 20px;
+  text-align: center;
 }
 
 /* La nav est en ligne */
@@ -12,15 +13,17 @@
 }
 
 /* Style des boutons de nav */
+
 .nav-btn {
-  color: white;
-  text-decoration: none;
+  font-family: "Oswald", sans-serif;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: var(--color-text);
+  letter-spacing: 2px;
   font-weight: 600;
-  padding: 8px 14px;
-  border-radius: 6px;
-  transition: background 0.2s;
+  transition: color 0.2s;
 }
 
 .nav-btn:hover {
-  background-color: var(--color-info);
+  background-color: var(--color-primary);
 }
