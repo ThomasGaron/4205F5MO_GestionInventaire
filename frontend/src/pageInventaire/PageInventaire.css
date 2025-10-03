@@ -6,7 +6,8 @@
 
 .items-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px; /* espace entre les cartes */
-  justify-content: center; /* centre la grille */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px; /* espace régulier */
+  margin: 0 auto;
+  max-width: 1200px; /* évite que ça s’étire trop */
 }

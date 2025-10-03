@@ -1,22 +1,53 @@
+/* Base */
 .btn {
-  background-color: var(--color-primary);
-  color: white;
+  display: inline-block;
   padding: 10px 16px;
   border: none;
   border-radius: 6px;
-  cursor: pointer;
   font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s, transform 0.1s;
 }
 
-.btn:hover {
-  background-color: var(--color-info);
+/* Effet au clic */
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Variants */
+.btn-primary {
+  background: var(--color-primary); /* Orange */
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #ea580c; /* orange plus foncé */
 }
 
 .btn-success {
-  background-color: var(--color-success);
+  background: var(--color-success); /* Vert */
+  color: white;
 }
 
-.btn-warning {
-  background-color: var(--color-warning);
-  color: var(--color-text);
+.btn-success:hover {
+  background: #16a34a;
+}
+
+.btn-danger {
+  background: #ef4444; /* Rouge */
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+.btn-info {
+  background: var(--color-info); /* Bleu */
+  color: white;
+}
+
+.btn-info:hover {
+  background: #3b82f6;
 }

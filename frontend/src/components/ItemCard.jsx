@@ -1,4 +1,5 @@
 import "./ItemCard.css";
+import "../Bouton.css";
 
 export default function ItemCard({ item }) {
   return (
@@ -14,6 +15,12 @@ export default function ItemCard({ item }) {
         <p className="detail">
           <span className="label">Quantité :</span> {item.produit_quantiter}
         </p>
+      </div>
+
+      <div className="item-actions">
+        <button className="btn btn-info"> Ajouter quantité</button>
+        <button className="btn btn-primary">Modifier</button>
+        <button className="btn btn-danger"> Supprimer</button>
       </div>
     </div>
   );
