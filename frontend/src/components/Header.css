@@ -21,7 +21,6 @@
   color: var(--color-text);
   letter-spacing: 2px;
   font-weight: 600;
-  transition: color 0.2s;
 }
 
 .nav-btn:hover {

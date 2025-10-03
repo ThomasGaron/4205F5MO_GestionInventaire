@@ -1,45 +1,64 @@
 .header {
+  background-color: var(--color-primary); /* ✅ ta barre orange */
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* logo à gauche, nav à droite */
   align-items: center;
-  background-color: var(--color-primary);
   padding: 10px 20px;
 }
 
+/* LOGO à gauche */
 .logo {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.5rem;
+  text-transform: uppercase;
   color: white;
+  margin: 0;
 }
 
+/* NAVIGATION à droite */
 .affichage-navigation {
   list-style: none;
   display: flex;
-  gap: 20px; /* espace entre les liens */
+  align-items: center;
+  gap: 20px;
   margin: 0;
   padding: 0;
 }
 
-.affichage-navigation li a {
+.affichage-navigation li {
+  display: flex;
+  align-items: center;
+}
+
+/* Liens */
+.affichage-navigation a {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
   color: white;
   text-decoration: none;
-  font-weight: 600;
-  transition: color 0.2s;
 }
 
-.affichage-navigation li a:hover {
-  color: var(--color-info);
+.affichage-navigation a:hover {
+  color: var(--color-info); /* bleu clair au hover */
 }
 
+/* Bouton déconnexion */
 .bouton {
-  background-color: var(--color-warning);
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+  padding: 6px 14px;
   border: none;
   border-radius: 6px;
-  padding: 8px 14px;
+  background: var(--color-warning);
   cursor: pointer;
-  font-weight: 600;
-  transition: background 0.2s;
-}
 
-.bouton:hover {
-  background-color: var(--color-success);
-  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
