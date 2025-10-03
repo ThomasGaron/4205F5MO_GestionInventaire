@@ -23,4 +23,9 @@ router.post(
   }
 );
 
+// Suppresion
+router.delete("/:id", (req, res) =>
+  produitController.supprimerProduit(req, res)
+);
+
 export default router;
