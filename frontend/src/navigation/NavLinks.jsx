@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import "./NavLinks.css";
+import Footer from "../components/Footer";
 
 export default function NavLinks() {
   // Récupère les infos du contexte (loggedin, logout ...)
@@ -50,6 +51,8 @@ export default function NavLinks() {
         <Outlet />
       </main>
       {/** Pour afficher les sous routes */}
+
+      <Footer />
     </>
   );
 }

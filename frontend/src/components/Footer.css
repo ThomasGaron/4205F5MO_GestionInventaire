@@ -1,14 +1,16 @@
 .footer {
   background-color: var(--color-background);
-  color: var(--color-text);
-  padding: 20px;
-  text-align: center;
   border-top: 1px solid var(--color-border);
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  color: var(--color-text);
 }
 
 .footer a {
   color: var(--color-info);
   text-decoration: none;
+  margin-left: 10px;
 }
 
 .footer a:hover {
