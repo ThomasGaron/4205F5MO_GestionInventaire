@@ -23,8 +23,47 @@ const Login = async (req, res, next) => {
       message: "Mot de passe incorrect.",
     });
   } else {
-    res.json({ message: "Connexion réussie.", utilisateur: data });
+    return res.json({ message: "Connexion réussie.", utilisateur: data.role });
   }
 };
 
-export default { Login };
+const SignUp = async (req, res, next) => {
+  const { nom, email, mdp, role } = req.body;
+
+  const { data, error } = await supabase
+    .from("utilisateur")
+    .select("*")
+    .eq("utilisateur_email", email)
+    .single();
+
+  if (error || !data) {
+    try {
+      const { data, error } = await supabase.from("utilisateurs").insert([
+        {
+          utilisateur_nom: nom,
+          utilisateur_email: email,
+          mdp: mdp,
+          role: role,
+        },
+      ]);
+
+      if (error) {
+        return res
+          .status(500)
+          .json({ message: "Une erreur est survenu " + error.message });
+      } else {
+        return res
+          .status(201)
+          .json({ message: "Utilisateur creer avec succes" });
+      }
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Une erreur est survenu " + error });
+    }
+  } else {
+    return res.status(409).json({ message: "Cette utilisateur existe deja" });
+  }
+};
+
+export default { Login, SignUp };

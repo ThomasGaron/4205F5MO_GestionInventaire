@@ -32,6 +32,14 @@ export default function NavLinks() {
           </>
         )}
 
+        {auth.isAdmin && (
+          <li>
+            <NavLink to="/signUp">
+              <h2>SignUp</h2>
+            </NavLink>
+          </li>
+        )}
+
         {/* Lien page acceuil */}
         <li>
           <NavLink to="/acceuil">

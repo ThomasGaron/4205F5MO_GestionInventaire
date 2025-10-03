@@ -44,6 +44,12 @@ export default function LoginForm() {
 
       auth.login("123");
 
+      const res = await response.json();
+
+      if (res.utilisateur == "admin") {
+        auth.admin();
+      }
+
       navigate("/acceuil");
     } catch (err) {
       setError(err.message);
