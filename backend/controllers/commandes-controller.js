@@ -18,15 +18,24 @@ export const creerCommande = async (req, res) => {
       }
     }
 
-    // 1) Vérifier que le client existe
+    // 1) Vérifier que le client existe (version safe + logs)
     const { data: client, error: errClient } = await supabase
       .from("clients")
       .select("id")
-      .eq("id", client_id)
-      .single();
-    if (errClient || !client) {
-      return res.status(404).json({ error: "Client introuvable." });
-    }
+      .eq("id", String(client_id).trim())
+      .maybeSingle();
+
+    console.log("[CHECK CLIENT]", {
+      sent: String(client_id).trim(),
+      errClient,
+      client,
+    });
+
+    if (errClient)
+      return res
+        .status(400)
+        .json({ error: "Erreur vérification client: " + errClient.message });
+    if (!client) return res.status(404).json({ error: "Client introuvable." });
 
     // 2) Charger les produits demandés
     const ids = [...new Set(produits.map((p) => p.produit_id))];
@@ -98,7 +107,7 @@ export const creerCommande = async (req, res) => {
       return res.status(400).json({ error: errLignes.message });
     }
 
-    // 6) Décrémenter les stocks
+    // 6) Décrémenter les stocks (SANS RPC)
     // On utilise la quantité courante lue plus haut → race condition possible
     for (const item of produits) {
       const prod = produitsDB.find((p) => p.id === item.produit_id);
