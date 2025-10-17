@@ -3,6 +3,7 @@ import "./LoginForm.css";
 import { AuthContext } from "../context/auth-context";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+// import "../Bouton.css";
 
 export default function LoginForm() {
   const auth = useContext(AuthContext);
@@ -81,7 +82,9 @@ export default function LoginForm() {
         />
       </div>
 
-      <button type="submit">Connexion</button>
+      <button className="btn" type="submit">
+        Connexion
+      </button>
 
       {error && <p className="error">{error}</p>}
     </form>

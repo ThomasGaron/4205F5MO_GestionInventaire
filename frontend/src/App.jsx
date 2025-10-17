@@ -13,6 +13,8 @@ import { AuthContext } from "./context/auth-context";
 import { AlertProvider } from "./context/alert-context";
 import SignUp from "./signUpForm/SignUp";
 
+import "./App.css";
+
 function App() {
   // état de la connexion
   const connecter = localStorage.getItem("statutConnexion");
