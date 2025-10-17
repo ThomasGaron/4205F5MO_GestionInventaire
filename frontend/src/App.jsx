@@ -11,6 +11,7 @@ import ErrorPage from "./pageErreur/PageErreur";
 import PageInventaire from "./pageInventaire/PageInventaire";
 import { AuthContext } from "./context/auth-context";
 import { AlertProvider } from "./context/alert-context";
+import SignUp from "./signUpForm/SignUp";
 
 import "./App.css";
 
@@ -26,15 +27,22 @@ function App() {
     tokenExist ? JSON.parse(tokenExist) : null
   );
 
+  const [isAdmin, setIsAdmin] = useState(false);
+
   // Fonctions de connexion
   const login = useCallback((token) => {
     setToken(token);
     setIsLoggedIn(true);
   }, []);
 
+  const admin = useCallback(() => {
+    setIsAdmin(true);
+  });
+
   const logout = useCallback(() => {
     setToken(null);
     setIsLoggedIn(false);
+    setIsAdmin(false);
   }, []);
 
   // Stockage, sauvegarde local storage
@@ -61,6 +69,23 @@ function App() {
     },
   ]);
 
+  // Routes connecte avec admin
+
+  const routerLoginAdmin = createBrowserRouter([
+    {
+      path: "/",
+      element: <NavLinks />,
+      errorElement: <ErrorPage />,
+      children: [
+        { path: "", element: <Acceuil /> },
+        { path: "/login", element: <Navigate to="/acceuil" replace /> },
+        { path: "/acceuil", element: <Acceuil /> },
+        { path: "/inventaire", element: <PageInventaire /> },
+        { path: "/signUp", element: <SignUp /> },
+      ],
+    },
+  ]);
+
   // Routes pas connecté
   const router = createBrowserRouter([
     {
@@ -81,10 +106,20 @@ function App() {
         isLoggedIn: isLoggedIn,
         login: login,
         logout: logout,
+        admin: admin,
+        isAdmin: isAdmin,
         token: token,
       }}
     >
-      <RouterProvider router={isLoggedIn ? routerLogin : router} />
+      <RouterProvider
+        router={
+          isLoggedIn
+            ? isAdmin
+              ? routerLoginAdmin // si connecté ET admin
+              : routerLogin // si connecté ET non admin
+            : router // si non connecté
+        }
+      />
     </AuthContext.Provider>
   );
 }
