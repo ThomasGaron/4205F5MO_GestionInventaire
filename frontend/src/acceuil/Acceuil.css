@@ -1,0 +1,71 @@
+.acceuil-container {
+  background: #f6f9fc;
+  min-height: 100vh;
+  padding: 3rem 2rem 2rem;
+  text-align: center;
+}
+
+.acceuil-logo {
+  width: 120px;
+  margin-bottom: 20px;
+}
+
+.acceuil-title {
+  font-weight: bold;
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.acceuil-subtitle {
+  font-size: 1.2rem;
+  margin: 16px auto 24px;
+  max-width: 600px;
+}
+
+.acceuil-button {
+  background: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 32px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.acceuil-button:hover {
+  background: #004494; /* Option : effet hover */
+}
+
+.features-section {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin: 40px 0;
+}
+
+.feature-item {
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.feature-icon {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.testimonial-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.testimonial-title {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.testimonial-text {
+  color: #666;
+  font-style: italic;
+}
