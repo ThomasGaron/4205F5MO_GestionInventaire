@@ -66,4 +66,24 @@ const SignUp = async (req, res, next) => {
   }
 };
 
-export default { Login, SignUp };
+const Modification = async (req, res, next) => {
+  const { id, nom, mdp, email, role } = req.body;
+
+  const { data, error } = await supabase
+    .from("utilisateurs")
+    .update({
+      nom,
+      mdp,
+      email,
+      role,
+    })
+    .eq("id", id);
+
+  if (error) {
+    console.log("Erreur lors de la mise a jour : ", error);
+  } else {
+    console.log("Utilisateur mis a jour : ", data);
+  }
+};
+
+export default { Login, SignUp, Modification };

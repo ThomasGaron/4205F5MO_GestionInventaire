@@ -7,4 +7,6 @@ router.post("/login", userController.Login);
 
 router.post("/signUp", userController.SignUp);
 
+router.post("/modification", userController.Modification);
+
 export default router;
