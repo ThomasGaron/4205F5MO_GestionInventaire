@@ -66,4 +66,65 @@ const SignUp = async (req, res, next) => {
   }
 };
 
-export default { Login, SignUp };
+const Modification = async (req, res, next) => {
+  const { id } = req.params;
+  const { nom, email, mdp, role } = req.body;
+
+  try {
+    const { data, error } = await supabase
+      .from("utilisateurs")
+      .update({
+        utilisateur_nom: nom,
+        mdp,
+        utilisateur_email: email,
+        role,
+      })
+      .eq("id", id);
+
+    if (error) {
+      return res.status(500).json({
+        error: "Erreur lors de la mise a jour : ",
+        message: error.message,
+      });
+    } else {
+      return res
+        .status(200)
+        .json({ message: "Utilisateur mis a jour : ", utilisateur: data });
+    }
+  } catch (e) {
+    return res.status(500).json({
+      error: "Erreur lors de la mis a jour de l'utilisateur",
+      message: e.message,
+    });
+  }
+};
+
+const Supprimer = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const { data, error } = await supabase
+      .from("utilisateurs")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      return res.status(500).json({
+        error: "Erreur lors de la suppression",
+        message: error.message,
+      });
+    } else {
+      return res.status(200).json({
+        message: "Utilisateur supprime avec succes",
+        utilisateur: data,
+      });
+    }
+  } catch (e) {
+    return res.status(500).json({
+      error: "Erreur lors de la suppression de l'utilisateur",
+      message: e.message,
+    });
+  }
+};
+
+export default { Login, SignUp, Modification, Supprimer };
