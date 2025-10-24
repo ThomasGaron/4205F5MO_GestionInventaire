@@ -127,4 +127,21 @@ const Supprimer = async (req, res, next) => {
   }
 };
 
+const GetTout = async (req, res, next) => {
+  try {
+    const { data, error } = await supabase.from("utilisateurs").select("*");
+    if (error || !data) {
+      return res
+        .status(500)
+        .json({ error: "Une erreur est survenu", message: error });
+    } else {
+      return res.status(200).json({ utilisateur: data });
+    }
+  } catch (e) {
+    return res
+      .status(500)
+      .json({ error: "Une erreur est survenu", message: e.message });
+  }
+};
+
 export default { Login, SignUp, Modification, Supprimer };
