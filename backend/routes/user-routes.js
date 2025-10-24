@@ -7,6 +7,6 @@ router.post("/login", userController.Login);
 
 router.post("/signUp", userController.SignUp);
 
-router.post("/modification", userController.Modification);
+router.patch("/modification/:id", userController.Modification);
 
 export default router;

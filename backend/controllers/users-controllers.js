@@ -67,7 +67,8 @@ const SignUp = async (req, res, next) => {
 };
 
 const Modification = async (req, res, next) => {
-  const { id, nom, mdp, email, role } = req.body;
+  const { id } = req.params;
+  const { nom, mdp, email, role } = req.body;
 
   const { data, error } = await supabase
     .from("utilisateurs")
