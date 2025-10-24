@@ -23,7 +23,7 @@ export default function NavLinks() {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/profil">Mon Profil</NavLink>
+                  <NavLink to="/profil">Profil</NavLink>
                 </li>
                 <li>
                   <button className="bouton" onClick={auth.logout}>

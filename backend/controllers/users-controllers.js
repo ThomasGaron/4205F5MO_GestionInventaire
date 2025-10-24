@@ -135,7 +135,7 @@ const GetTout = async (req, res, next) => {
         .status(500)
         .json({ error: "Une erreur est survenu", message: error });
     } else {
-      return res.status(200).json({ utilisateur: data });
+      return res.status(200).json({ utilisateurs: data });
     }
   } catch (e) {
     return res
@@ -144,4 +144,4 @@ const GetTout = async (req, res, next) => {
   }
 };
 
-export default { Login, SignUp, Modification, Supprimer };
+export default { Login, SignUp, Modification, Supprimer, GetTout };

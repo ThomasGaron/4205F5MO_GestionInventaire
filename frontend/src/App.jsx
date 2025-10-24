@@ -14,6 +14,7 @@ import { AlertProvider } from "./context/alert-context";
 import SignUp from "./signUpForm/SignUp";
 
 import "./App.css";
+import Profil from "./pageProfil/Profil";
 
 function App() {
   // état de la connexion
@@ -82,6 +83,7 @@ function App() {
         { path: "/acceuil", element: <Acceuil /> },
         { path: "/inventaire", element: <PageInventaire /> },
         { path: "/signUp", element: <SignUp /> },
+        { path: "/profil", element: <Profil /> },
       ],
     },
   ]);
