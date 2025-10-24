@@ -68,15 +68,15 @@ const SignUp = async (req, res, next) => {
 
 const Modification = async (req, res, next) => {
   const { id } = req.params;
-  const { nom, mdp, email, role } = req.body;
+  const { nom, email, mdp, role } = req.body;
 
   try {
     const { data, error } = await supabase
       .from("utilisateurs")
       .update({
-        nom,
+        utilisateur_nom: nom,
         mdp,
-        email,
+        utilisateur_email: email,
         role,
       })
       .eq("id", id);
@@ -91,10 +91,10 @@ const Modification = async (req, res, next) => {
         .status(200)
         .json({ message: "Utilisateur mis a jour : ", utilisateur: data });
     }
-  } catch (error) {
+  } catch (e) {
     return res.status(500).json({
       error: "Erreur lors de la mis a jour de l'utilisateur",
-      message: error,
+      message: e.message,
     });
   }
 };
@@ -119,10 +119,10 @@ const Supprimer = async (req, res, next) => {
         utilisateur: data[0],
       });
     }
-  } catch (error) {
+  } catch (e) {
     return res
       .status(500)
-      .json({ error: "Erreur lors de la suppression", message: error });
+      .json({ error: "Erreur lors de la suppression", message: e.message });
   }
 };
 
