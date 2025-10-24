@@ -104,7 +104,7 @@ const Supprimer = async (req, res, next) => {
 
   try {
     const { data, error } = await supabase
-      .from("utilisateur")
+      .from("utilisateurs")
       .delete()
       .eq("id", id);
 
@@ -116,13 +116,14 @@ const Supprimer = async (req, res, next) => {
     } else {
       return res.status(200).json({
         message: "Utilisateur supprime avec succes",
-        utilisateur: data[0],
+        utilisateur: data,
       });
     }
   } catch (e) {
-    return res
-      .status(500)
-      .json({ error: "Erreur lors de la suppression", message: e.message });
+    return res.status(500).json({
+      error: "Erreur lors de la suppression de l'utilisateur",
+      message: e.message,
+    });
   }
 };
 
