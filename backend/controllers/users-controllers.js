@@ -87,4 +87,31 @@ const Modification = async (req, res, next) => {
   }
 };
 
-export default { Login, SignUp, Modification };
+const Supprimer = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const { data, error } = await supabase
+      .from("utilisateur")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      return res.status(500).json({
+        error: "Erreur lors de la suppression",
+        message: error.message,
+      });
+    } else {
+      return res.status(200).json({
+        message: "Utilisateur supprime avec succes",
+        utilisateur: data[0],
+      });
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Erreur lors de la suppression", message: error.message });
+  }
+};
+
+export default { Login, SignUp, Modification, Supprimer };
