@@ -36,7 +36,7 @@ export default function Acceuil() {
       <section className="testimonial-section">
         <h3 className="testimonial-title">+500 entreprises partenaires</h3>
         <p className="testimonial-text">
-          “Une plateforme intuitive et efficace !” — Témoignage client
+          “Une plateforme intuitive et efficace !” — Témoignage client
         </p>
       </section>
     </div>
