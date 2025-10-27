@@ -1,9 +1,13 @@
-// import { useContext } from "react";
 import { AuthContext } from "../context/auth-context";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useContext } from "react";
+import { useMemo } from "react";
+import SupprimerUserModal from "../components/modals/SupprimerUserModal";
 
 export default function Profil() {
+  // Récupère les infos du contexte (loggedin, logout ...)
+  const { token, user: me } = useContext(AuthContext) || {};
   const [data, setData] = useState([]);
 
   useEffect(() => {
