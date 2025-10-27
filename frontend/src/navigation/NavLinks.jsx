@@ -18,9 +18,10 @@ export default function NavLinks() {
             {auth.isLoggedIn && (
               <>
                 <li>
-                  <NavLink to="/inventaire">
-                    <h2>Inventaire</h2>
-                  </NavLink>
+                  <NavLink to="/inventaire">Inventaire</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/commandes">Commandes</NavLink>
                 </li>
                 <li>
                   <NavLink to="/profil">Profil</NavLink>
@@ -35,9 +36,7 @@ export default function NavLinks() {
 
             {auth.isAdmin && (
               <li>
-                <NavLink to="/signUp">
-                  <h2>SignUp</h2>
-                </NavLink>
+                <NavLink to="/signUp">Créer un compte</NavLink>
               </li>
             )}
 
