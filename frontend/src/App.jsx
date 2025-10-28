@@ -3,7 +3,7 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState } from "react";
 import NavLinks from "./navigation/NavLinks";
 import Acceuil from "./acceuil/Acceuil";
 import LoginForm from "./loginForm/LoginForm";
@@ -16,24 +16,41 @@ import SignUp from "./signUpForm/SignUp";
 import "./App.css";
 import Profil from "./pageProfil/Profil";
 
+function decodeToken(token) {
+  try {
+    const payload = token.split(".")[1];
+    const decoded = JSON.parse(atob(payload));
+    return decoded;
+  } catch {
+    return null;
+  }
+}
+
 function App() {
-  // état de la connexion
-  const connecter = localStorage.getItem("statutConnexion");
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    connecter ? JSON.parse(connecter) : false
-  );
-
+  // lecture directe du token brut
   const tokenExist = localStorage.getItem("token");
-  const [token, setToken] = useState(
-    tokenExist ? JSON.parse(tokenExist) : null
-  );
+  const parsedToken = tokenExist ? JSON.parse(tokenExist) : null;
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  // décodage du token JWT (si présent)
+  const payload = parsedToken ? decodeToken(parsedToken) : null;
+
+  // initialisation de l'état à partir du payload
+  const [token, setToken] = useState(parsedToken);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!parsedToken);
+  const [isAdmin, setIsAdmin] = useState(
+    !!(payload && (payload.role === "admin" || payload.is_admin))
+  );
 
   // Fonctions de connexion
-  const login = useCallback((token) => {
-    setToken(token);
+  const login = useCallback((newToken) => {
+    if (!newToken) return;
+    setToken(newToken);
     setIsLoggedIn(true);
+
+    const payload = decodeToken(newToken);
+    setIsAdmin(!!(payload && (payload.role === "admin" || payload.is_admin)));
+    localStorage.setItem("token", JSON.stringify(newToken));
+    localStorage.setItem("statutConnexion", JSON.stringify(true));
   }, []);
 
   const admin = useCallback(() => {
@@ -45,15 +62,6 @@ function App() {
     setIsLoggedIn(false);
     setIsAdmin(false);
   }, []);
-
-  // Stockage, sauvegarde local storage
-  useEffect(() => {
-    localStorage.setItem("statutConnexion", JSON.stringify(isLoggedIn));
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    localStorage.setItem("token", JSON.stringify(token));
-  }, [token]);
 
   // Routes connecté
   const routerLogin = createBrowserRouter([
