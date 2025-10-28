@@ -67,11 +67,11 @@ export default function Profil() {
       setSelectedUser(null);
 
     try {
-      const res = await fetch(BASE + `/api/user/${selectedUser.id}`, {
+      const res = await fetch(`${BASE}/api/user/supprimer/${selectedUser.id}`, {
         method: "DELETE",
         headers: {
+          Accept: "application/json",
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
-          "Content-Type": "application/json",
         },
       });
 

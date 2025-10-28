@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import "./NavLinks.css";
 import Footer from "../components/Footer";
@@ -7,6 +7,12 @@ import Footer from "../components/Footer";
 export default function NavLinks() {
   // Récupère les infos du contexte (loggedin, logout ...)
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    auth.logout(); // efface le token, etc.
+    navigate("/acceuil", { replace: true }); // redirige toujours vers /acceuil
+  };
 
   return (
     <>
@@ -27,7 +33,7 @@ export default function NavLinks() {
                   <NavLink to="/profil">Profil</NavLink>
                 </li>
                 <li>
-                  <button className="bouton" onClick={auth.logout}>
+                  <button className="bouton" onClick={handleLogout}>
                     Déconnexion
                   </button>
                 </li>
