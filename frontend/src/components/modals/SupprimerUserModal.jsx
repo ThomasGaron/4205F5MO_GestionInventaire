@@ -1,6 +1,6 @@
 import React from "react";
-import "../Bouton.css";
-import "../theme.css";
+import "../../Bouton.css";
+import "../../theme.css";
 
 export default function SupprimerUserModal({
   open,
@@ -18,7 +18,7 @@ export default function SupprimerUserModal({
       aria-modal="true"
       aria-labelledby="su-title"
     >
-      <div className="su-modal">
+      <div className="su-modal" role="document">
         <h2 id="su-title" className="su-title">
           {title || "Confirmer"}
         </h2>
@@ -30,6 +30,7 @@ export default function SupprimerUserModal({
             type="button"
             className="su-btn su-btn-cancel"
             onClick={onCancel}
+            disabled={loading}
           >
             Annuler
           </button>

@@ -66,6 +66,7 @@ function App() {
         { path: "/login", element: <Navigate to="/acceuil" replace /> },
         { path: "/acceuil", element: <Acceuil /> },
         { path: "/inventaire", element: <PageInventaire /> },
+        { path: "/profil", element: <Profil /> },
       ],
     },
   ]);
@@ -113,15 +114,17 @@ function App() {
         token: token,
       }}
     >
-      <RouterProvider
-        router={
-          isLoggedIn
-            ? isAdmin
-              ? routerLoginAdmin // si connecté ET admin
-              : routerLogin // si connecté ET non admin
-            : router // si non connecté
-        }
-      />
+      <AlertProvider>
+        <RouterProvider
+          router={
+            isLoggedIn
+              ? isAdmin
+                ? routerLoginAdmin // si connecté ET admin
+                : routerLogin // si connecté ET non admin
+              : router // si non connecté
+          }
+        />
+      </AlertProvider>
     </AuthContext.Provider>
   );
 }
