@@ -3,7 +3,7 @@ import React from "react";
 import "./Acceuil.css";
 import "../Bouton.css";
 import "../theme.css";
-import logo from "/public/images/warehouse1.jpg";
+import logo from "/src/images/warehouse1.jpg";
 
 export default function Acceuil() {
   return (

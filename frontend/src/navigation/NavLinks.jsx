@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import "./NavLinks.css";
 import Footer from "../components/Footer";
@@ -7,6 +7,12 @@ import Footer from "../components/Footer";
 export default function NavLinks() {
   // Récupère les infos du contexte (loggedin, logout ...)
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    auth.logout(); // efface le token, etc.
+    navigate("/acceuil", { replace: true }); // redirige toujours vers /acceuil
+  };
 
   return (
     <>
@@ -18,15 +24,16 @@ export default function NavLinks() {
             {auth.isLoggedIn && (
               <>
                 <li>
-                  <NavLink to="/inventaire">
-                    <h2>Inventaire</h2>
-                  </NavLink>
+                  <NavLink to="/inventaire">Inventaire</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/commandes">Commandes</NavLink>
                 </li>
                 <li>
                   <NavLink to="/profil">Profil</NavLink>
                 </li>
                 <li>
-                  <button className="bouton" onClick={auth.logout}>
+                  <button className="bouton" onClick={handleLogout}>
                     Déconnexion
                   </button>
                 </li>
@@ -35,9 +42,7 @@ export default function NavLinks() {
 
             {auth.isAdmin && (
               <li>
-                <NavLink to="/signUp">
-                  <h2>SignUp</h2>
-                </NavLink>
+                <NavLink to="/signUp">Créer un compte</NavLink>
               </li>
             )}
 

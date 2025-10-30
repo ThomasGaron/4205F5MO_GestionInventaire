@@ -8,6 +8,7 @@ export function requireAuth(req, res, next) {
     req.user = jwt.verify(token, process.env.JWT_SECRET);
     next();
   } catch {
+    console.error("JWT error:", err.message);
     return res.status(401).json({ message: "Token invalide ou expiré" });
   }
 }
