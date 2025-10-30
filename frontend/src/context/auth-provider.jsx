@@ -1,13 +1,5 @@
-import { createContext, useCallback, useEffect, useState } from "react";
-
-export const AuthContext = createContext({
-  token: null,
-  user: null,
-  isAuthenticated: false,
-  login: async () => {},
-  logout: () => {},
-  refreshUser: async () => {},
-});
+import { useCallback, useEffect, useState } from "react";
+import { AuthContext } from "./auth-context.js";
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(() => localStorage.getItem("token"));
@@ -57,6 +49,7 @@ export function AuthProvider({ children }) {
           throw new Error(`Login failed: ${resp.status} ${text}`);
         }
         const data = await resp.json();
+        console.log(data);
         // attendu : { token: "...", user: {...} }
         saveAuth(data.token, data.user);
         return { ok: true, user: data.user };
@@ -84,6 +77,7 @@ export function AuthProvider({ children }) {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+
       if (!resp.ok) throw new Error("Cannot refresh user");
       const data = await resp.json();
       saveAuth(token, data.user || data);

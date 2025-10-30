@@ -2,6 +2,7 @@ import express from "express";
 
 import dotenv from "dotenv";
 import userRoute from "./routes/user-routes.js";
+import authRoutes from "./routes/auth.routes.js";
 import produitRoute from "./routes/produit-routes.js";
 import invoiceRoute from "./routes/invoice-routes.js"; // factures
 import cors from "cors";
@@ -18,8 +19,9 @@ const __dirname = path.dirname(__filename);
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(cors());
+app.use("/api/auth", authRoutes);
 
 app.use("/api/user", userRoute);
 
