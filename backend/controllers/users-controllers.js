@@ -16,6 +16,7 @@ const Login = async (req, res, next) => {
     {
       userId: data.id,
       email: data.email,
+      role: data.role,
     },
     "cleSuperSecrete!",
     {
@@ -36,7 +37,6 @@ const Login = async (req, res, next) => {
   } else {
     return res.json({
       message: "Connexion réussie.",
-      utilisateur: data.role,
       token: token,
     });
   }

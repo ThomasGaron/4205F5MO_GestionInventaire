@@ -43,7 +43,7 @@ export default function LoginForm() {
 
       auth.login(res.token);
 
-      if (res.utilisateur == "admin") {
+      if (res.token.role == "admin") {
         auth.admin();
       }
 
