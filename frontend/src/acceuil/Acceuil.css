@@ -1,0 +1,184 @@
+/* Container principal — fond du site + espacement */
+.acceuil-container {
+  background: var(--color-background, var(--bg));
+  color: var(--color-text, var(--text));
+  min-height: 100vh;
+  padding: 3rem 2rem 2rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Logo — encadré léger sur panel */
+.acceuil-logo {
+  width: 120px;
+  margin: 0 auto 20px;
+  display: block;
+  border-radius: 12px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(0, 0, 0, 0.04)
+  );
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+/* Titres */
+.acceuil-title {
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin: 0;
+  color: var(--color-text, var(--text));
+  letter-spacing: -0.5px;
+}
+
+/* Sous-titre */
+.acceuil-subtitle {
+  font-size: 1.15rem;
+  margin: 16px auto 24px;
+  max-width: 720px;
+  color: rgba(
+    var(--color-text, 229 231 235),
+    0.9
+  ); /* fallback si variable non convertible */
+  /* si var() retourne une couleur hex, rgba(var(...)) won't convert — fallback to rgba via opacity on element */
+  opacity: 0.95;
+  line-height: 1.5;
+}
+
+/* Card / panel look for central area (optional wrapper if you use one) */
+.acceuil-panel {
+  background: var(--color-panel, var(--panel));
+  border: 1px solid var(--color-border, var(--border));
+  border-radius: 12px;
+  padding: 1.25rem;
+  max-width: 1100px;
+  margin: 1.5rem auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  color: var(--color-text, var(--text));
+}
+
+/* Primary CTA button */
+.acceuil-button {
+  background: var(--color-primary, var(--primary));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 36px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  font-weight: 700;
+  margin-top: 20px;
+  transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+}
+
+/* Hover / active */
+.acceuil-button:hover {
+  filter: brightness(0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55);
+}
+
+.acceuil-button:active {
+  transform: translateY(0);
+  filter: brightness(0.92);
+}
+
+/* Secondary link-style button (if needed) */
+.acceuil-button.secondary {
+  background: transparent;
+  color: var(--color-info, var(--info));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: none;
+}
+
+/* Features: responsive grid / row */
+.features-section {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin: 40px 0;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+/* Each feature item as a small card */
+.feature-item {
+  font-size: 1.05rem;
+  text-align: center;
+  width: 220px;
+  padding: 20px;
+  border-radius: 10px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(0, 0, 0, 0.03)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.55);
+  color: var(--color-text, var(--text));
+}
+
+/* Feature icon */
+.feature-icon {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: var(--color-info, var(--info));
+}
+
+/* Testimonials */
+.testimonial-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.testimonial-title {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--color-text, var(--text));
+}
+
+.testimonial-text {
+  color: rgba(229, 231, 235, 0.85); /* texte plus doux */
+  font-style: italic;
+  max-width: 760px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Small devices: stack features vertically and shrink paddings */
+@media (max-width: 720px) {
+  .acceuil-container {
+    padding: 2rem 1rem;
+  }
+  .acceuil-title {
+    font-size: 1.9rem;
+  }
+  .acceuil-subtitle {
+    font-size: 1rem;
+    max-width: 92%;
+  }
+  .features-section {
+    gap: 18px;
+    margin: 28px 0;
+  }
+  .feature-item {
+    width: 100%;
+    max-width: 420px;
+    padding: 16px;
+  }
+}
+
+/* Accessibility: focus styles */
+.acceuil-button:focus {
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 35%, transparent);
+  outline-offset: 3px;
+}
+
+/* Utility: small muted text */
+.acceuil-muted {
+  color: rgba(229, 231, 235, 0.6);
+  font-size: 0.95rem;
+}

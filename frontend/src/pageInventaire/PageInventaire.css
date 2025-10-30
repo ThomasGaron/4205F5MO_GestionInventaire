@@ -1,0 +1,13 @@
+.page-inventaire {
+  padding: 20px;
+  max-width: 1200px; /* largeur max du contenu */
+  margin: 0 auto; /* centre le contenu */
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px; /* espace régulier */
+  margin: 0 auto;
+  max-width: 1200px; /* évite que ça s’étire trop */
+}

@@ -1,0 +1,14 @@
+:root {
+  --color-background: #000c18; /* fond abyss */
+  --color-panel: #001f33; /* cartes/panels */
+  --color-text: #e5e7eb; /* gris clair lisible */
+  --color-border: #113355; /* séparateurs */
+  --color-primary: #f97316; /* orange CTA */
+  --color-info: #33aaff; /* bleu clair (hover, links) */
+  --color-success: #22c55e; /* vert succès */
+  --color-warning: #facc15; /* jaune warning */
+}
+
+body {
+  font-family: "Oswald", sans-serif;
+}

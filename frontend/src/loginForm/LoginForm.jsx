@@ -3,6 +3,7 @@ import "./LoginForm.css";
 import { AuthContext } from "../context/auth-context";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+// import "../Bouton.css";
 
 export default function LoginForm() {
   const auth = useContext(AuthContext);
@@ -38,15 +39,11 @@ export default function LoginForm() {
         throw new Error("Identifiants invalides");
       }
 
-      // const data = await response.json();
-
-      // auth.login(data.token);
-
-      auth.login("123");
-
       const res = await response.json();
 
-      if (res.utilisateur == "admin") {
+      auth.login(res.token);
+
+      if (res.token.role == "admin") {
         auth.admin();
       }
 
@@ -81,7 +78,9 @@ export default function LoginForm() {
         />
       </div>
 
-      <button type="submit">Connexion</button>
+      <button className="btn" type="submit">
+        Connexion
+      </button>
 
       {error && <p className="error">{error}</p>}
     </form>

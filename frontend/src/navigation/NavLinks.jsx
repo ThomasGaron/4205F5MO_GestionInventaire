@@ -1,63 +1,71 @@
 import { useContext } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import "./NavLinks.css";
+import Footer from "../components/Footer";
 
 export default function NavLinks() {
   // Récupère les infos du contexte (loggedin, logout ...)
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    auth.logout(); // efface le token, etc.
+    navigate("/acceuil", { replace: true }); // redirige toujours vers /acceuil
+  };
 
   return (
     <>
-      <h1>Gestion d'inventaire</h1>
-      <ul className="affichage-navigation">
-        {/* Si connecté */}
-        {auth.isLoggedIn && (
-          <>
-            <li>
-              <NavLink to="/inventaire">
-                <h2>Inventaire</h2>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/profil">
-                <h2>Mon Profil</h2>
-              </NavLink>
-            </li>
-            <li>
-              <button className="bouton" onClick={auth.logout}>
-                Déconnexion
-              </button>
-            </li>
-          </>
-        )}
+      <header className="header">
+        <h1 className="logo">Gestion d'inventaire</h1>
+        <nav>
+          <ul className="affichage-navigation">
+            {/* Si connecté */}
+            {auth.isLoggedIn && (
+              <>
+                <li>
+                  <NavLink to="/inventaire">Inventaire</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/commandes">Commandes</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/profil">Profil</NavLink>
+                </li>
+                <li>
+                  <button className="bouton" onClick={handleLogout}>
+                    Déconnexion
+                  </button>
+                </li>
+              </>
+            )}
 
-        {auth.isAdmin && (
-          <li>
-            <NavLink to="/signUp">
-              <h2>SignUp</h2>
-            </NavLink>
-          </li>
-        )}
+            {auth.isAdmin && (
+              <li>
+                <NavLink to="/signUp">Créer un compte</NavLink>
+              </li>
+            )}
 
-        {/* Lien page acceuil */}
-        <li>
-          <NavLink to="/acceuil">
-            <h2>Acceuil</h2>
-          </NavLink>
-        </li>
+            {/* Lien page acceuil */}
+            <li>
+              <NavLink to="/acceuil">Acceuil</NavLink>
+            </li>
 
-        {/** Si pas connecté -> lien vers connexion */}
-        {!auth.isLoggedIn && (
-          <li>
-            <NavLink to="/login">
-              <h2>Connexion</h2>
-            </NavLink>
-          </li>
-        )}
-      </ul>
+            {/** Si pas connecté -> lien vers connexion */}
+            {!auth.isLoggedIn && (
+              <li>
+                <NavLink to="/login">Connexion</NavLink>
+              </li>
+            )}
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <Outlet />
+      </main>
       {/** Pour afficher les sous routes */}
-      <Outlet />
+
+      <Footer />
     </>
   );
 }

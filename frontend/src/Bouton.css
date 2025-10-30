@@ -1,0 +1,53 @@
+/* Base */
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s, transform 0.1s;
+}
+
+/* Effet au clic */
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Variants */
+.btn-primary {
+  background: var(--color-primary); /* Orange */
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #ea580c; /* orange plus foncé */
+}
+
+.btn-success {
+  background: var(--color-success); /* Vert */
+  color: white;
+}
+
+.btn-success:hover {
+  background: #16a34a;
+}
+
+.btn-danger {
+  background: #ef4444; /* Rouge */
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+.btn-info {
+  background: var(--color-info); /* Bleu */
+  color: white;
+}
+
+.btn-info:hover {
+  background: #3b82f6;
+}
