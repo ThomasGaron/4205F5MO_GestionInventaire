@@ -1,5 +1,7 @@
 import { supabase } from "../util/db2.js";
 
+const STATUTS_VALIDES = new Set(["En cours", "Livrée", "Annulée"]);
+
 const isUUID = (s) =>
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
 
@@ -156,17 +158,38 @@ const getCommandeParId = async (req, res) => {
 
 /**
  * PATCH /api/commandes/:id/statut
- * Body: { "statut": "Payée" | "Annulée" | "Livrée" | "En cours" }
+ * Body: { "statut": "Annulée" | "Livrée" | "En cours" }
  */
 const changerStatutCommande = async (req, res) => {
   try {
     const id = String(req.params.id || "").trim();
     const { statut } = req.body || {};
+
     if (!isUUID(id)) return res.status(400).json({ error: "Paramètre id invalide." });
-    if (!statut || typeof statut !== "string") {
-      return res.status(400).json({ error: "statut requis." });
+    if (typeof statut !== "string" || !STATUTS_VALIDES.has(statut)) {
+      return res
+        .status(400)
+        .json({ error: "Statut invalide. Valeurs permises: En cours, Livrée, Annulée." });
     }
 
+    // Vérifier existence
+    const { data: exist, error: errExist } = await supabase
+      .from("commandes")
+      .select("id, statut")
+      .eq("id", id)
+      .single();
+
+    if (errExist || !exist) return res.status(404).json({ error: "Commande introuvable." });
+
+    const ancienStatut = exist.statut;
+    if (ancienStatut === statut) {
+      return res.status(200).json({
+        message: "Aucun changement de statut (déjà identique).",
+        data: { id, statut },
+      });
+    }
+
+    // Mise à jour du statut
     const { data, error } = await supabase
       .from("commandes")
       .update({ statut })
@@ -175,11 +198,15 @@ const changerStatutCommande = async (req, res) => {
       .single();
 
     if (error) return res.status(400).json({ error: error.message });
-    return res.status(200).json({ message: "Statut mis à jour.", data });
+
+    return res.status(200).json({
+      message: "Statut mis à jour.",
+      data: { id: data.id, ancienStatut, nouveauStatut: data.statut },
+    });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
-}
+};
 
 const getToutesLesCommandes = async (req, res) => {
   try {
