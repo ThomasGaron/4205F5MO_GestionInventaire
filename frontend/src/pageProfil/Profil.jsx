@@ -1,4 +1,5 @@
 // src/pageProfil/Profil.jsx
+// import { useContext } from "react";
 import { AuthContext } from "../context/auth-context";
 import { useEffect, useContext, useState } from "react";
 import SupprimerUserModal from "../components/modals/SupprimerUserModal";

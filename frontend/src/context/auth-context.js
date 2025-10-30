@@ -1,10 +1,121 @@
-import { createContext } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 
 export const AuthContext = createContext({
-  isLoggedIn: false,
-  login: () => {},
-  logout: () => {},
-  admin: () => {},
-  isAdmin: false,
   token: null,
+  user: null,
+  isAuthenticated: false,
+  login: async () => {},
+  logout: () => {},
+  refreshUser: async () => {},
 });
+
+export function AuthProvider({ children }) {
+  const [token, setToken] = useState(() => localStorage.getItem("token"));
+  const [user, setUser] = useState(() => {
+    try {
+      const raw = localStorage.getItem("user");
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [loading, setLoading] = useState(false);
+
+  // helper pour sauvegarder token/user
+  const saveAuth = useCallback((newToken, newUser) => {
+    if (newToken) {
+      localStorage.setItem("token", newToken);
+      setToken(newToken);
+    } else {
+      localStorage.removeItem("token");
+      setToken(null);
+    }
+    if (newUser) {
+      localStorage.setItem("user", JSON.stringify(newUser));
+      setUser(newUser);
+    } else {
+      localStorage.removeItem("user");
+      setUser(null);
+    }
+  }, []);
+
+  const login = useCallback(
+    async (email, password) => {
+      setLoading(true);
+      try {
+        // adapte l'URL et le body selon ton backend
+        const resp = await fetch(
+          `${import.meta.env.VITE_BACKEND_URI}/api/auth/login`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          }
+        );
+        if (!resp.ok) {
+          const text = await resp.text().catch(() => "");
+          throw new Error(`Login failed: ${resp.status} ${text}`);
+        }
+        const data = await resp.json();
+        // attendu : { token: "...", user: {...} }
+        saveAuth(data.token, data.user);
+        return { ok: true, user: data.user };
+      } catch (err) {
+        console.error("login error", err);
+        return { ok: false, error: err.message || String(err) };
+      } finally {
+        setLoading(false);
+      }
+    },
+    [saveAuth]
+  );
+
+  const logout = useCallback(() => {
+    saveAuth(null, null);
+  }, [saveAuth]);
+
+  // Optionnel : recharger l'objet user depuis une route /me
+  const refreshUser = useCallback(async () => {
+    if (!token) return null;
+    try {
+      const resp = await fetch(
+        `${import.meta.env.VITE_BACKEND_URI}/api/auth/me`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (!resp.ok) throw new Error("Cannot refresh user");
+      const data = await resp.json();
+      saveAuth(token, data.user || data);
+      return data.user || data;
+    } catch (err) {
+      console.warn("refreshUser failed", err);
+      logout();
+      return null;
+    }
+  }, [token, saveAuth, logout]);
+
+  // si besoin → auto refresh / validate token au montage
+  useEffect(() => {
+    if (token && !user) {
+      // essayer de récupérer l'utilisateur
+      refreshUser();
+    }
+  }, [token, user, refreshUser]);
+
+  return (
+    <AuthContext.Provider
+      value={{
+        token,
+        user,
+        isAuthenticated: !!token,
+        login,
+        logout,
+        loading,
+        refreshUser,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+}
