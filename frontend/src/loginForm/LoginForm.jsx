@@ -39,15 +39,11 @@ export default function LoginForm() {
         throw new Error("Identifiants invalides");
       }
 
-      // const data = await response.json();
-
-      // auth.login(data.token);
-
-      auth.login("123");
-
       const res = await response.json();
 
-      if (res.utilisateur == "admin") {
+      auth.login(res.token);
+
+      if (res.token.role == "admin") {
         auth.admin();
       }
 

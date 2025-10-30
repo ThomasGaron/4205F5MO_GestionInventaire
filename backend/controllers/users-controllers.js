@@ -1,7 +1,5 @@
-// import User from "../models/user.js";
-// import HttpError from "../util/http-error.js";
-
 import { supabase } from "../util/db2.js";
+import jwt from "jsonwebtoken";
 
 const Login = async (req, res, next) => {
   const { email, mdp } = req.body;
@@ -11,6 +9,20 @@ const Login = async (req, res, next) => {
     .select("*")
     .eq("utilisateur_email", email)
     .single();
+
+  let token;
+
+  token = jwt.sign(
+    {
+      userId: data.id,
+      email: data.email,
+      role: data.role,
+    },
+    "cleSuperSecrete!",
+    {
+      expiresIn: "3h",
+    }
+  );
 
   if (error || !data) {
     return res.status(401).json({
@@ -23,7 +35,10 @@ const Login = async (req, res, next) => {
       message: "Mot de passe incorrect.",
     });
   } else {
-    return res.json({ message: "Connexion réussie.", utilisateur: data.role });
+    return res.json({
+      message: "Connexion réussie.",
+      token: token,
+    });
   }
 };
 
