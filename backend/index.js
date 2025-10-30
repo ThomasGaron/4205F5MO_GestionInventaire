@@ -3,7 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import userRoute from "./routes/user-routes.js";
 import produitRoute from "./routes/produit-routes.js";
-import commandesRoutes from "./routes/commandes.js";
+import commandesRoutes from "./routes/commandes.routes.js";
 import cors from "cors";
 
 dotenv.config();

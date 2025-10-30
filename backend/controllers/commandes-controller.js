@@ -1,146 +1,204 @@
 import { supabase } from "../util/db2.js";
 
-export const creerCommande = async (req, res) => {
+const isUUID = (s) =>
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
+
+const creerCommande = async (req, res) => {
   try {
-    const { client_id, produits } = req.body;
+    const { client_id, items } = req.body || {};
 
-    // 0) Validations d'entrée
-    if (!client_id || !Array.isArray(produits) || produits.length === 0) {
-      return res
-        .status(400)
-        .json({ error: "client_id et produits[] sont requis." });
+    if (!isUUID(String(client_id || ""))) {
+      return res.status(400).json({ error: "client_id invalide." });
     }
-    for (const p of produits) {
-      if (!p.produit_id || !Number.isInteger(p.quantite) || p.quantite <= 0) {
-        return res.status(400).json({
-          error: "Chaque item doit avoir produit_id (uuid) et quantite (>0).",
-        });
-      }
+    if (!Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({ error: "items doit être un tableau non vide." });
     }
 
-    // 1) Vérifier que le client existe (version safe + logs)
-    const { data: client, error: errClient } = await supabase
+    // Normaliser + valider items
+    const cleanItems = items
+      .map((it) => ({
+        produit_id: String(it?.produit_id || "").trim(),
+        quantite: Number(it?.quantite || 0),
+      }))
+      .filter((it) => isUUID(it.produit_id) && it.quantite > 0);
+
+    if (cleanItems.length !== items.length) {
+      return res.status(400).json({ error: "Un ou plusieurs items sont invalides." });
+    }
+
+    // Client existe ?
+    const { data: clientExist, error: errClient } = await supabase
       .from("clients")
       .select("id")
-      .eq("id", String(client_id).trim())
-      .maybeSingle();
-
-    console.log("[CHECK CLIENT]", {
-      sent: String(client_id).trim(),
-      errClient,
-      client,
-    });
-
-    if (errClient)
-      return res
-        .status(400)
-        .json({ error: "Erreur vérification client: " + errClient.message });
-    if (!client) return res.status(404).json({ error: "Client introuvable." });
-
-    // 2) Charger les produits demandés
-    const ids = [...new Set(produits.map((p) => p.produit_id))];
-    const { data: produitsDB, error: errProd } = await supabase
-      .from("produits")
-      .select("id, produit_prix, produit_quantiter, disponible")
-      .in("id", ids);
-
-    if (errProd) return res.status(400).json({ error: errProd.message });
-    if (!produitsDB || produitsDB.length !== ids.length) {
-      return res
-        .status(404)
-        .json({ error: "Un ou plusieurs produits sont introuvables." });
+      .eq("id", client_id)
+      .single();
+    if (errClient || !clientExist) {
+      return res.status(404).json({ error: "Client introuvable." });
     }
 
-    // 3) Vérifier stock & construire les lignes
-    let total = 0;
-    const lignes = [];
-    for (const item of produits) {
-      const prod = produitsDB.find((p) => p.id === item.produit_id);
-      if (!prod) {
-        return res
-          .status(404)
-          .json({ error: `Produit introuvable: ${item.produit_id}` });
-      }
-      if (prod.disponible === false) {
-        return res
-          .status(400)
-          .json({ error: `Produit non disponible: ${item.produit_id}` });
-      }
-      if (item.quantite > prod.produit_quantiter) {
+    // Charger tous les produits concernés
+    const ids = [...new Set(cleanItems.map((i) => i.produit_id))];
+    const { data: produits, error: errProd } = await supabase
+      .from("produits")
+      .select("id, produit_nom, produit_prix, produit_quantiter, disponible")
+      .in("id", ids);
+    if (errProd) return res.status(400).json({ error: errProd.message });
+
+    // Vérifier stock
+    const byId = new Map(produits.map((p) => [p.id, p]));
+    for (const it of cleanItems) {
+      const p = byId.get(it.produit_id);
+      if (!p) return res.status(404).json({ error: `Produit introuvable: ${it.produit_id}` });
+      const stock = Number(p.produit_quantiter || 0);
+      if (stock < it.quantite) {
         return res.status(400).json({
-          error: `Stock insuffisant pour le produit ${item.produit_id}`,
+          error: `Stock insuffisant pour ${p.produit_nom || it.produit_id} (stock=${stock}, demandé=${it.quantite})`,
         });
       }
-
-      const prix_unitaire = Number(prod.produit_prix);
-      total += prix_unitaire * item.quantite;
-
-      lignes.push({
-        produit_id: item.produit_id,
-        commande_produit_quantiter: item.quantite,
-        prix_unitaire,
-      });
     }
 
-    // 4) Créer l'en-tête de commande (date = default current_date)
+    // Insérer l'en-tête (statut "En cours" + date du jour)
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
     const { data: cmd, error: errCmd } = await supabase
       .from("commandes")
-      .insert([{ client_id }])
+      .insert([{ client_id, date: today, statut: "En cours" }])
       .select()
       .single();
-
     if (errCmd) return res.status(400).json({ error: errCmd.message });
 
-    // 5) Insérer les lignes
-    const lignesAvecCommande = lignes.map((l) => ({
-      ...l,
-      commande_id: cmd.id,
-    }));
+    // Préparer les lignes + total
+    let total = 0;
+    const lignes = cleanItems.map((it) => {
+      const p = byId.get(it.produit_id);
+      const prix = Number(p.produit_prix || 0);
+      total += prix * it.quantite;
+      return {
+        commande_id: cmd.id,
+        produit_id: it.produit_id,
+        commande_produit_quantite: it.quantite,
+        prix_unitaire: prix,
+      };
+    });
+
+    // Insérer les lignes
     const { data: lignesInserees, error: errLignes } = await supabase
       .from("commande_produit")
-      .insert(lignesAvecCommande)
+      .insert(lignes)
       .select();
-
     if (errLignes) {
-      // rollback logique si l'insertion des lignes échoue
+      // rollback "soft" de l'en-tête si erreur d'insertion des lignes
       await supabase.from("commandes").delete().eq("id", cmd.id);
       return res.status(400).json({ error: errLignes.message });
     }
 
-    // 6) Décrémenter les stocks (SANS RPC)
-    // On utilise la quantité courante lue plus haut → race condition possible
-    for (const item of produits) {
-      const prod = produitsDB.find((p) => p.id === item.produit_id);
-      const newQty = Number(prod.produit_quantiter) - Number(item.quantite);
-
-      const { error: errMaj } = await supabase
+    // Mettre à jour les stocks produits
+    for (const it of cleanItems) {
+      const p = byId.get(it.produit_id);
+      const newQty = Number(p.produit_quantiter || 0) - it.quantite;
+      const newDisponible = newQty > 0;
+      const { error: errUp } = await supabase
         .from("produits")
-        .update({ produit_quantiter: newQty })
-        .eq("id", item.produit_id);
-
-      if (errMaj) {
-        // rollback logique
-        await supabase
-          .from("commande_produit")
-          .delete()
-          .eq("commande_id", cmd.id);
-        await supabase.from("commandes").delete().eq("id", cmd.id);
-        return res
-          .status(500)
-          .json({ error: "Erreur mise à jour stock: " + errMaj.message });
+        .update({ produit_quantiter: newQty, disponible: newDisponible })
+        .eq("id", it.produit_id);
+      if (errUp) {
+        return res.status(207).json({
+          warning: "Commande créée mais une mise à jour de stock a échoué.",
+          commande: { id: cmd.id, statut: cmd.statut, date: cmd.date, total },
+          lignes: lignesInserees,
+          erreur_stock: errUp.message,
+        });
       }
     }
 
-    // 7) Réponse OK
+    // Réponse UC-07
     return res.status(201).json({
-      message: "Commande créée avec succès",
-      commande: {
-        ...cmd,
-        total,
-        lignes: lignesInserees,
-      },
+      message: "Commande créée (statut: En cours).",
+      commande: { id: cmd.id, client_id: cmd.client_id, date: cmd.date, statut: cmd.statut, total },
+      lignes: lignesInserees,
     });
-  } catch (e) {
-    return res.status(500).json({ error: e.message });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
   }
+};
+
+/**
+ * GET /api/commandes/:id
+ * Renvoie entête + lignes + total (utile après création)
+ */
+const getCommandeParId = async (req, res) => {
+  try {
+    const id = String(req.params.id || "").trim();
+    if (!isUUID(id)) return res.status(400).json({ error: "Paramètre id invalide." });
+
+    const { data: cmd, error: errCmd } = await supabase
+      .from("commandes")
+      .select("*")
+      .eq("id", id)
+      .single();
+    if (errCmd || !cmd) return res.status(404).json({ error: "Commande introuvable." });
+
+    const { data: lignes, error: errLignes } = await supabase
+      .from("commande_produit")
+      .select("produit_id, commande_produit_quantite, prix_unitaire")
+      .eq("commande_id", id);
+    if (errLignes) return res.status(400).json({ error: errLignes.message });
+
+    const total = (lignes || []).reduce(
+      (s, l) => s + Number(l.prix_unitaire || 0) * Number(l.commande_produit_quantite || 0),
+      0
+    );
+
+    return res.status(200).json({ commande: { ...cmd, total }, lignes: lignes || [] });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * PATCH /api/commandes/:id/statut
+ * Body: { "statut": "Payée" | "Annulée" | "Livrée" | "En cours" }
+ */
+const changerStatutCommande = async (req, res) => {
+  try {
+    const id = String(req.params.id || "").trim();
+    const { statut } = req.body || {};
+    if (!isUUID(id)) return res.status(400).json({ error: "Paramètre id invalide." });
+    if (!statut || typeof statut !== "string") {
+      return res.status(400).json({ error: "statut requis." });
+    }
+
+    const { data, error } = await supabase
+      .from("commandes")
+      .update({ statut })
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) return res.status(400).json({ error: error.message });
+    return res.status(200).json({ message: "Statut mis à jour.", data });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
+const getToutesLesCommandes = async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from("commandes")
+      .select("id, client_id, date, statut")   // ajoute statut si tu l’as dans la table
+      .order("date", { ascending: false });    // tri les plus récentes d’abord
+
+    if (error) return res.status(400).json({ error: error.message });
+
+    return res.status(200).json({ data });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+export default {
+  creerCommande,
+  getCommandeParId,
+  changerStatutCommande,
+  getToutesLesCommandes,
 };
