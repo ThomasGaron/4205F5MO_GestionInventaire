@@ -21,7 +21,7 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.16.3",
     "postgres": "^3.4.7",
-    "puppeteer": "^24.25.0"
+    "puppeteer": "^24.27.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
