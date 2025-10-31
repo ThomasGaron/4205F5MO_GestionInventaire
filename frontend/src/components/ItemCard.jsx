@@ -1,10 +1,14 @@
 import { useState } from "react";
 import "./ItemCard.css";
+import { useContext } from "react";
+import { AuthContext } from "../context/auth-context";
 
 export default function ItemCard({ item, onChanged }) {
   const [editing, setEditing] = useState(false);
   const [addingQty, setAddingQty] = useState(false);
   const [busy, setBusy] = useState(false);
+
+  const { token } = useContext(AuthContext);
 
   const [form, setForm] = useState({
     produit_nom: item.produit_nom || "",
@@ -22,7 +26,8 @@ export default function ItemCard({ item, onChanged }) {
     try {
       setBusy(true);
       const up = {};
-      if (form.produit_nom !== item.produit_nom) up.produit_nom = form.produit_nom;
+      if (form.produit_nom !== item.produit_nom)
+        up.produit_nom = form.produit_nom;
       if (Number(form.produit_prix) !== Number(item.produit_prix))
         up.produit_prix = Number(form.produit_prix);
       if (Number(form.produit_quantiter) !== Number(item.produit_quantiter))
@@ -37,7 +42,10 @@ export default function ItemCard({ item, onChanged }) {
 
       const res = await fetch(`${backend}/api/produit/${item.id}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(up),
       });
       const json = await res.json();
@@ -90,7 +98,9 @@ export default function ItemCard({ item, onChanged }) {
     if (!confirm(`Supprimer le produit "${item.produit_nom}" ?`)) return;
     try {
       setBusy(true);
-      const res = await fetch(`${backend}/api/produit/${item.id}`, { method: "DELETE" });
+      const res = await fetch(`${backend}/api/produit/${item.id}`, {
+        method: "DELETE",
+      });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(json?.error || "Échec de suppression.");
       onChanged?.();
@@ -109,9 +119,18 @@ export default function ItemCard({ item, onChanged }) {
       {/* Affichage normal */}
       {!editing && !addingQty && (
         <>
-          <p><strong className="lbl">Prix :</strong> {Number(item.produit_prix).toFixed(2)} $</p>
-          <p><strong className="lbl">Quantité :</strong> {Number(item.produit_quantiter || 0)}</p>
-          <p><strong className="lbl">Disponible :</strong> {item.disponible ? "Oui" : "Non"}</p>
+          <p>
+            <strong className="lbl">Prix :</strong>{" "}
+            {Number(item.produit_prix).toFixed(2)} $
+          </p>
+          <p>
+            <strong className="lbl">Quantité :</strong>{" "}
+            {Number(item.produit_quantiter || 0)}
+          </p>
+          <p>
+            <strong className="lbl">Disponible :</strong>{" "}
+            {item.disponible ? "Oui" : "Non"}
+          </p>
         </>
       )}
 
@@ -123,7 +142,9 @@ export default function ItemCard({ item, onChanged }) {
             <input
               type="text"
               value={form.produit_nom}
-              onChange={(e) => setForm((f) => ({ ...f, produit_nom: e.target.value }))}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, produit_nom: e.target.value }))
+              }
             />
           </label>
           <label>
@@ -132,7 +153,9 @@ export default function ItemCard({ item, onChanged }) {
               type="number"
               step="0.01"
               value={form.produit_prix}
-              onChange={(e) => setForm((f) => ({ ...f, produit_prix: e.target.value }))}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, produit_prix: e.target.value }))
+              }
             />
           </label>
           <label>
@@ -141,14 +164,18 @@ export default function ItemCard({ item, onChanged }) {
               type="number"
               min="0"
               value={form.produit_quantiter}
-              onChange={(e) => setForm((f) => ({ ...f, produit_quantiter: e.target.value }))}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, produit_quantiter: e.target.value }))
+              }
             />
           </label>
           <label className="chk">
             <input
               type="checkbox"
               checked={form.disponible}
-              onChange={(e) => setForm((f) => ({ ...f, disponible: e.target.checked }))}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, disponible: e.target.checked }))
+              }
             />
             <span>Disponible</span>
           </label>
@@ -209,13 +236,25 @@ export default function ItemCard({ item, onChanged }) {
       {/* Boutons principaux : toujours sur une seule ligne */}
       {!editing && !addingQty && (
         <div className="actions actions--row">
-          <button className="btn" onClick={() => setAddingQty(true)} disabled={busy}>
+          <button
+            className="btn"
+            onClick={() => setAddingQty(true)}
+            disabled={busy}
+          >
             Ajouter quantité
           </button>
-          <button className="btn btn-info" onClick={() => setEditing(true)} disabled={busy}>
+          <button
+            className="btn btn-info"
+            onClick={() => setEditing(true)}
+            disabled={busy}
+          >
             Modifier
           </button>
-          <button className="btn btn-danger" onClick={removeItem} disabled={busy}>
+          <button
+            className="btn btn-danger"
+            onClick={removeItem}
+            disabled={busy}
+          >
             Supprimer
           </button>
         </div>
