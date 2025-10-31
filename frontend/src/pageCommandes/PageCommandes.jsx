@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import "./PageCommandes.css";
+import "../Bouton.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 
@@ -271,7 +272,7 @@ export default function PageCommandes() {
       <h1>Commandes</h1>
 
       <div className="actions-row" style={{ marginBottom: 14 }}>
-        <button className="btn" onClick={openModal}>
+        <button className="btn btn-primary" onClick={openModal}>
           Ajouter commande
         </button>
       </div>
@@ -414,7 +415,11 @@ export default function PageCommandes() {
               </div>
 
               <div className="actions-row">
-                <button type="button" className="btn" onClick={addRow}>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={addRow}
+                >
                   + Ajouter un produit
                 </button>
               </div>
@@ -430,7 +435,7 @@ export default function PageCommandes() {
               >
                 <button
                   type="submit"
-                  className="btn"
+                  className="btn btn-primary"
                   disabled={!canSubmit || creating}
                 >
                   {creating ? "Création..." : "Créer la commande"}
@@ -471,7 +476,7 @@ export default function PageCommandes() {
             ))}
           </ul>
           <div className="actions-row">
-            <button className="btn" onClick={() => setDetail(null)}>
+            <button className="btn btn-primary" onClick={() => setDetail(null)}>
               Fermer
             </button>
           </div>
@@ -509,7 +514,7 @@ export default function PageCommandes() {
                 </button>
 
                 <button
-                  className="btn"
+                  className="btn btn-primary"
                   onClick={() =>
                     window.open(
                       `${
