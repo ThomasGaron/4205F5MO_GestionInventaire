@@ -15,6 +15,8 @@ export default function PageCommandes() {
   const [detail, setDetail] = useState(null);
   const [updatingId, setUpdatingId] = useState(null);
 
+  const [nomClients, setNomClients] = useState([]);
+
   // Modal création
   const [openNew, setOpenNew] = useState(false);
   const [clients, setClients] = useState([]);
@@ -28,10 +30,10 @@ export default function PageCommandes() {
       navigate("/login");
       return;
     }
-    getAllCommandes();
+    getAllCommandesEtNomClient();
   }, [isLoggedIn, navigate]);
 
-  const getAllCommandes = async () => {
+  const getAllCommandesEtNomClient = async () => {
     try {
       setLoading(true);
       const res = await fetch(
@@ -46,6 +48,19 @@ export default function PageCommandes() {
       );
       const json = await res.json();
       setCommandes(json.data || []);
+
+      const reponse = await fetch(
+        import.meta.env.VITE_BACKEND_URI + "/api/clients",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await reponse.json();
+      setNomClients(data.data);
     } catch (error) {
       console.error("Erreur chargement commandes:", error);
     } finally {
@@ -173,6 +188,13 @@ export default function PageCommandes() {
     }
   };
 
+  const getNomClient = (idClient) => {
+    const client = nomClients.find((cl) => cl.id === idClient);
+    return client
+      ? `${client.client_prenom} ${client.client_nom}`
+      : "Client inconnu";
+  };
+
   const closeModal = () => {
     setOpenNew(false);
     setClientId("");
@@ -246,7 +268,7 @@ export default function PageCommandes() {
       const json = await res.json();
       if (!res.ok) throw new Error(json?.error || "Erreur création commande.");
 
-      await getAllCommandes();
+      await getAllCommandesEtNomClient();
       setDetail(null);
       closeModal();
 
@@ -496,8 +518,14 @@ export default function PageCommandes() {
 
               <div className="commande-infos">
                 <p>
-                  <strong>Client:</strong> {c.client_id}
+                  <strong>Client id:</strong> {c.client_id}
                 </p>
+
+                <p>
+                  <strong>Client nom:</strong>
+                  {getNomClient(c.client_id)}
+                </p>
+
                 {"date" in c && (
                   <p>
                     <strong>Date:</strong> {c.date}
