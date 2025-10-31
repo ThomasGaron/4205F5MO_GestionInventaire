@@ -1,43 +1,65 @@
 import express from "express";
-
 import dotenv from "dotenv";
-import userRoute from "./routes/user-routes.js";
-import produitRoute from "./routes/produit-routes.js";
-
-
-import commandesRoutes from "./routes/commandes.routes.js";   // commandes
-import invoiceRoute from "./routes/invoice-routes.js";        // factures
-
-
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-import clientsRoute from "./routes/clients-routes.js";   
 
+import userRoute from "./routes/user-routes.js";
+import produitRoute from "./routes/produit-routes.js";
+import commandesRoutes from "./routes/commandes.routes.js";
+import invoiceRoute from "./routes/invoice-routes.js";
+import clientsRoute from "./routes/clients-routes.js";
 
 dotenv.config();
 
 const app = express();
 
-// PDF facture
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+/* ---------- CORS (Render) ---------- */
+const DEFAULT_ALLOWED = [
+  "http://localhost:5173",
+  "https://four205f5mo-gestioninventaire-1.onrender.com", // your frontend
+];
+// Allow override from env if you want (comma-separated)
+const allowedOrigins = (
+  process.env.ALLOWED_ORIGINS || DEFAULT_ALLOWED.join(",")
+)
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
 
-app.use(cors());
+const corsOptions = {
+  origin(origin, cb) {
+    // allow non-browser tools / same-origin / curl (no Origin header)
+    if (!origin) return cb(null, true);
+    if (allowedOrigins.includes(origin)) return cb(null, true);
+    return cb(new Error(`CORS blocked: ${origin}`));
+  },
+  methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: false, // set true ONLY if you use cookies across sites
+};
+
+// Handle JSON + CORS (including preflight)
 app.use(express.json());
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // respond to preflight for all routes
 
-app.use(cors());
-
+/* ---------- Routes API ---------- */
 app.use("/api/user", userRoute);
 app.use("/api/invoice", invoiceRoute);
 app.use("/api/produit", produitRoute);
-app.use("/api/commandes", commandesRoutes); 
-app.use("/api/clients", clientsRoute);             
+app.use("/api/commandes", commandesRoutes);
+app.use("/api/clients", clientsRoute);
 
-
-// Factures
+/* ---------- Static invoices (optional) ---------- */
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use("/invoices", express.static(path.join(__dirname, "invoices")));
 
+/* ---------- Health ---------- */
+app.get("/health", (_req, res) => res.send("ok"));
+
+/* ---------- Start ---------- */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Backend lancé sur http://localhost:${PORT}`);
