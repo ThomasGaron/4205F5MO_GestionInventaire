@@ -6,7 +6,9 @@ const router = express.Router();
 
 // Liste
 router.get("/tousLesProduits", produitController.getTousLesProduits);
-router.get("/faible-stock", ProduitCtrl.getProduitsFaibleStock);
+
+// Nouvelle route : faible stock
+router.get("/faible-stock", produitController.getProduitsFaibleStock);
 
 // Création
 router.post(
@@ -24,7 +26,7 @@ router.post(
   }
 );
 
-// Suppresion
+// Suppression
 router.delete("/:id", (req, res) =>
   produitController.supprimerProduit(req, res)
 );
@@ -32,7 +34,6 @@ router.delete("/:id", (req, res) =>
 // Modification
 router.patch(
   "/:id",
-  // validations optionnelles pour les champs présents
   body("produit_nom").optional().trim().notEmpty().isLength({ max: 120 }),
   body("produit_prix").optional().isFloat({ gt: 0 }),
   body("produit_quantiter").optional().isInt({ min: 0 }),

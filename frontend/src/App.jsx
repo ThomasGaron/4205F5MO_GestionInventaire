@@ -16,6 +16,7 @@ import SignUp from "./signUpForm/SignUp";
 import "./App.css";
 import Profil from "./pageProfil/Profil";
 import PageCommandes from "./pageCommandes/PageCommandes";
+import LowStockAlert from "./components/LowStockAlert";
 
 
 function decodeToken(jwt) {
@@ -157,15 +158,17 @@ function App() {
         token: token,
       }}
     >
-      <AlertProvider>
+       <AlertProvider>
+        {/* Alerte stock faible globale */}
+        <LowStockAlert seuil={5} />
+        {/* Router unique */}
         <RouterProvider
-          router={
-            isLoggedIn ? (isAdmin ? routerLoginAdmin : routerLogin) : router
-          }
+          router={isLoggedIn ? (isAdmin ? routerLoginAdmin : routerLogin) : router}
         />
       </AlertProvider>
     </AuthContext.Provider>
   );
 }
+
 
 export default App;
