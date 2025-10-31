@@ -26,7 +26,7 @@ export default function LowStockAlert({ seuil = 5, backendBase }) {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Autorization: `Bearer: ${token}`,
+              Authorization: `Bearer ${token}`,
             },
           }
         );
