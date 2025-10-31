@@ -7,6 +7,8 @@ export default function PageCommandes() {
   const navigate = useNavigate();
   const { isLoggedIn } = useContext(AuthContext);
 
+  const { token } = useContext(AuthContext);
+
   const [commandes, setCommandes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [detail, setDetail] = useState(null);
@@ -33,7 +35,13 @@ export default function PageCommandes() {
       setLoading(true);
       const res = await fetch(
         import.meta.env.VITE_BACKEND_URI + "/api/commandes",
-        { method: "GET" }
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const json = await res.json();
       setCommandes(json.data || []);
@@ -48,7 +56,13 @@ export default function PageCommandes() {
     try {
       const res = await fetch(
         import.meta.env.VITE_BACKEND_URI + `/api/commandes/${id}`,
-        { method: "GET" }
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const json = await res.json();
       setDetail(json || null);
@@ -65,7 +79,10 @@ export default function PageCommandes() {
         import.meta.env.VITE_BACKEND_URI + `/api/commandes/${id}/statut`,
         {
           method: "PATCH",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify({ statut }),
         }
       );
@@ -91,7 +108,13 @@ export default function PageCommandes() {
       setUpdatingId(id);
       const res = await fetch(
         import.meta.env.VITE_BACKEND_URI + `/api/commandes/${id}`,
-        { method: "DELETE" }
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
@@ -114,7 +137,13 @@ export default function PageCommandes() {
       try {
         const resC = await fetch(
           import.meta.env.VITE_BACKEND_URI + "/api/clients",
-          { method: "GET" }
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const jC = await resC.json();
         setClients(jC.data || []);
@@ -127,7 +156,13 @@ export default function PageCommandes() {
       try {
         const resP = await fetch(
           import.meta.env.VITE_BACKEND_URI + "/api/produit/tousLesProduits",
-          { method: "GET" }
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const jP = await resP.json();
         setProduits(jP.data || []);
@@ -200,7 +235,10 @@ export default function PageCommandes() {
         import.meta.env.VITE_BACKEND_URI + "/api/commandes",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify(payload),
         }
       );

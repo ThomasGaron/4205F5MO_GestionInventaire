@@ -6,9 +6,9 @@ const router = express.Router();
 
 router.post("/login", userController.Login);
 
-router.post("/signUp", userController.SignUp);
-
 router.use(checkAuth);
+
+router.post("/signUp", userController.SignUp);
 
 router.patch("/modification/:id", userController.Modification);
 

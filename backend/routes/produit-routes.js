@@ -1,8 +1,11 @@
 import express from "express";
 import produitController from "../controllers/produit-controllers.js";
 import { body, validationResult } from "express-validator";
+import checkAuth from "../handlers/check-auth.js";
 
 const router = express.Router();
+
+router.use(checkAuth);
 
 // Liste
 router.get("/tousLesProduits", produitController.getTousLesProduits);
