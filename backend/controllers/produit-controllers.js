@@ -125,9 +125,30 @@ const modifierProduit = async (req, res) => {
   }
 };
 
+// --- Alerte stock faible ---
+const getProduitsFaibleStock = async (req, res) => {
+  try {
+    const seuilParam = Number(req.query.seuil);
+    const seuil = Number.isFinite(seuilParam) && seuilParam >= 0 ? Math.floor(seuilParam) : 5;
+
+    // on retourne tous les produits dont la quantité <= seuil
+    const { data, error } = await supabase
+      .from("produits")
+      .select("id, produit_nom, produit_quantiter, produit_prix, disponible")
+      .lte("produit_quantiter", seuil);
+
+    if (error) return res.status(400).json({ error: error.message });
+    return res.status(200).json({ data, seuil });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+
 export default {
   getTousLesProduits,
   ajouterProduit,
   supprimerProduit,
   modifierProduit,
+  getProduitsFaibleStock,
 };

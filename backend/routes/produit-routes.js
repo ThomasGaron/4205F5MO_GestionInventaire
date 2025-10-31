@@ -6,6 +6,7 @@ const router = express.Router();
 
 // Liste
 router.get("/tousLesProduits", produitController.getTousLesProduits);
+router.get("/faible-stock", ProduitCtrl.getProduitsFaibleStock);
 
 // Création
 router.post(
