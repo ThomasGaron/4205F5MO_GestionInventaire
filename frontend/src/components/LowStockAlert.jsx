@@ -1,10 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import "./LowStockAlert.css";
+import { useContext } from "react";
+import { AuthContext } from "../context/auth-context";
 
 export default function LowStockAlert({ seuil = 5, backendBase }) {
   const [loading, setLoading] = useState(true);
   const [produits, setProduits] = useState([]);
   const [hiddenBatchKey, setHiddenBatchKey] = useState(null);
+
+  const { token } = useContext(AuthContext);
 
   const backend = backendBase || import.meta.env.VITE_BACKEND_URI;
 
@@ -16,7 +20,16 @@ export default function LowStockAlert({ seuil = 5, backendBase }) {
     (async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${backend}/api/produit/faible-stock?seuil=${seuil}`, { method: "GET" });
+        const res = await fetch(
+          `${backend}/api/produit/faible-stock?seuil=${seuil}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Autorization: `Bearer: ${token}`,
+            },
+          }
+        );
         const json = await res.json();
         if (!mounted) return;
         const list = Array.isArray(json?.data) ? json.data : [];
@@ -31,7 +44,9 @@ export default function LowStockAlert({ seuil = 5, backendBase }) {
         if (mounted) setLoading(false);
       }
     })();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, [backend, seuil, batchKey]);
 
   // Si l’utilisateur a déjà confirmé ce batch exact, on masque
@@ -64,7 +79,8 @@ export default function LowStockAlert({ seuil = 5, backendBase }) {
         </div>
 
         <p className="lowstock-desc">
-          Les produits suivants sont à ≤ {seuil} en stock. Veuillez réapprovisionner.
+          Les produits suivants sont à ≤ {seuil} en stock. Veuillez
+          réapprovisionner.
         </p>
 
         <ul className="lowstock-list">
@@ -72,15 +88,21 @@ export default function LowStockAlert({ seuil = 5, backendBase }) {
             <li key={p.id} className="lowstock-item">
               <div className="lowstock-line">
                 <span className="name">{p.produit_nom}</span>
-                <span className="qty">Qté: {Number(p.produit_quantiter || 0)}</span>
-                <span className="price">{Number(p.produit_prix || 0).toFixed(2)} $</span>
+                <span className="qty">
+                  Qté: {Number(p.produit_quantiter || 0)}
+                </span>
+                <span className="price">
+                  {Number(p.produit_prix || 0).toFixed(2)} $
+                </span>
               </div>
             </li>
           ))}
         </ul>
 
         <div className="lowstock-actions">
-          <button className="btn" onClick={onConfirm}>Confirmer</button>
+          <button className="btn" onClick={onConfirm}>
+            Confirmer
+          </button>
         </div>
       </div>
     </div>
