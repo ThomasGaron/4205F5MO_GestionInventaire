@@ -42,7 +42,7 @@ const corsOptions = {
 // Handle JSON + CORS (including preflight)
 app.use(express.json());
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // respond to preflight for all routes
+app.options("/*", cors(corsOptions)); // respond to preflight for all routes
 
 /* ---------- Routes API ---------- */
 app.use("/api/user", userRoute);
