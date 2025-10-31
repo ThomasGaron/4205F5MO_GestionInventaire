@@ -44,3 +44,106 @@
   margin-top: 16px;
   gap: 8px;
 }
+
+
+.item-card { background:#0b1a24; border:1px solid #0f2b3b; border-radius:14px; padding:16px; color:#e9f1f5; }
+.item-title { color:#ff8a2a; text-align:center; margin:0 0 10px 0; }
+.lbl { color:#77c1ff; font-weight:600; }
+
+.edit-grid { display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin:10px 0; }
+.edit-grid input { background:#0e2230; border:1px solid #134b66; border-radius:8px; padding:8px 10px; color:#fff; }
+.chk { display:flex; align-items:center; gap:8px; margin-top:4px; }
+
+.actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+
+
+/* sécu : rien ne déborde et sizing correct */
+.item-card, .item-card * { box-sizing: border-box; }
+.item-card {
+  background:#0b1a24;
+  border:1px solid #0f2b3b;
+  border-radius:14px;
+  padding:16px;
+  color:#e9f1f5;
+  overflow:hidden; /* évite que ça sorte du cadre */
+}
+
+.item-title {
+  color:#ff8a2a;
+  text-align:center;
+  margin:0 0 10px 0;
+}
+
+.lbl { color:#77c1ff; font-weight:600; }
+
+/* grille d'édition propre, inputs pleine largeur */
+.edit-grid {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
+  margin:10px 0;
+}
+.edit-grid input[type="text"],
+.edit-grid input[type="number"] {
+  width:100%;
+  background:#0e2230;
+  border:1px solid #134b66;
+  border-radius:8px;
+  padding:8px 10px;
+  color:#fff;
+}
+.chk { display:flex; align-items:center; gap:8px; }
+
+/* bloc d'ajout de quantité inline */
+.addqty-box {
+  margin-top:8px;
+}
+.addqty-box input[type="number"] {
+  width:100%;
+  max-width:220px;
+  background:#0e2230;
+  border:1px solid #134b66;
+  border-radius:8px;
+  padding:8px 10px;
+  color:#fff;
+}
+
+/* --- structure générale --- */
+.actions {
+  display: flex;
+  flex-wrap: wrap;      /* permet deux lignes */
+  gap: 8px;
+  margin-top: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+/* première ligne : deux boutons */
+.actions--row {
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* pour que les deux premiers boutons occupent la largeur équitablement */
+.actions--row .btn {
+  flex: 1 1 48%;        /* ~deux moitiés avec un petit espace */
+  min-width: 120px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* bouton Supprimer centré en dessous */
+.actions--row .btn.btn-danger {
+  flex: 1 1 100%;
+  max-width: 200px;     /* centré, pas trop large */
+  margin: 0 auto;
+}
+
+/* responsive : sur très petit écran, tous en colonne */
+@media (max-width: 420px) {
+  .actions--row .btn {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+}
+
