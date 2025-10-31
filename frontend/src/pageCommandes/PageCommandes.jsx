@@ -12,14 +12,12 @@ export default function PageCommandes() {
   const [detail, setDetail] = useState(null);
   const [updatingId, setUpdatingId] = useState(null);
 
-  // === AJOUT MODAL ===
+  // Modal création
   const [openNew, setOpenNew] = useState(false);
   const [clients, setClients] = useState([]);
   const [produits, setProduits] = useState([]);
   const [clientId, setClientId] = useState("");
-  const [rows, setRows] = useState([
-    { produit_id: "", quantite: 1 }, // ligne vide initiale
-  ]);
+  const [rows, setRows] = useState([{ produit_id: "", quantite: 1 }]);
   const [creating, setCreating] = useState(false);
 
   useEffect(() => {
@@ -109,13 +107,11 @@ export default function PageCommandes() {
     }
   };
 
-  // === AJOUT MODAL ===
+  // Modal création
   const openModal = async () => {
     setOpenNew(true);
-    // charger clients & produits (une seule fois si possible)
     if (clients.length === 0) {
       try {
-        // adapte l’endpoint clients si besoin (ex: /api/clients)
         const resC = await fetch(
           import.meta.env.VITE_BACKEND_URI + "/api/clients",
           { method: "GET" }
@@ -123,7 +119,7 @@ export default function PageCommandes() {
         const jC = await resC.json();
         setClients(jC.data || []);
       } catch (e) {
-        console.warn("Impossible de charger les clients, fallback input UUID.", e);
+        console.warn("Impossible de charger les clients.", e);
         setClients([]);
       }
     }
@@ -155,16 +151,19 @@ export default function PageCommandes() {
   };
 
   const setRowQuantite = (idx, q) => {
-    // clamp selon stock
     const row = rows[idx];
     const p = produits.find((x) => x.id === row.produit_id);
     const max = Math.max(0, Number(p?.produit_quantiter || 0));
     const val = Math.max(0, Math.min(Number(q || 0), max));
-    setRows((prev) => prev.map((r, i) => (i === idx ? { ...r, quantite: val } : r)));
+    setRows((prev) =>
+      prev.map((r, i) => (i === idx ? { ...r, quantite: val } : r))
+    );
   };
 
-  const addRow = () => setRows((prev) => [...prev, { produit_id: "", quantite: 1 }]);
-  const removeRow = (idx) => setRows((prev) => prev.filter((_, i) => i !== idx));
+  const addRow = () =>
+    setRows((prev) => [...prev, { produit_id: "", quantite: 1 }]);
+  const removeRow = (idx) =>
+    setRows((prev) => prev.filter((_, i) => i !== idx));
 
   const total = rows.reduce((sum, r) => {
     const p = produits.find((x) => x.id === r.produit_id);
@@ -191,7 +190,10 @@ export default function PageCommandes() {
         client_id: clientId,
         items: rows
           .filter((r) => r.produit_id && Number(r.quantite) > 0)
-          .map((r) => ({ produit_id: r.produit_id, quantite: Number(r.quantite) })),
+          .map((r) => ({
+            produit_id: r.produit_id,
+            quantite: Number(r.quantite),
+          })),
       };
 
       const res = await fetch(
@@ -209,7 +211,6 @@ export default function PageCommandes() {
       setDetail(null);
       closeModal();
 
-      // (optionnel) montrer le détail tout de suite
       if (json?.commande?.id) getCommande(json.commande.id);
     } catch (err) {
       console.error(err);
@@ -231,22 +232,26 @@ export default function PageCommandes() {
     <div className="page-commandes">
       <h1>Commandes</h1>
 
-      {/* Bouton ouvrir modal */}
       <div className="actions-row" style={{ marginBottom: 14 }}>
-        <button className="btn" onClick={openModal}>Ajouter commande</button>
+        <button className="btn" onClick={openModal}>
+          Ajouter commande
+        </button>
       </div>
 
-      {/* === MODAL AJOUT COMMANDE === */}
       {openNew && (
-        <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && closeModal()}>
+        <div
+          className="modal-overlay"
+          onClick={(e) => e.target === e.currentTarget && closeModal()}
+        >
           <div className="modal-card">
             <div className="modal-header">
               <h2>Nouvelle commande</h2>
-              <button className="btn btn-danger" onClick={closeModal}>X</button>
+              <button className="btn btn-danger" onClick={closeModal}>
+                X
+              </button>
             </div>
 
             <form className="ajout-commande-form" onSubmit={submitCommande}>
-              {/* Sélection client */}
               {clients.length > 0 ? (
                 <label>
                   Client :
@@ -260,7 +265,7 @@ export default function PageCommandes() {
                     {clients.map((c) => (
                       <option key={c.id} value={c.id}>
                         {c.client_prenom ? `${c.client_prenom} ` : ""}
-                        {c.client_nom || "Client"} — {c.id.slice(0,8)}…
+                        {c.client_nom || "Client"} — {c.id.slice(0, 8)}…
                       </option>
                     ))}
                   </select>
@@ -275,13 +280,9 @@ export default function PageCommandes() {
                     placeholder="UUID du client"
                     required
                   />
-                  <small style={{opacity:.8}}>
-                    (Astuce: tu peux ajouter une API /api/clients pour charger la liste)
-                  </small>
                 </label>
               )}
 
-              {/* Lignes produits */}
               <div className="rows">
                 {rows.map((r, idx) => {
                   const p = produits.find((x) => x.id === r.produit_id);
@@ -299,11 +300,38 @@ export default function PageCommandes() {
                             required
                           >
                             <option value="">— Choisir —</option>
-                            {produits.map((prod) => (
-                              <option key={prod.id} value={prod.id}>
-                                {prod.produit_nom} (stock: {prod.produit_quantiter}, {Number(prod.produit_prix)} $)
-                              </option>
-                            ))}
+                            {produits
+                              .slice()
+                              .sort((a, b) => {
+                                const da =
+                                  Number(a.produit_quantiter || 0) > 0 &&
+                                  a.disponible !== false
+                                    ? 0
+                                    : 1;
+                                const db =
+                                  Number(b.produit_quantiter || 0) > 0 &&
+                                  b.disponible !== false
+                                    ? 0
+                                    : 1;
+                                return da - db;
+                              })
+                              .map((prod) => {
+                                const st = Number(prod.produit_quantiter || 0);
+                                const indispo =
+                                  st <= 0 || prod.disponible === false;
+                                const label = `${prod.produit_nom} (stock: ${st}, ${Number(
+                                  prod.produit_prix
+                                )} $)${indispo ? " — (épuisé)" : ""}`;
+                                return (
+                                  <option
+                                    key={prod.id}
+                                    value={prod.id}
+                                    disabled={indispo}
+                                  >
+                                    {label}
+                                  </option>
+                                );
+                              })}
                           </select>
                         </label>
                       </div>
@@ -316,18 +344,20 @@ export default function PageCommandes() {
                             min="1"
                             max={stock || 0}
                             value={r.quantite}
-                            onChange={(e) => setRowQuantite(idx, e.target.value)}
+                            onChange={(e) =>
+                              setRowQuantite(idx, e.target.value)
+                            }
                             disabled={!r.produit_id}
                           />
-                          {r.produit_id && (
-                            <small>max: {stock}</small>
-                          )}
+                          {r.produit_id && <small>max: {stock}</small>}
                         </label>
                       </div>
 
                       <div className="row-sub">
                         <span>Sous-total:</span>
-                        <strong>{(prix * Number(r.quantite || 0)).toFixed(2)} $</strong>
+                        <strong>
+                          {(prix * Number(r.quantite || 0)).toFixed(2)} $
+                        </strong>
                       </div>
 
                       <button
@@ -349,14 +379,17 @@ export default function PageCommandes() {
                 </button>
               </div>
 
-              {/* Total */}
               <div className="total-box">
                 <span>Total:</span>
                 <strong>{total.toFixed(2)} $</strong>
               </div>
 
               <div className="actions-row" style={{ justifyContent: "flex-end" }}>
-                <button type="submit" className="btn" disabled={!canSubmit || creating}>
+                <button
+                  type="submit"
+                  className="btn"
+                  disabled={!canSubmit || creating}
+                >
                   {creating ? "Création..." : "Créer la commande"}
                 </button>
               </div>
@@ -365,7 +398,6 @@ export default function PageCommandes() {
         </div>
       )}
 
-      {/* Détail */}
       {detail && (
         <div className="commande-card commande-detail">
           <div className="commande-header">
@@ -394,7 +426,6 @@ export default function PageCommandes() {
         </div>
       )}
 
-      {/* Liste */}
       <div className="commandes-grid">
         {commandes.length === 0 ? (
           <p>Aucune commande.</p>
