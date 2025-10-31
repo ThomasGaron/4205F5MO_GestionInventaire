@@ -87,6 +87,17 @@ app.use("/invoices", express.static(path.join(__dirname, "invoices")));
 /* ---------- Health Check ---------- */
 app.get("/health", (_req, res) => res.send("ok"));
 
+/*---------- Factures ----------*/
+app.use((err, req, res, next) => {
+  console.error("API ERROR:", {
+    method: req.method,
+    url: req.originalUrl,
+    message: err?.message,
+  });
+  const status = err.status || err.statusCode || 500;
+  res.status(status).json({ error: "Erreur génération facture" });
+});
+
 /* ---------- Start ---------- */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
