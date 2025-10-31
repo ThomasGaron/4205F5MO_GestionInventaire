@@ -3,6 +3,7 @@ import "./PageInventaire.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import ItemCard from "../components/ItemCard";
+import "../Bouton.css";
 
 export default function PageInventaire() {
   const navigate = useNavigate();
@@ -116,7 +117,7 @@ export default function PageInventaire() {
     <div className="page-inventaire">
       <div className="inventaire-header">
         <h1>Inventaire</h1>
-        <button className="btn" onClick={openModal}>
+        <button className="btn btn-primary" onClick={openModal}>
           Ajouter un produit
         </button>
       </div>
@@ -205,7 +206,11 @@ export default function PageInventaire() {
                 className="actions-row"
                 style={{ justifyContent: "flex-end" }}
               >
-                <button type="submit" className="btn" disabled={creating}>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={creating}
+                >
                   {creating ? "Création..." : "Créer"}
                 </button>
               </div>
