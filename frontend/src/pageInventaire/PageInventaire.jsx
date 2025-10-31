@@ -89,7 +89,10 @@ export default function PageInventaire() {
       // même style que ton contrôleur: POST /api/produit
       const res = await fetch(`${backend}/api/produit`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
           produit_nom: nom,
           produit_prix: prix,

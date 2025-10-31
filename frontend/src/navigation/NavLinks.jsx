@@ -32,11 +32,6 @@ export default function NavLinks() {
                 <li>
                   <NavLink to="/profil">Profil</NavLink>
                 </li>
-                <li>
-                  <button className="bouton" onClick={handleLogout}>
-                    Déconnexion
-                  </button>
-                </li>
               </>
             )}
 
@@ -55,6 +50,13 @@ export default function NavLinks() {
             {!auth.isLoggedIn && (
               <li>
                 <NavLink to="/login">Connexion</NavLink>
+              </li>
+            )}
+            {auth.isLoggedIn && (
+              <li>
+                <button className="bouton" onClick={handleLogout}>
+                  Déconnexion
+                </button>
               </li>
             )}
           </ul>
