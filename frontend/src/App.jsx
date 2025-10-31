@@ -15,6 +15,8 @@ import SignUp from "./signUpForm/SignUp";
 
 import "./App.css";
 import Profil from "./pageProfil/Profil";
+import PageCommandes from "./pageCommandes/PageCommandes";
+
 
 function decodeToken(jwt) {
   try {
@@ -105,6 +107,8 @@ function App() {
         { path: "/acceuil", element: <Acceuil /> },
         { path: "/inventaire", element: <PageInventaire /> },
         { path: "/profil", element: <Profil /> },
+        { path: "/commandes", element: <PageCommandes /> },
+
       ],
     },
   ]);
@@ -122,6 +126,7 @@ function App() {
         { path: "/inventaire", element: <PageInventaire /> },
         { path: "/signUp", element: <SignUp /> },
         { path: "/profil", element: <Profil /> },
+        { path: "/commandes", element: <PageCommandes /> },
       ],
     },
   ]);
