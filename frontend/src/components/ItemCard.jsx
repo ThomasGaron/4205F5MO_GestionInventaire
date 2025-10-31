@@ -101,6 +101,10 @@ export default function ItemCard({ item, onChanged }) {
       setBusy(true);
       const res = await fetch(`${backend}/api/produit/${item.id}`, {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(json?.error || "Échec de suppression.");
