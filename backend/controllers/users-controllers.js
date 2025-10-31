@@ -10,20 +10,6 @@ const Login = async (req, res, next) => {
     .eq("utilisateur_email", email)
     .single();
 
-  let token;
-
-  token = jwt.sign(
-    {
-      userId: data.id,
-      email: data.email,
-      role: data.role,
-    },
-    "cleSuperSecrete!",
-    {
-      expiresIn: "3h",
-    }
-  );
-
   if (error || !data) {
     return res.status(401).json({
       message: "Utilisateur introuvable ou email incorrect.",
@@ -34,12 +20,25 @@ const Login = async (req, res, next) => {
     return res.status(401).json({
       message: "Mot de passe incorrect.",
     });
-  } else {
-    return res.json({
-      message: "Connexion réussie.",
-      token: token,
-    });
   }
+
+  let token;
+
+  token = jwt.sign(
+    {
+      userId: data.id,
+      email: data.email,
+    },
+    "cleSuperSecrete!",
+    {
+      expiresIn: "3h",
+    }
+  );
+  return res.json({
+    message: "Connexion réussie.",
+    token: token,
+    role: data.role,
+  });
 };
 
 const SignUp = async (req, res, next) => {
