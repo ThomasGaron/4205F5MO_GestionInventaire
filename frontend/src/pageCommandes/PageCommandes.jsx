@@ -319,7 +319,9 @@ export default function PageCommandes() {
                                 const st = Number(prod.produit_quantiter || 0);
                                 const indispo =
                                   st <= 0 || prod.disponible === false;
-                                const label = `${prod.produit_nom} (stock: ${st}, ${Number(
+                                const label = `${
+                                  prod.produit_nom
+                                } (stock: ${st}, ${Number(
                                   prod.produit_prix
                                 )} $)${indispo ? " — (épuisé)" : ""}`;
                                 return (
@@ -384,7 +386,10 @@ export default function PageCommandes() {
                 <strong>{total.toFixed(2)} $</strong>
               </div>
 
-              <div className="actions-row" style={{ justifyContent: "flex-end" }}>
+              <div
+                className="actions-row"
+                style={{ justifyContent: "flex-end" }}
+              >
                 <button
                   type="submit"
                   className="btn"
@@ -405,23 +410,32 @@ export default function PageCommandes() {
             <BadgeStatut statut={detail?.commande?.statut || "En cours"} />
           </div>
           <div className="commande-infos">
-            <p><strong>Client:</strong> {detail?.commande?.client_id}</p>
+            <p>
+              <strong>Client:</strong> {detail?.commande?.client_id}
+            </p>
             {"date" in (detail?.commande || {}) && (
-              <p><strong>Date:</strong> {detail?.commande?.date}</p>
+              <p>
+                <strong>Date:</strong> {detail?.commande?.date}
+              </p>
             )}
             {"total" in (detail?.commande || {}) && (
-              <p><strong>Total:</strong> {Number(detail?.commande?.total || 0)} $</p>
+              <p>
+                <strong>Total:</strong> {Number(detail?.commande?.total || 0)} $
+              </p>
             )}
           </div>
           <ul className="commande-lignes">
             {(detail?.lignes || []).map((l) => (
               <li key={l.produit_id}>
-                {l.produit_id} — qté: {l.commande_produit_quantite} × {l.prix_unitaire} $
+                {l.produit_id} — qté: {l.commande_produit_quantite} ×{" "}
+                {l.prix_unitaire} $
               </li>
             ))}
           </ul>
           <div className="actions-row">
-            <button className="btn" onClick={() => setDetail(null)}>Fermer</button>
+            <button className="btn" onClick={() => setDetail(null)}>
+              Fermer
+            </button>
           </div>
         </div>
       )}
@@ -438,13 +452,36 @@ export default function PageCommandes() {
               </div>
 
               <div className="commande-infos">
-                <p><strong>Client:</strong> {c.client_id}</p>
-                {"date" in c && <p><strong>Date:</strong> {c.date}</p>}
+                <p>
+                  <strong>Client:</strong> {c.client_id}
+                </p>
+                {"date" in c && (
+                  <p>
+                    <strong>Date:</strong> {c.date}
+                  </p>
+                )}
               </div>
 
               <div className="actions-row">
-                <button className="btn btn-info" onClick={() => getCommande(c.id)}>
+                <button
+                  className="btn btn-info"
+                  onClick={() => getCommande(c.id)}
+                >
                   Voir
+                </button>
+
+                <button
+                  className="btn"
+                  onClick={() =>
+                    window.open(
+                      `${
+                        import.meta.env.VITE_BACKEND_URI
+                      }/api/invoice/from-commande/${c.id}`,
+                      "_blank"
+                    )
+                  }
+                >
+                  Télécharger facture
                 </button>
 
                 <select
@@ -476,8 +513,10 @@ export default function PageCommandes() {
 
 function BadgeStatut({ statut }) {
   const s = (statut || "").toLowerCase();
-  const cls =
-    s.includes("livr") ? "badge livree" :
-    s.includes("annul") ? "badge annulee" : "badge en-cours";
+  const cls = s.includes("livr")
+    ? "badge livree"
+    : s.includes("annul")
+    ? "badge annulee"
+    : "badge en-cours";
   return <span className={cls}>{statut}</span>;
 }
