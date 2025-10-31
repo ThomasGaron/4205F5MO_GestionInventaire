@@ -19,22 +19,22 @@ const SELLER = {
 
 const BRAND = {
   accent: "#ff8a2a",
-  // siteUrl: "", serait cool d'avoir un vrai site
+  // siteUrl: "",
 };
 
 const LOGO_SVG = `
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff8a2a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  `;
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff8a2a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+`;
 
 /* =============================================================================
-   Utils chemin / dossier invoices (pour ?save=1)
+   Dossier invoices (optionnel si ?save=1)
 ============================================================================= */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const INVOICE_DIR = path.join(__dirname, "..", "invoices");
-if (!fs.existsSync(INVOICE_DIR)) fs.mkdirSync(INVOICE_DIR);
+if (!fs.existsSync(INVOICE_DIR)) fs.mkdirSync(INVOICE_DIR, { recursive: true });
 
 const isUUID = (s) =>
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
@@ -55,31 +55,29 @@ function calcTaxes(items) {
 }
 
 /* =============================================================================
-   Template HTML (figé)
+   Template HTML
 ============================================================================= */
 function renderInvoiceHTML({ invoice, seller, customer, items, totals }) {
   const rows = items
     .map(
       (it, i) => `
-    <tr class="${i % 2 ? "zebra" : ""}">
-      <td>${it.description}</td>
-      <td class="num">${it.qty}</td>
-      <td class="num">${Number(it.unit_price).toFixed(2)} $</td>
-      <td class="num">${(Number(it.qty) * Number(it.unit_price)).toFixed(
-        2
-      )} $</td>
-    </tr>`
+        <tr class="${i % 2 ? "zebra" : ""}">
+          <td>${it.description}</td>
+          <td class="num">${it.qty}</td>
+          <td class="num">${Number(it.unit_price).toFixed(2)} $</td>
+          <td class="num">${(Number(it.qty) * Number(it.unit_price)).toFixed(
+            2
+          )} $</td>
+        </tr>`
     )
     .join("");
 
-  // lien de site : s'il est vide on évite l'ancre
   const siteLink =
-    BRAND.siteUrl && BRAND.siteUrl.trim().length > 0
+    BRAND.siteUrl && BRAND.siteUrl.trim()
       ? `<a class="link" href="${BRAND.siteUrl}" target="_blank">${BRAND.siteUrl}</a>`
       : "";
 
-  return `
-<!doctype html>
+  return `<!doctype html>
 <html lang="fr">
 <head>
 <meta charset="utf-8"/>
@@ -89,17 +87,12 @@ function renderInvoiceHTML({ invoice, seller, customer, items, totals }) {
   html, body { margin:0; padding:0; }
   body { font-family: Arial, Helvetica, sans-serif; color:#111; -webkit-print-color-adjust: exact; }
 
-  /* header simple */
-  .header {
-    display:flex; align-items:center; justify-content:space-between;
+  .header { display:flex; align-items:center; justify-content:space-between;
     border:1px solid #eaeaea; border-radius:10px; padding:10px 12px; margin-bottom:12px;
-    background: ${BRAND.accent}1a; /* léger fond teinté */
-  }
+    background: ${BRAND.accent}1a; }
   .brand { display:flex; gap:8px; align-items:center; font-weight:700; }
-  .brand a { display:inline-flex; align-items:center; }
   .brand-name { color:#111; }
   h1 { margin: 8px 0 4px; color:${BRAND.accent}; font-size: 18pt; }
-
   .meta { display:flex; gap:16px; font-size: 12px; color:#444; }
 
   .cards { display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:10px; }
@@ -120,39 +113,11 @@ function renderInvoiceHTML({ invoice, seller, customer, items, totals }) {
 
   .small { font-size: 11px; color:#666; }
 
-  /* --- Ajouts signature --- */
-    .signature-wrap{
-  display:flex;
-  justify-content:flex-end; 
-  margin-top:32px;
-}
-.sig-box{
-  width:360px;          
-  border:1px solid #d8dee4;
-  border-radius:10px;
-  padding:12px 14px 20px;
-  background:#fafcff;      
-}
-.sig-heading{
-  font-weight:600;
-  color:#0f172a;
-  margin:0 0 10px 0;
-  font-size:12.5px;
-  letter-spacing:.2px;
-}
-.sig-line{
-  width:100%;
-  height:34px;                 
-  border-bottom:1.5px dashed #94a3b8; 
-  margin-bottom:10px;
-}
-.sig-meta{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  font-size:11px;
-  color:#475569;
-}
+  .signature-wrap{ display:flex; justify-content:flex-end; margin-top:32px; }
+  .sig-box{ width:360px; border:1px solid #d8dee4; border-radius:10px; padding:12px 14px 20px; background:#fafcff; }
+  .sig-heading{ font-weight:600; color:#0f172a; margin:0 0 10px 0; font-size:12.5px; letter-spacing:.2px; }
+  .sig-line{ width:100%; height:34px; border-bottom:1.5px dashed #94a3b8; margin-bottom:10px; }
+  .sig-meta{ display:flex; align-items:center; justify-content:space-between; font-size:11px; color:#475569; }
 </style>
 </head>
 <body>
@@ -161,9 +126,7 @@ function renderInvoiceHTML({ invoice, seller, customer, items, totals }) {
       ${LOGO_SVG}
       <span class="brand-name">${seller.name}</span>
     </div>
-    <div class="small">
-      ${siteLink}
-    </div>
+    <div class="small">${siteLink}</div>
   </div>
 
   <h1>Facture</h1>
@@ -224,25 +187,55 @@ function renderInvoiceHTML({ invoice, seller, customer, items, totals }) {
     <a class="link" href="mailto:factures@gestion-inventaire.com">factures@gestion-inventaire.com</a>
   </p>
 
-  <!-- ENCART SIGNATURE (ajouté tout en bas) -->
   <div class="signature-wrap">
-  <div class="sig-box">
-    <div class="sig-heading">Signature du client</div>
-    <div class="sig-line"></div>
-    <div class="sig-meta">
-      <div>Date : ______________________</div>
+    <div class="sig-box">
+      <div class="sig-heading">Signature du client</div>
+      <div class="sig-line"></div>
+      <div class="sig-meta">
+        <div>Date : ______________________</div>
+      </div>
     </div>
   </div>
-</div>
 </body>
 </html>`;
 }
 
 /* =============================================================================
-   UNIQUE ROUTE : Générer une facture depuis une commande
+   TEST simple pour valider Chromium sur Render
+   GET /api/invoice/_test
+============================================================================= */
+router.get("/_test", async (req, res, next) => {
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+      headless: "new",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+    const page = await browser.newPage();
+    await page.setContent(
+      `<h1 style="font-family:Arial;color:#ff8a2a">Test PDF OK ✅</h1>`,
+      {
+        waitUntil: "networkidle0",
+      }
+    );
+    const pdf = await page.pdf({ format: "A4", printBackground: true });
+    await browser.close();
+    res.setHeader("Content-Type", "application/pdf");
+    return res.send(pdf);
+  } catch (e) {
+    try {
+      if (browser) await browser.close();
+    } catch {}
+    return next(e);
+  }
+});
+
+/* =============================================================================
+   Générer une facture depuis une commande
    GET /api/invoice/from-commande/:id[?save=1]
 ============================================================================= */
-router.get("/from-commande/:id", async (req, res) => {
+router.get("/from-commande/:id", async (req, res, next) => {
+  let browser;
   try {
     const commandeId = String(req.params.id || "").trim();
     if (!isUUID(commandeId)) {
@@ -266,7 +259,6 @@ router.get("/from-commande/:id", async (req, res) => {
       return res.status(400).json({ error: "Commande sans lignes." });
     }
 
-    // produits
     const ids = [...new Set(lignes.map((l) => l.produit_id))];
     const { data: produits, error: errProd } = await supabase
       .from("produits")
@@ -275,7 +267,6 @@ router.get("/from-commande/:id", async (req, res) => {
     if (errProd) return res.status(400).json({ error: errProd.message });
     const byId = new Map((produits || []).map((p) => [p.id, p]));
 
-    // Client
     const { data: client } = await supabase
       .from("clients")
       .select("client_nom, client_prenom, client_email, client_adresse")
@@ -311,16 +302,22 @@ router.get("/from-commande/:id", async (req, res) => {
       totals,
     });
 
-    // PDF
-    const browser = await puppeteer.launch({ headless: "new" });
+    // ---- Puppeteer (flags Render) + fermeture propre
+    browser = await puppeteer.launch({
+      headless: "new",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
     await page.emulateMediaType("print");
     await page.setContent(html, { waitUntil: "networkidle0" });
+
     const pdfBuffer = await page.pdf({
+      format: "A4",
       printBackground: true,
       preferCSSPageSize: true,
       margin: { top: "16mm", right: "14mm", bottom: "16mm", left: "14mm" },
     });
+
     await browser.close();
 
     if (String(req.query.save) === "1") {
@@ -340,10 +337,13 @@ router.get("/from-commande/:id", async (req, res) => {
       "Content-Disposition",
       `inline; filename="facture-${invoice.number}.pdf"`
     );
-    res.send(pdfBuffer);
+    return res.send(pdfBuffer);
   } catch (e) {
+    try {
+      if (browser) await browser.close();
+    } catch {}
     console.error("Erreur facture commande:", e);
-    res.status(500).json({ error: "Erreur génération facture" });
+    return next(e); // Laisse le handler global formatter la réponse
   }
 });
 
