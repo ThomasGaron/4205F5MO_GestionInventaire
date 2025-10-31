@@ -42,7 +42,30 @@ const corsOptions = {
 // Handle JSON + CORS (including preflight)
 app.use(express.json());
 app.use(cors(corsOptions));
-app.options("/*", cors(corsOptions)); // respond to preflight for all routes
+
+// Universal preflight handler (Express 5 safe)
+app.use((req, res, next) => {
+  if (req.method !== "OPTIONS") return next();
+
+  const origin = req.headers.origin || "";
+  const allowed = !origin || allowedOrigins.includes(origin);
+
+  if (allowed) {
+    res.setHeader("Access-Control-Allow-Origin", origin || "*");
+    res.setHeader("Vary", "Origin");
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET,POST,PATCH,PUT,DELETE,OPTIONS"
+    );
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
+    // If you use cookies across sites, also:
+    // res.setHeader("Access-Control-Allow-Credentials", "true");
+  }
+  return res.sendStatus(204);
+});
 
 /* ---------- Routes API ---------- */
 app.use("/api/user", userRoute);
