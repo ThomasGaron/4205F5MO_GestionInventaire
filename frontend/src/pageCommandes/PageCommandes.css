@@ -1,0 +1,263 @@
+/* --- Layout général --- */
+.page-commandes {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.commandes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 18px;
+}
+
+/* --- Carte (même vibe que ItemCard) --- */
+.commande-card {
+  background: #0b1a24;                 /* fond sombre */
+  border: 1px solid #0f2b3b;           /* léger contour bleu nuit */
+  border-radius: 14px;                  /* coins arrondis */
+  padding: 18px 16px;
+  color: #e9f1f5;                       /* texte principal clair */
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.commande-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.45);
+  border-color: #134b66;
+}
+
+/* Titre orange centré comme sur la carte produit */
+.commande-card h3 {
+  text-align: center;
+  color: #ff8a2a;       /* orange boutons */
+  font-weight: 700;
+  letter-spacing: .3px;
+  margin: 0 0 10px 0;
+}
+
+/* Bloc d'infos (ID, prix, quantité / client, date, etc.) */
+.commande-infos p,
+.commande-details p {
+  margin: 6px 0;
+  font-size: 0.98rem;
+}
+
+.commande-infos strong,
+.commande-details strong {
+  color: #77c1ff;       /* libellé bleu comme "Prix :" / "Quantité :" */
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+/* Liste des lignes (produits de la commande) */
+.commande-lignes {
+  margin: 10px 0 0 0;
+  padding-left: 18px;
+}
+.commande-lignes li {
+  margin: 4px 0;
+  color: #d9e8ee;
+}
+
+/* Badges de statut dans le même ton */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  letter-spacing: .2px;
+}
+.badge.en-cours { background: rgba(255, 211, 105, 0.15); color: #ffd369; }
+.badge.livree   { background: rgba(129, 230, 171, 0.15); color: #81e6ab; }
+.badge.annulee  { background: rgba(255, 125, 125, 0.15); color: #ff7d7d; }
+
+/* Header de carte (titre + badge) */
+.commande-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* Rangée d’actions = mêmes boutons orange que ton site */
+.actions-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* Sélecteur de statut pour matcher les inputs existants */
+.select-statut {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #134b66;
+  background: #0e2230;
+  color: #e9f1f5;
+  outline: none;
+}
+.select-statut:focus {
+  border-color: #1f7aa5;
+  box-shadow: 0 0 0 2px rgba(31, 122, 165, 0.25);
+}
+
+/* Carte pour le panneau de détail (optionnel) */
+.commande-detail {
+  margin-bottom: 20px;
+}
+
+
+/* --- Formulaire ajout commande --- */
+.ajout-commande-card {
+  background: #0b1a24;
+  border: 1px solid #0f2b3b;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 25px;
+  color: #e9f1f5;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+}
+
+.ajout-commande-card h2 {
+  color: #ff8a2a;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.ajout-commande-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ajout-commande-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.95rem;
+  color: #77c1ff;
+}
+
+.ajout-commande-form input {
+  background: #0e2230;
+  border: 1px solid #134b66;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #fff;
+  margin-top: 4px;
+}
+
+.ajout-commande-form input:focus {
+  outline: none;
+  border-color: #1f7aa5;
+  box-shadow: 0 0 0 2px rgba(31,122,165,0.3);
+}
+
+.ajout-commande-form .btn {
+  align-self: center;
+  margin-top: 8px;
+  padding: 10px 20px;
+}
+
+
+/* --- Modal overlay --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: grid;
+  place-items: center;
+  z-index: 50;
+}
+
+.modal-card {
+  width: min(900px, 92vw);
+  background: #0b1a24;
+  border: 1px solid #0f2b3b;
+  border-radius: 14px;
+  color: #e9f1f5;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.45);
+  padding: 18px;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.modal-header h2 {
+  color: #ff8a2a;
+  margin: 0;
+}
+
+/* Formulaire de création */
+.ajout-commande-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ajout-commande-form label {
+  display: flex;
+  flex-direction: column;
+  color: #77c1ff;
+  font-size: 0.95rem;
+}
+
+.ajout-commande-form input,
+.ajout-commande-form select {
+  background: #0e2230;
+  border: 1px solid #134b66;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #fff;
+  margin-top: 6px;
+}
+
+.ajout-commande-form input:focus,
+.ajout-commande-form select:focus {
+  outline: none;
+  border-color: #1f7aa5;
+  box-shadow: 0 0 0 2px rgba(31,122,165,0.3);
+}
+
+/* lignes produit */
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row-line {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr 0.8fr auto;
+  gap: 10px;
+  align-items: end;
+  background: #0f2230;
+  border: 1px solid #103348;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.row-sub {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+.row-sub span { color: #9ecdf3; }
+
+/* total */
+.total-box {
+  margin-top: 6px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  align-items: center;
+  font-size: 1.1rem;
+}
+.total-box strong { color: #ffcf70; }
