@@ -17,7 +17,7 @@ const app = express();
 /* ---------- CORS (Render) ---------- */
 const DEFAULT_ALLOWED = [
   "http://localhost:5173",
-  "https://four205f5mo-gestioninventaire-1.onrender.com", // your frontend
+  "https://4205-f5-mo-gestion-inventaire.vercel.app", // your frontend
 ];
 // Allow override from env if you want (comma-separated)
 const allowedOrigins = (
