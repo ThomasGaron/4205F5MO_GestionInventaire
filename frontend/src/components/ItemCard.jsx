@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./ItemCard.css";
+import "../Bouton.css";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth-context";
 
@@ -181,7 +182,11 @@ export default function ItemCard({ item, onChanged }) {
           </label>
 
           <div className="actions actions--edit">
-            <button className="btn" onClick={saveChanges} disabled={busy}>
+            <button
+              className="btn btn-primary"
+              onClick={saveChanges}
+              disabled={busy}
+            >
               Enregistrer
             </button>
             <button
@@ -216,7 +221,11 @@ export default function ItemCard({ item, onChanged }) {
             />
           </label>
           <div className="actions actions--edit">
-            <button className="btn" onClick={submitAddQty} disabled={busy}>
+            <button
+              className="btn btn-primary"
+              onClick={submitAddQty}
+              disabled={busy}
+            >
               Enregistrer
             </button>
             <button
@@ -237,7 +246,7 @@ export default function ItemCard({ item, onChanged }) {
       {!editing && !addingQty && (
         <div className="actions actions--row">
           <button
-            className="btn"
+            className="btn btn-primary"
             onClick={() => setAddingQty(true)}
             disabled={busy}
           >
