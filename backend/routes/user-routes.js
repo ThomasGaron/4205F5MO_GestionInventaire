@@ -1,9 +1,12 @@
 import express from "express";
 import userController from "../controllers/users-controllers.js";
+import checkAuth from "../handlers/check-auth.js";
 
 const router = express.Router();
 
 router.post("/login", userController.Login);
+
+router.use(checkAuth);
 
 router.post("/signUp", userController.SignUp);
 

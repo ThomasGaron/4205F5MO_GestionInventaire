@@ -1,9 +1,13 @@
+import { useContext } from "react";
 import { useState } from "react";
+import { AuthContext } from "../context/auth-context";
 
 export default function SignUp() {
   const [mdpPasEgale, setMdpPasEgale] = useState(false);
 
   const [userExist, setUserExist] = useState(false);
+
+  const { token } = useContext(AuthContext);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -28,6 +32,7 @@ export default function SignUp() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(nouveauUser),
         }

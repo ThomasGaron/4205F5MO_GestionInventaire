@@ -18,7 +18,6 @@ import Profil from "./pageProfil/Profil";
 import PageCommandes from "./pageCommandes/PageCommandes";
 import LowStockAlert from "./components/LowStockAlert";
 
-
 function decodeToken(jwt) {
   try {
     if (!jwt) return null;
@@ -81,7 +80,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Au montage, si on a un token mais pas de statut admin renseigné, on le détermine
+    // Au montage, si on a un token mais pas de statut admin renseigné, on le détermine;
     if (token && !isAdmin) {
       const payload = decodeToken(token);
       if (payload) {
@@ -109,7 +108,6 @@ function App() {
         { path: "/inventaire", element: <PageInventaire /> },
         { path: "/profil", element: <Profil /> },
         { path: "/commandes", element: <PageCommandes /> },
-
       ],
     },
   ]);
@@ -158,17 +156,18 @@ function App() {
         token: token,
       }}
     >
-       <AlertProvider>
+      <AlertProvider>
         {/* Alerte stock faible globale */}
         <LowStockAlert seuil={5} />
         {/* Router unique */}
         <RouterProvider
-          router={isLoggedIn ? (isAdmin ? routerLoginAdmin : routerLogin) : router}
+          router={
+            isLoggedIn ? (isAdmin ? routerLoginAdmin : routerLogin) : router
+          }
         />
       </AlertProvider>
     </AuthContext.Provider>
   );
 }
-
 
 export default App;

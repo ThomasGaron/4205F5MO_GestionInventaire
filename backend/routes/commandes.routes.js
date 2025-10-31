@@ -1,7 +1,10 @@
 import express from "express";
 import CommandesCtrl from "../controllers/commandes-controller.js";
+import checkAuth from "../handlers/check-auth.js";
 
 const router = express.Router();
+
+router.use(checkAuth);
 
 // base = /api/commandes
 router.get("/", CommandesCtrl.getToutesLesCommandes); // si présent

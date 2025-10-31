@@ -8,6 +8,8 @@ export default function PageInventaire() {
   const navigate = useNavigate();
   const { isLoggedIn } = useContext(AuthContext);
 
+  const { token } = useContext(AuthContext);
+
   const [items, setItems] = useState([]);
 
   // Modal ajout produit
@@ -26,6 +28,10 @@ export default function PageInventaire() {
     try {
       const res = await fetch(`${backend}/api/produit/tousLesProduits`, {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
       const json = await res.json();
       setItems(json.data || []);
@@ -107,7 +113,9 @@ export default function PageInventaire() {
     <div className="page-inventaire">
       <div className="inventaire-header">
         <h1>Inventaire</h1>
-        <button className="btn" onClick={openModal}>Ajouter un produit</button>
+        <button className="btn" onClick={openModal}>
+          Ajouter un produit
+        </button>
       </div>
 
       <div className="items-grid">
@@ -129,7 +137,9 @@ export default function PageInventaire() {
           <div className="modal-card">
             <div className="modal-header">
               <h2>Nouveau produit</h2>
-              <button className="btn btn-danger" onClick={closeModal}>X</button>
+              <button className="btn btn-danger" onClick={closeModal}>
+                X
+              </button>
             </div>
 
             <form className="add-product-form" onSubmit={submitNewProduct}>
@@ -188,7 +198,10 @@ export default function PageInventaire() {
                 <span>Disponible</span>
               </label>
 
-              <div className="actions-row" style={{ justifyContent: "flex-end" }}>
+              <div
+                className="actions-row"
+                style={{ justifyContent: "flex-end" }}
+              >
                 <button type="submit" className="btn" disabled={creating}>
                   {creating ? "Création..." : "Créer"}
                 </button>

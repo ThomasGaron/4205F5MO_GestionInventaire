@@ -25,7 +25,11 @@ export default function Profil() {
   const fetchUsers = async () => {
     try {
       const res = await fetch(BASE + "/api/user/getTout", {
-        headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
