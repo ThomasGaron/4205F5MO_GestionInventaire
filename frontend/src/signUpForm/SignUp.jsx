@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { useState } from "react";
 import { AuthContext } from "../context/auth-context";
+import "./SignUp.css";
+import "../Bouton.css";
 
 export default function SignUp() {
   const [mdpPasEgale, setMdpPasEgale] = useState(false);
@@ -51,44 +53,48 @@ export default function SignUp() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Ajouter un nouvel employe</h2>
+    <form onSubmit={handleSubmit} className="signup-form">
+      <h2>Ajouter un nouvel employé</h2>
 
       <div>
         <label htmlFor="email">Courriel</label>
         <input name="email" type="email" required />
-        {userExist ? <p>Ce courriel exist deja</p> : null}
+        {userExist && <p className="error">Ce courriel existe déjà</p>}
       </div>
 
       <div>
-        <label htmlFor="password">Mot de passe</label>
+        <label htmlFor="mdp">Mot de passe</label>
         <input type="password" name="mdp" required />
       </div>
 
       <div>
         <label htmlFor="confirmer_mdp">Confirmer le mot de passe</label>
         <input type="password" name="confirmer_mdp" required />
-        {mdpPasEgale ? <p>Les mots de passe doivent etre identique</p> : null}
+        {mdpPasEgale && (
+          <p className="error">Les mots de passe doivent être identiques</p>
+        )}
       </div>
 
       <hr />
 
       <div>
-        <label htmlFor="nom">Entrez votre nom complet</label>
+        <label htmlFor="nom">Nom complet</label>
         <input type="text" name="nom" required />
       </div>
 
-      <div>
-        <label htmlFor="role">Choisissez le role : </label>
-        <label htmlFor="text">Employe</label>
-        <input type="radio" name="role" value="emp" />
-        <label htmlFor="text">Admin</label>
-        <input type="radio" name="role" value="admin" />
+      <div className="role-section">
+        <label>Choisissez le rôle :</label>
+        <label>
+          <input type="radio" name="role" value="emp" /> Employé
+        </label>
+        <label>
+          <input type="radio" name="role" value="admin" /> Admin
+        </label>
       </div>
 
-      <p>
-        <button type="submit">Ajouter</button>
-      </p>
+      <button type="submit" className="btn btn-primary">
+        Ajouter
+      </button>
     </form>
   );
 }

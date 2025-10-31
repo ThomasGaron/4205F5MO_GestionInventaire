@@ -1,0 +1,102 @@
+/* ===== Profil.css ===== */
+
+/* Conteneur principal */
+.profil-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 20px;
+  color: #e9f1f5;
+}
+
+.profil-container h1 {
+  text-align: center;
+  color: #ff8a2a; /* orange principal */
+  margin-bottom: 24px;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+}
+
+/* Liste des utilisateurs (grid responsive) */
+.profil-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Carte utilisateur */
+.profil-card {
+  background: #0b1a24;
+  border: 1px solid #0f2b3b;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.profil-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
+  border-color: #134b66;
+}
+
+.profil-card h3 {
+  margin: 0 0 8px 0;
+  color: #77c1ff;
+  font-weight: 600;
+  text-align: center;
+}
+
+.profil-card p {
+  margin: 4px 0 10px;
+  text-align: center;
+  color: #e9f1f5;
+  font-size: 0.95rem;
+}
+
+/* Boutons d’action (utilise tes styles globaux .btn) */
+.profil-card-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.profil-card-actions button {
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.profil-card-actions button:hover {
+  background: #dc2626;
+}
+
+.profil-card-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Texte vide (aucun utilisateur) */
+.profil-list p {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: rgba(233, 241, 245, 0.7);
+  font-style: italic;
+  margin-top: 40px;
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+  .profil-container h1 {
+    font-size: 1.6rem;
+  }
+
+  .profil-card {
+    padding: 16px;
+  }
+}
