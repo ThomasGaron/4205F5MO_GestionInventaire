@@ -226,7 +226,15 @@ router.get("/_test", async (req, res, next) => {
     try {
       if (browser) await browser.close();
     } catch {}
-    return next(e);
+
+    console.error("Erreur _test invoice:", e);
+
+    // TEMPORAIREMENT : renvoyer l'erreur brute au lieu de passer par le handler global
+    return res.status(500).json({
+      error: e.message || "Erreur inconnue",
+      name: e.name,
+      stack: e.stack,
+    });
   }
 });
 
