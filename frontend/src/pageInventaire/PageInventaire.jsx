@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import ItemCard from "../components/ItemCard";
 import "../Bouton.css";
+import LowStockAlert from "../components/LowStockAlert";
 
 export default function PageInventaire() {
   const navigate = useNavigate();
@@ -115,6 +116,7 @@ export default function PageInventaire() {
 
   return (
     <div className="page-inventaire">
+      <LowStockAlert seuil={5} backendBase={backend} />
       <div className="inventaire-header">
         <h1>Inventaire</h1>
         <button className="btn btn-primary" onClick={openModal}>
