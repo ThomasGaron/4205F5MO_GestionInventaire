@@ -59,4 +59,26 @@ export default defineConfig([
       },
     },
   },
+
+  {
+    files: ["cypress/**/*.cy.{js,jsx,ts,tsx}"],
+    languageOptions: {
+      globals: {
+        // Mocha globals (describe, it…)
+        describe: "readonly",
+        it: "readonly",
+        before: "readonly",
+        beforeEach: "readonly",
+        after: "readonly",
+        afterEach: "readonly",
+
+        // Chai expect
+        expect: "readonly",
+
+        // Cypress API
+        cy: "readonly",
+        Cypress: "readonly",
+      },
+    },
+  },
 ]);
