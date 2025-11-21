@@ -50,4 +50,13 @@ export default defineConfig([
       },
     },
   },
+
+  {
+    files: ["cypress.config.js"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
 ]);
