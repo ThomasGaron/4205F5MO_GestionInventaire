@@ -1,8 +1,9 @@
 import express from "express";
-import puppeteer from "puppeteer";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import chromium from "@sparticuz/chromium";
+import puppeteer from "puppeteer-core";
 import { supabase } from "../util/db2.js";
 
 const router = express.Router();
@@ -201,22 +202,31 @@ function renderInvoiceHTML({ invoice, seller, customer, items, totals }) {
 }
 
 /* =============================================================================
+   Helper pour lancer Chromium (Render-friendly)
+============================================================================= */
+async function launchBrowser() {
+  // @sparticuz/chromium est pensé pour ce pattern
+  const browser = await puppeteer.launch({
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
+  });
+  return browser;
+}
+
+/* =============================================================================
    TEST simple pour valider Chromium sur Render
    GET /api/invoice/_test
 ============================================================================= */
 router.get("/_test", async (req, res, next) => {
   let browser;
   try {
-    browser = await puppeteer.launch({
-      headless: "new",
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
+    browser = await launchBrowser();
     const page = await browser.newPage();
     await page.setContent(
       `<h1 style="font-family:Arial;color:#ff8a2a">Test PDF OK ✅</h1>`,
-      {
-        waitUntil: "networkidle0",
-      }
+      { waitUntil: "networkidle0" }
     );
     const pdf = await page.pdf({ format: "A4", printBackground: true });
     await browser.close();
@@ -226,7 +236,11 @@ router.get("/_test", async (req, res, next) => {
     try {
       if (browser) await browser.close();
     } catch {}
-    return next(e);
+    console.error("Erreur _test invoice:", e);
+    return res.status(500).json({
+      error: e.message || "Erreur génération facture",
+      name: e.name,
+    });
   }
 });
 
@@ -302,11 +316,7 @@ router.get("/from-commande/:id", async (req, res, next) => {
       totals,
     });
 
-    // ---- Puppeteer (flags Render) + fermeture propre
-    browser = await puppeteer.launch({
-      headless: "new",
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
+    browser = await launchBrowser();
     const page = await browser.newPage();
     await page.emulateMediaType("print");
     await page.setContent(html, { waitUntil: "networkidle0" });
@@ -343,7 +353,9 @@ router.get("/from-commande/:id", async (req, res, next) => {
       if (browser) await browser.close();
     } catch {}
     console.error("Erreur facture commande:", e);
-    return next(e); // Laisse le handler global formatter la réponse
+    return res
+      .status(500)
+      .json({ error: e.message || "Erreur génération facture" });
   }
 });
 

@@ -67,7 +67,7 @@ export default function LowStockAlert({ seuil = 5, backendBase }) {
   }
 
   const onConfirm = () => {
-    localStorage.setItem(batchKey, currentKey);
+    // localStorage.setItem(batchKey, currentKey);
     setHiddenBatchKey(currentKey);
   };
 
