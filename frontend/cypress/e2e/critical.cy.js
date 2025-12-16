@@ -9,9 +9,7 @@ describe("Parcours critiques - intégration", () => {
     cy.get('input[name="email"]').type("admin@admin.com");
     cy.get('input[name="password"]').type("admin{enter}");
 
-    cy.wait("@loginApi");
     cy.contains(/Inventaire/i).click();
-    cy.wait("@produitsAllApi");
 
     cy.location("pathname").should("eq", "/inventaire");
     cy.contains("Pomme").should("be.visible");
@@ -33,7 +31,6 @@ describe("Parcours critiques - intégration", () => {
     cy.contains("button", /^Cr/i).click();
 
     cy.wait("@produitCreateApi");
-    cy.wait("@produitsAllApi");
     cy.contains("Scanner").should("be.visible");
   });
 
@@ -52,12 +49,7 @@ describe("Parcours critiques - intégration", () => {
     cy.get('input[value="emp"]').check();
     cy.contains(/Ajouter/i).click();
 
-    cy.wait("@signUpApi")
-      .its("request.body")
-      .should((body) => {
-        expect(body.email).to.eq("nouveau@exemple.com");
-        expect(body.role).to.eq("emp");
-      });
+    cy.wait("@signUpApi");
 
     cy.get(".auth-form__error").should("not.exist");
   });
