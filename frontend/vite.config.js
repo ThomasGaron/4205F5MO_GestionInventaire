@@ -12,6 +12,10 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "html", "lcov"],
       reportsDirectory: "./coverage",
+      lines: 75,
+      branches: 75,
+      functions: 75,
+      statements: 75,
       all: true,
       include: [
         "src/components/**/*.{js,jsx,ts,tsx}",

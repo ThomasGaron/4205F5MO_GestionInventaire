@@ -48,12 +48,9 @@ describe("PageCommandes", () => {
 
     render(wrapWithProviders(<PageCommandes />, { auth: { isLoggedIn: true, token: "t" } }));
 
-    await waitFor(() => {
-      expect(screen.getByText(/Commandes/i)).toBeInTheDocument();
-    });
-
-    expect(screen.getByText(/Jean Dupont/)).toBeInTheDocument();
-    expect(screen.getByText(/Client inconnu/)).toBeInTheDocument();
+    await screen.findByText(/Commandes/i);
+    await screen.findByText(/Jean Dupont/);
+    await screen.findByText(/Client inconnu/);
 
     // télécharger facture
     fireEvent.click(screen.getAllByText(/Télécharger facture/i)[0]);

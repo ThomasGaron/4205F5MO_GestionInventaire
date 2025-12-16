@@ -30,23 +30,23 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">89.28% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>24/28</span>
+                <span class='fraction'>25/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
+                <span class="strong">88.23% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>14/16</span>
+                <span class='fraction'>15/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.42% </span>
+                <span class="strong">96.36% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>54/56</span>
+                <span class='fraction'>53/55</span>
             </div>
         
             
@@ -281,14 +281,8 @@
 <a name='L216'></a><a href='#L216'>216</a>
 <a name='L217'></a><a href='#L217'>217</a>
 <a name='L218'></a><a href='#L218'>218</a>
-<a name='L219'></a><a href='#L219'>219</a>
-<a name='L220'></a><a href='#L220'>220</a>
-<a name='L221'></a><a href='#L221'>221</a>
-<a name='L222'></a><a href='#L222'>222</a>
-<a name='L223'></a><a href='#L223'>223</a>
-<a name='L224'></a><a href='#L224'>224</a>
-<a name='L225'></a><a href='#L225'>225</a>
-<a name='L226'></a><a href='#L226'>226</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L219'></a><a href='#L219'>219</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -314,17 +308,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35x</span>
 <span class="cline-any cline-yes">35x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">35x</span>
 <span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -388,11 +376,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -445,6 +428,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -460,7 +444,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -513,13 +499,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useEffect, useState, useContext, useCallback } from "react";
-import "./PageInventaire.css";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useEffect, useState, useContext, useCallback, useMemo } from "react";
+import "../pagesCss/ManagementPages.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import ItemCard from "../components/ItemCard";
 import "../Bouton.css";
 import LowStockAlert from "../components/LowStockAlert";
+import { buildFetchJson } from "../utils/api";
 &nbsp;
 export default function PageInventaire() {
   const navigate = useNavigate();
@@ -540,22 +527,16 @@ export default function PageInventaire() {
   });
 &nbsp;
   const backend = import.meta.env.VITE_BACKEND_URI;
+  const fetchJson = useMemo(() =&gt; buildFetchJson(token, backend), [token, backend]);
 &nbsp;
   const getAllItems = useCallback(async () =&gt; {
     try {
-      const res = await fetch(`${backend}/api/produit/tousLesProduits`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const json = await res.json();
-      setItems(json.data || <span class="branch-1 cbranch-no" title="branch not covered" >[])</span>;
+      const json = await fetchJson("/api/produit/tousLesProduits");
+      setItems(json.data || []);
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >      console.error("Error fetching data:", error);</span>
     }
-  }, [backend]);
+  }, [backend, fetchJson]);
 &nbsp;
   useEffect(() =&gt; {
     if (!isLoggedIn) {
@@ -604,12 +585,8 @@ export default function PageInventaire() {
     try {
       setCreating(true);
       // même style que ton contrôleur: POST /api/produit
-      const res = await fetch(`${backend}/api/produit`, {
+      const json = await fetchJson("/api/produit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({
           produit_nom: nom,
           produit_prix: prix,
@@ -617,8 +594,7 @@ export default function PageInventaire() {
           disponible: form.disponible,
         }),
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.error || <span class="branch-1 cbranch-no" title="branch not covered" >"Échec de la création.")</span>;
+      if (json?.error) throw new Error(json.error || <span class="branch-1 cbranch-no" title="branch not covered" >"Échec de la création.")</span>;
 &nbsp;
       await getAllItems();
       closeModal();
@@ -655,7 +631,7 @@ export default function PageInventaire() {
           className="modal-overlay"
           onClick={(e) =&gt; e.target === e.currentTarget &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >closeModal()}</span>
         &gt;
-          &lt;div className="modal-card"&gt;
+          &lt;div className="modal-card modal-card--narrow"&gt;
             &lt;div className="modal-header"&gt;
               &lt;h2&gt;Nouveau produit&lt;/h2&gt;
               &lt;button className="btn btn-danger" onClick={closeModal}&gt;
@@ -669,6 +645,7 @@ export default function PageInventaire() {
                 &lt;input
                   type="text"
                   value={form.produit_nom}
+                  name="nom"
                   onChange={(e) =&gt;
                     setForm((f) =&gt; ({ ...f, produit_nom: e.target.value }))
                   }
@@ -683,6 +660,7 @@ export default function PageInventaire() {
                     type="number"
                     step="0.01"
                     min="0"
+                    name="prix"
                     value={form.produit_prix}
                     onChange={(e) =&gt;
                       setForm((f) =&gt; ({ ...f, produit_prix: e.target.value }))
@@ -696,6 +674,7 @@ export default function PageInventaire() {
                   &lt;input
                     type="number"
                     min="0"
+                    name="quant"
                     value={form.produit_quantiter}
                     onChange={(e) =&gt;
                       setForm((f) =&gt; ({
@@ -745,7 +724,7 @@ export default function PageInventaire() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-12-16T21:55:18.439Z
+                at 2025-12-16T23:45:01.491Z
             </div>
         <script src="../prettify.js"></script>
         <script>
