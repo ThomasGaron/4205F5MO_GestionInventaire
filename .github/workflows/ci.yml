@@ -32,9 +32,25 @@ jobs:
         working-directory: ./frontend
         run: npm ci
 
-      - name: Frontend unit tests
+      - name: Frontend unit tests (coverage)
         working-directory: ./frontend
-        run: npm test
+        run: npm test -- --coverage
+
+      - name: Upload frontend coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage
+          path: frontend/coverage
+
+      - name: Frontend integration (Cypress)
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: ./frontend
+          install: false
+          start: npm run dev -- --host --port 4173
+          wait-on: "http://localhost:4173"
+          browser: chrome
+          config: baseUrl=http://localhost:4173
 
       - name: Frontend build
         working-directory: ./frontend

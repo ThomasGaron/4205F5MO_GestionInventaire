@@ -5,7 +5,8 @@ import createEsbuildPlugin from "@badeball/cypress-cucumber-preprocessor/esbuild
 
 export default defineConfig({
   e2e: {
-    specPattern: "**/*.feature",
+    // Run both cucumber .feature files and classic Cypress specs
+    specPattern: ["**/*.feature", "cypress/e2e/**/*.cy.{js,ts}"],
     baseUrl: "http://localhost:5173",
     viewportWidth: 1280,
     viewportHeight: 800,
