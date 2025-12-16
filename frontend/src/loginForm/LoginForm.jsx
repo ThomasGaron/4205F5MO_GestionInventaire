@@ -41,6 +41,8 @@ export default function LoginForm() {
 
       const res = await response.json();
 
+      console.log("Reponse backedn : ", res);
+
       auth.login(res.token);
 
       if (res.token.role == "admin") {
