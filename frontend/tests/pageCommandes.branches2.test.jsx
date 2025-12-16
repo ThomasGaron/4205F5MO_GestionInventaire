@@ -27,13 +27,13 @@ describe("PageCommandes - branches supplémentaires", () => {
     const fetchMock = vi.fn(async (url, options) => {
       const u = String(url);
 
-      if (u.includes("/api/commandes") && (!options || options.method === "GET")) {
+      if (u.includes("/api/commandes") && (!options || !options.method || options.method === "GET")) {
         return {
           ok: true,
           json: async () => ({ data: [{ id: "c1", client_id: "clX", statut: "En cours" }] }),
         };
       }
-      if (u.includes("/api/clients") && (!options || options.method === "GET")) {
+      if (u.includes("/api/clients") && (!options || !options.method || options.method === "GET")) {
         return { ok: true, json: async () => ({ data: [] }) };
       }
 
@@ -55,13 +55,13 @@ describe("PageCommandes - branches supplémentaires", () => {
     const fetchMock = vi.fn(async (url, options) => {
       const u = String(url);
 
-      if (u.includes("/api/commandes") && (!options || options.method === "GET")) {
+      if (u.includes("/api/commandes") && (!options || !options.method || options.method === "GET")) {
         return {
           ok: true,
           json: async () => ({ data: [{ id: "c1", client_id: "cl1", statut: "En cours" }] }),
         };
       }
-      if (u.includes("/api/clients") && (!options || options.method === "GET")) {
+      if (u.includes("/api/clients") && (!options || !options.method || options.method === "GET")) {
         return { ok: true, json: async () => ({ data: [{ id: "cl1", client_prenom: "A", client_nom: "B" }] }) };
       }
 
@@ -98,7 +98,7 @@ describe("PageCommandes - branches supplémentaires", () => {
     const u = String(url);
 
     // liste commandes (OK)
-    if (u.includes("/api/commandes") && (!options || options.method === "GET") && !u.includes("c1")) {
+    if (u.includes("/api/commandes") && (!options || !options.method || options.method === "GET") && !u.includes("c1")) {
       return {
         ok: true,
         json: async () => ({ data: [{ id: "c1", client_id: "cl1", statut: "En cours" }] }),
@@ -106,11 +106,11 @@ describe("PageCommandes - branches supplémentaires", () => {
     }
 
     // clients (OK)
-    if (u.includes("/api/clients") && (!options || options.method === "GET")) {
+    if (u.includes("/api/clients") && (!options || !options.method || options.method === "GET")) {
       return { ok: true, json: async () => ({ data: [] }) };
     }
 
-    if (u.includes("/api/commandes") && u.includes("c1") && (!options || options.method === "GET")) {
+    if (u.includes("/api/commandes") && u.includes("c1") && (!options || !options.method || options.method === "GET")) {
       throw new Error("boom");
     }
 
@@ -138,11 +138,11 @@ describe("PageCommandes - branches supplémentaires", () => {
     const fetchMock = vi.fn(async (url, options) => {
       const u = String(url);
 
-      if (u.includes("/api/commandes") && (!options || options.method === "GET")) {
+      if (u.includes("/api/commandes") && (!options || !options.method || options.method === "GET")) {
         return { ok: true, json: async () => ({ data: [] }) };
       }
 
-      if (u.includes("/api/clients") && (!options || options.method === "GET")) {
+      if (u.includes("/api/clients") && (!options || !options.method || options.method === "GET")) {
         throw new Error("fail clients");
       }
 
@@ -167,11 +167,11 @@ describe("PageCommandes - branches supplémentaires", () => {
     const fetchMock = vi.fn(async (url, options) => {
       const u = String(url);
 
-      if (u.includes("/api/commandes") && (!options || options.method === "GET")) {
+      if (u.includes("/api/commandes") && (!options || !options.method || options.method === "GET")) {
         return { ok: true, json: async () => ({ data: [] }) };
       }
 
-      if (u.includes("/api/clients") && (!options || options.method === "GET")) {
+      if (u.includes("/api/clients") && (!options || !options.method || options.method === "GET")) {
         return { ok: true, json: async () => ({ data: [{ id: "cl1", client_prenom: "A", client_nom: "B" }] }) };
       }
 
@@ -194,11 +194,13 @@ describe("PageCommandes - branches supplémentaires", () => {
     fireEvent.click(await screen.findByRole("button", { name: /Ajouter commande/i }));
     await screen.findByText(/Nouvelle commande/i);
 
+    await waitFor(() => {
+      expect(screen.getAllByRole("combobox").length).toBeGreaterThan(1);
+    });
+
     const combos = screen.getAllByRole("combobox");
     fireEvent.change(combos[0], { target: { value: "cl1" } });
-
-    const combos2 = screen.getAllByRole("combobox");
-    fireEvent.change(combos2[1], { target: { value: "p1" } });
+    fireEvent.change(combos[1], { target: { value: "p1" } });
 
     const qtyInput = screen.getByRole("spinbutton", { name: /Quantité/i });
     fireEvent.change(qtyInput, { target: { value: "99" } });

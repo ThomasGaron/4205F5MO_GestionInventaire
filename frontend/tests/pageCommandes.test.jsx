@@ -195,7 +195,9 @@ it("deleteCommande confirm=true + ok => DELETE et carte disparait", async () => 
     .fn()
     .mockResolvedValueOnce({ ok: true, json: async () => ({ data: commandes }) }) // commandes
     .mockResolvedValueOnce({ ok: true, json: async () => ({ data: clients }) })  // clients
-    .mockResolvedValueOnce({ ok: true, text: async () => "" });                  // DELETE
+    .mockResolvedValueOnce({ ok: true, json: async () => ({}) })                  // DELETE
+    .mockResolvedValueOnce({ ok: true, json: async () => ({ data: [] }) })        // refresh commandes
+    .mockResolvedValueOnce({ ok: true, json: async () => ({ data: clients }) });  // refresh clients
 
   vi.stubGlobal("fetch", fetchMock);
 

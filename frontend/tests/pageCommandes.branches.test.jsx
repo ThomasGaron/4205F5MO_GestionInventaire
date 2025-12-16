@@ -22,12 +22,12 @@ describe("PageCommandes - more branches", () => {
       const u = String(url);
 
       // useEffect (liste commandes)
-      if (u.includes("/api/commandes") && (!options || options.method === "GET")) {
+      if (u.includes("/api/commandes") && (!options || !options.method || options.method === "GET")) {
         return { ok: true, json: async () => ({ data: [] }) };
       }
 
       // useEffect (nomClients)
-      if (u.includes("/api/clients") && (!options || options.method === "GET")) {
+      if (u.includes("/api/clients") && (!options || !options.method || options.method === "GET")) {
         // retourne 1 client pour avoir le <select> (branche clients.length > 0)
         return { ok: true, json: async () => ({ data: [{ id: "cl1", client_prenom: "A", client_nom: "B" }] }) };
       }
@@ -58,15 +58,12 @@ describe("PageCommandes - more branches", () => {
     fireEvent.click(await screen.findByRole("button", { name: /Ajouter commande/i }));
     await screen.findByText(/Nouvelle commande/i);
 
-    // sélection client
-    const selects = screen.getAllByRole("combobox");
+    await waitFor(() => {
+      expect(screen.getAllByRole("combobox").length).toBeGreaterThan(1);
+    });
 
-    // 0 = select Client
-    fireEvent.change(selects[0], { target: { value: "cl1" } });
-
-
-    // sélection produit (le 2e combobox dans le modal)
     const combos = screen.getAllByRole("combobox");
+    fireEvent.change(combos[0], { target: { value: "cl1" } });
     fireEvent.change(combos[1], { target: { value: "p1" } });
 
     // submit
@@ -83,11 +80,11 @@ describe("PageCommandes - more branches", () => {
     const fetchMock = vi.fn(async (url, options) => {
       const u = String(url);
 
-      if (u.includes("/api/commandes") && (!options || options.method === "GET")) {
+      if (u.includes("/api/commandes") && (!options || !options.method || options.method === "GET")) {
         return { ok: true, json: async () => ({ data: [] }) };
       }
 
-      if (u.includes("/api/clients") && (!options || options.method === "GET")) {
+      if (u.includes("/api/clients") && (!options || !options.method || options.method === "GET")) {
         return { ok: true, json: async () => ({ data: [{ id: "cl1", client_prenom: "A", client_nom: "B" }] }) };
       }
 
@@ -115,11 +112,11 @@ describe("PageCommandes - more branches", () => {
   const fetchMock = vi.fn(async (url, options) => {
     const u = String(url);
 
-    if (u.includes("/api/commandes") && (!options || options.method === "GET"))
+    if (u.includes("/api/commandes") && (!options || !options.method || options.method === "GET"))
       return { ok: true, json: async () => ({ data: [] }) };
 
     // nomClients OK (useEffect)
-    if (u.includes("/api/clients") && (!options || options.method === "GET"))
+    if (u.includes("/api/clients") && (!options || !options.method || options.method === "GET"))
       return { ok: true, json: async () => ({ data: [] }) };
 
     // produits OK (openModal)
