@@ -13,8 +13,3 @@ When(
     cy.get('button[type="submit"]').click();
   }
 );
-
-// Then("je suis redirigé vers {string}", (path: string) => {
-//   cy.url().should("include", path);
-//   cy.url().should("include", "/acceuil", { timeout: 10000 });
-// });

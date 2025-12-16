@@ -154,6 +154,7 @@ export default function PageInventaire() {
                 <input
                   type="text"
                   value={form.produit_nom}
+                  name="nom"
                   onChange={(e) =>
                     setForm((f) => ({ ...f, produit_nom: e.target.value }))
                   }
@@ -168,6 +169,7 @@ export default function PageInventaire() {
                     type="number"
                     step="0.01"
                     min="0"
+                    name="prix"
                     value={form.produit_prix}
                     onChange={(e) =>
                       setForm((f) => ({ ...f, produit_prix: e.target.value }))
@@ -181,6 +183,7 @@ export default function PageInventaire() {
                   <input
                     type="number"
                     min="0"
+                    name="quant"
                     value={form.produit_quantiter}
                     onChange={(e) =>
                       setForm((f) => ({

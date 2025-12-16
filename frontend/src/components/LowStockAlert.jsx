@@ -100,7 +100,7 @@ export default function LowStockAlert({ seuil = 5, backendBase }) {
         </ul>
 
         <div className="lowstock-actions">
-          <button className="btn" onClick={onConfirm}>
+          <button type="confirm" className="btn" onClick={onConfirm}>
             Confirmer
           </button>
         </div>
