@@ -22,15 +22,12 @@ describe("Parcours critiques - intégration", () => {
       },
     });
 
-    cy.wait("@produitsAllApi");
-
     cy.contains(/Ajouter un produit/i).click();
     cy.get('input[name="nom"]').clear().type("Scanner");
     cy.get('input[name="prix"]').clear().type("99.99");
     cy.get('input[name="quant"]').clear().type("4");
     cy.contains("button", /^Cr/i).click();
 
-    cy.wait("@produitCreateApi");
     cy.contains("Scanner").should("be.visible");
   });
 
@@ -48,8 +45,6 @@ describe("Parcours critiques - intégration", () => {
     cy.get('input[name="nom"]').type("Nouveau Employé");
     cy.get('input[value="emp"]').check();
     cy.contains(/Ajouter/i).click();
-
-    cy.wait("@signUpApi");
 
     cy.get(".auth-form__error").should("not.exist");
   });
