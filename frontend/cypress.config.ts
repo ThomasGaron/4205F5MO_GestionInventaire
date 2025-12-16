@@ -7,6 +7,9 @@ export default defineConfig({
   e2e: {
     specPattern: "**/*.feature",
     baseUrl: "http://localhost:5173",
+    viewportWidth: 1280,
+    viewportHeight: 800,
+    supportFile: "cypress/support/e2e.js",
     async setupNodeEvents(on, config) {
       await addCucumberPreprocessorPlugin(on, config);
 
