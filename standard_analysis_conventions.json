@@ -1,0 +1,1489 @@
+{
+  "extensions" : {
+    "onlyInclude" : [ ],
+    "alwaysExclude" : [ ]
+  },
+  "ignoreStandardScopingConventions" : false,
+  "removeStandardConcerns" : false,
+  "logoLink" : "",
+  "ignoredFilesConventions" : [ ],
+  "testFilesConventions" : [ {
+    "pathPattern" : ".*/[Tt]est/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/[Tt]est/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/[Tt]ests/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*[.][Tt]est/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*[.][Tt]ests/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*[.][Tt]est[.].*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*[.][Tt]ests[.].*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/UnitTests?/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*[.]UnitTests/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*UnitTests[.][a-zA-Z0-9_]+",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/IntegrationTests?/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/UITests?/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/src/testPlay/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/Unit Tests/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/src/ciTest/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/src/ciTests/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/src/androidTest/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/src/androidTests/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/[Ss]pecs/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*[-]tests/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/test[-]data/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*_test[.].*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*_tests[.].*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*[.]test[.].*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*[.]tests[.].*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/test_.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/test[.].*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/testing[.].*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/tests_.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*[-]test[-].*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*[-]tests[-].*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*__test__.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*__tests__.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*[.]feature",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*[.]lint[-]test",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*[.]lint[-]tests",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/vitest[.].*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Vitest configuration files"
+  }, {
+    "pathPattern" : ".*/test[-]runner[.].*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Vitest configuration files"
+  }, {
+    "pathPattern" : ".*[.]spec[.]ts",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "TypeScript test files"
+  }, {
+    "pathPattern" : ".*[.]spec[.]tsx",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "TSX (React) files"
+  }, {
+    "pathPattern" : ".*[.]spec[.]js",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "JavaScript test files"
+  }, {
+    "pathPattern" : ".*/karma[.]conf[.]js",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Karma test files"
+  }, {
+    "pathPattern" : ".*/protractor[.]conf[.]js",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Protractor test files"
+  }, {
+    "pathPattern" : ".*/e2e/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Protractor test files"
+  }, {
+    "pathPattern" : ".*/cppunittests/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "CPP unit test files"
+  }, {
+    "pathPattern" : ".*/palmtests/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Palm test files"
+  }, {
+    "pathPattern" : ".*/jstests/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "JS test files"
+  }, {
+    "pathPattern" : ".*/RestAPIClientTests/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "API test files"
+  }, {
+    "pathPattern" : ".*/ViewTests/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test files"
+  }, {
+    "pathPattern" : ".*/test[-]resources/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test resources"
+  }, {
+    "pathPattern" : ".*/test[-]helpers/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test helpers"
+  }, {
+    "pathPattern" : ".*/TestData/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test data"
+  }, {
+    "pathPattern" : ".*/mockapi/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Mock resources"
+  }, {
+    "pathPattern" : ".*/__mock[a-zA-Z0-9_\\- ]+/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Mock resources"
+  }, {
+    "pathPattern" : ".*/mock[a-zA-Z0-9_\\- ]+/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Mock resources"
+  }, {
+    "pathPattern" : ".*_mock[.][a-zA-Z0-9_\\-]+",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Mock resources"
+  }, {
+    "pathPattern" : ".*[.]snap",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Jest snapshots"
+  }, {
+    "pathPattern" : ".*/jest[.][a-zA-Z0-9\\.]+",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Jest files"
+  }, {
+    "pathPattern" : ".*/TestUtilities/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Test utilities"
+  }, {
+    "pathPattern" : ".*/[Mm]ocks/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Mocks"
+  } ],
+  "generatedFilesConventions" : [ {
+    "pathPattern" : ".*/generated/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Generated files"
+  }, {
+    "pathPattern" : ".*/gen-code/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Generated files"
+  }, {
+    "pathPattern" : ".*/_generated_/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Generated files"
+  }, {
+    "pathPattern" : ".*/_generated/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Generated files"
+  }, {
+    "pathPattern" : ".*/__generated__/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Generated files"
+  }, {
+    "pathPattern" : ".*/gen/.*[.]go",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Generated Go files"
+  }, {
+    "pathPattern" : ".*[.]generated[.][a-zA-Z]+",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Generated files"
+  }, {
+    "pathPattern" : "",
+    "contentPattern" : "//[ ]*Generated by .*",
+    "exception" : false,
+    "note" : "Generated files"
+  }, {
+    "pathPattern" : "",
+    "contentPattern" : "// Generated using .*",
+    "exception" : false,
+    "note" : "Generated files"
+  }, {
+    "pathPattern" : "",
+    "contentPattern" : "// This file was generated .*",
+    "exception" : false,
+    "note" : "Generated files"
+  }, {
+    "pathPattern" : "",
+    "contentPattern" : "This is auto[-]generated with .*",
+    "exception" : false,
+    "note" : "Generated files"
+  }, {
+    "pathPattern" : "",
+    "contentPattern" : "#[ ]*WARNING[ ]*[:][ ]*This file is generated.*",
+    "exception" : false,
+    "note" : "Generated files"
+  }, {
+    "pathPattern" : "",
+    "contentPattern" : "\\<\\!\\-\\-[ ]*Generated by .*",
+    "exception" : false,
+    "note" : "Generated files"
+  }, {
+    "pathPattern" : ".*/npm[-]shrinkwrap[.]json",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "A generated npm shrinkwrap file"
+  }, {
+    "pathPattern" : ".*/package[-]lock[.]json",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "A generated npm package lock file"
+  }, {
+    "pathPattern" : ".*/.*[.]nib",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Xcode generated files"
+  }, {
+    "pathPattern" : ".*/.*[.]xcworkspacedata",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Xcode generated files"
+  }, {
+    "pathPattern" : ".*/.*[.]xcuserstate",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Xcode generated files"
+  }, {
+    "pathPattern" : ".*/Pods/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Cocoa pods"
+  }, {
+    "pathPattern" : ".*/Carthage/Build/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Carthage builds"
+  }, {
+    "pathPattern" : ".*/[.](css|js)[.]map",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "JS/CSS map"
+  }, {
+    "pathPattern" : ".*/[.]js",
+    "contentPattern" : "[/][/] Generated by .*",
+    "exception" : false,
+    "note" : "JS generated"
+  }, {
+    "pathPattern" : ".*/[.]xml",
+    "contentPattern" : "[<]doc[>]",
+    "exception" : false,
+    "note" : "A generated documentation file for a .NET assembly"
+  }, {
+    "pathPattern" : ".*[.]designer[.](cs|vb)",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "A codegen file for a .NET repository"
+  }, {
+    "pathPattern" : ".*[.]feature[.]cs",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "A codegen file for Specflow feature file"
+  }, {
+    "pathPattern" : ".*[.]feature[.]cs",
+    "contentPattern" : ".*Generated by PEG[.]js.*",
+    "exception" : false,
+    "note" : "A parser generated by PEG.js"
+  }, {
+    "pathPattern" : ".*[.](c|cpp)",
+    "contentPattern" : ".*Generated by Cython.*",
+    "exception" : false,
+    "note" : "A compiled C/C++ file from Cython"
+  }, {
+    "pathPattern" : ".*[.](cpp|hpp|h|cc)",
+    "contentPattern" : ".*[/][/] Generated by the gRPC.*",
+    "exception" : false,
+    "note" : "A protobuf/grpc-generated C++ file"
+  }, {
+    "pathPattern" : ".*[.](c|h)",
+    "contentPattern" : ".*GIMP header image file format .*",
+    "exception" : false,
+    "note" : "A generated GIMP C image file"
+  }, {
+    "pathPattern" : ".*[.](c|h)",
+    "contentPattern" : ".*GIMP .* C[-]Source image dump.*",
+    "exception" : false,
+    "note" : "A generated GIMP C image file"
+  }, {
+    "pathPattern" : ".*[.]dsp",
+    "contentPattern" : ".*[#] Microsoft Developer Studio Generated Build File.*",
+    "exception" : false,
+    "note" : "A generated Microsoft Visual Studio 6.0 build file"
+  }, {
+    "pathPattern" : ".*[.](ps|eps|pfa)",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "PostScript generated"
+  }, {
+    "pathPattern" : ".*[.](py|java|h|cc|cpp|m|rb|php)",
+    "contentPattern" : ".*Generated by the protocol buffer compiler[.][ ]+DO NOT EDIT[!].*",
+    "exception" : false,
+    "note" : "Generated by protocol buffer compiler"
+  }, {
+    "pathPattern" : ".*[.](js|py|lua|cpp|h|java|cs|php)",
+    "contentPattern" : ".*Generated by Haxe.*",
+    "exception" : false,
+    "note" : "A generated Haxe-generated source file"
+  }, {
+    "pathPattern" : ".*[.]js",
+    "contentPattern" : ".*GENERATED CODE [-][-] DO NOT EDIT[!].*",
+    "exception" : false,
+    "note" : "Generated by protocol buffer compiler"
+  }, {
+    "pathPattern" : ".*[.]h",
+    "contentPattern" : ".* DO NOT EDIT THIS FILE [-] it is machine generated .*",
+    "exception" : false,
+    "note" : "A C/C++ header generated by the Java JNI tool javah"
+  }, {
+    "pathPattern" : ".*[.]meta",
+    "contentPattern" : ".*fileFormatVersion[:] .*",
+    "exception" : false,
+    "note" : "A metadata file from Unity3D"
+  }, {
+    "pathPattern" : ".*[.]rb",
+    "contentPattern" : "# This file is automatically generated by Racc.*",
+    "exception" : false,
+    "note" : "A a Racc-generated file"
+  }, {
+    "pathPattern" : ".*[.]java",
+    "contentPattern" : ".*The following code was generated by JFlex.*",
+    "exception" : false,
+    "note" : "A JFlex-generated file"
+  }, {
+    "pathPattern" : ".*[.]java",
+    "contentPattern" : ".*[/][/] This is a generated file[.] Not intended for manual editing[.].*",
+    "exception" : false,
+    "note" : "A GrammarKit-generated file"
+  }, {
+    "pathPattern" : ".*[.]java",
+    "contentPattern" : ".*This file is generated by jOOQ[.].*",
+    "exception" : false,
+    "note" : "A generated jOOQ file"
+  }, {
+    "pathPattern" : ".*[.]java",
+    "contentPattern" : ".*// DO NOT EDIT[.] This is code generated.*",
+    "exception" : false,
+    "note" : "A generated file"
+  }, {
+    "pathPattern" : ".*[.]java",
+    "contentPattern" : "[ ]*[*][ ]*[@]author[ ]+DAOGenerator.*",
+    "exception" : false,
+    "note" : "A generated Java DAO file"
+  }, {
+    "pathPattern" : ".*[.]java",
+    "contentPattern" : "[ ]*[*][ ]*[@]author[ ]+DAOGenerator.*",
+    "exception" : false,
+    "note" : "A generated Java DAO file"
+  }, {
+    "pathPattern" : ".*[.]java",
+    "contentPattern" : "[/][/][ ]*This file is auto-generated.*",
+    "exception" : false,
+    "note" : "A generated Java file"
+  }, {
+    "pathPattern" : ".*[.]cs",
+    "contentPattern" : "[/][/][ ]*<auto[-]?generated.*",
+    "exception" : false,
+    "note" : "A generated C# file"
+  }, {
+    "pathPattern" : ".*[.]vb",
+    "contentPattern" : "[/][/][ ]*<auto[-]?generated.*",
+    "exception" : false,
+    "note" : "A generated VisualBasic file"
+  }, {
+    "pathPattern" : ".*[.]js",
+    "contentPattern" : "[/][*] parser generated by jison .*",
+    "exception" : false,
+    "note" : "A Jison-generated file"
+  }, {
+    "pathPattern" : ".*[.]js",
+    "contentPattern" : "[/][*] generated by jison[-]lex .*",
+    "exception" : false,
+    "note" : "A Jison-generated file"
+  }, {
+    "pathPattern" : ".*[.]zep[.][a-z0-9_]+",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : ""
+  }, {
+    "pathPattern" : ".*[.]dart",
+    "contentPattern" : ".*GENERATED CODE.*DO NOT MODIFY.*",
+    "exception" : false,
+    "note" : "A generated Dart file"
+  }, {
+    "pathPattern" : ".*[.]h",
+    "contentPattern" : ".*Automatically created by Devel[:][:]PPPort.*",
+    "exception" : false,
+    "note" : "A generated Perl/Pollution/Portability header file"
+  }, {
+    "pathPattern" : ".*[.](html|html|xhtml)",
+    "contentPattern" : ".*Generated by pkgdown[:] do not edit by hand.*",
+    "exception" : false,
+    "note" : "A generated HTML source file"
+  }, {
+    "pathPattern" : ".*[.](html|html|xhtml)",
+    "contentPattern" : ".*Generated by Doxygen.*",
+    "exception" : false,
+    "note" : "A generated HTML source file"
+  }, {
+    "pathPattern" : ".*[.](html|html|xhtml)",
+    "contentPattern" : "[ ]*[<]meta name[=]\"generator\" .*",
+    "exception" : false,
+    "note" : "A generated HTML source file"
+  }, {
+    "pathPattern" : ".*[.](cxx|cpp|c|hxx|hpp|h)",
+    "contentPattern" : ".*autogen include statement, do not remove.*",
+    "exception" : false,
+    "note" : "A generated C(PP) source file"
+  }, {
+    "pathPattern" : ".*[.](cxx|cpp|c|hxx|hpp|h)",
+    "contentPattern" : "[ ]*[*][ ]*Generated automatically by[ ]*.*",
+    "exception" : false,
+    "note" : "A generated C(PP) source file"
+  }, {
+    "pathPattern" : ".*/src/gen/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Generated files"
+  }, {
+    "pathPattern" : ".*_generated[.][a-z]+",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Generated files"
+  } ],
+  "buildAndDeploymentFilesConventions" : [ {
+    "pathPattern" : ".*/pom[.]xml",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Maven configuration"
+  }, {
+    "pathPattern" : ".*[.]nuspec",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "NuSpec configuration"
+  }, {
+    "pathPattern" : ".*/build[.]xml",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Build configuration"
+  }, {
+    "pathPattern" : ".*/assembly[.]xml",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Maven assembly plugin configuration"
+  }, {
+    "pathPattern" : ".*/assembly/src[.]xml",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Maven assembly plugin configuration"
+  }, {
+    "pathPattern" : ".*[.]gradle",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Gradle configuration"
+  }, {
+    "pathPattern" : ".*[.][-]gradle[.]js",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Gradle configuration"
+  }, {
+    "pathPattern" : ".*[.]sh",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Scripts"
+  }, {
+    "pathPattern" : ".*[.]bat",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Scripts"
+  }, {
+    "pathPattern" : ".*/AndroidManifest[.]xml",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Scripts"
+  }, {
+    "pathPattern" : ".*/pnpm.*[.]json",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "pnpm configuration"
+  }, {
+    "pathPattern" : ".*/pnpm.*[.]ya?ml",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "pnpm configuration"
+  }, {
+    "pathPattern" : ".*/package[.]json",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "npm configuration"
+  }, {
+    "pathPattern" : ".*/package[-]lock[.]json",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "npm configuration"
+  }, {
+    "pathPattern" : ".*/glide[.]yml",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Glide configuration"
+  }, {
+    "pathPattern" : ".*/glide[.]yaml",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Glide configuration"
+  }, {
+    "pathPattern" : ".*/glide[.]lock",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Glide configuration"
+  }, {
+    "pathPattern" : ".*/docker[-]compose[.]yaml",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Docker configuration"
+  }, {
+    "pathPattern" : ".*/docker[-]compose[.]yml",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Docker configuration"
+  }, {
+    "pathPattern" : ".*[.]dockerfile",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Docker configuration"
+  }, {
+    "pathPattern" : ".*[.]mk",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Mk files"
+  }, {
+    "pathPattern" : ".*[.]cvsignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "CVS configuration files"
+  }, {
+    "pathPattern" : ".*[.]git[a-z]+",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Git configuration files"
+  }, {
+    "pathPattern" : ".*([.]|/)webpack([.]|/).*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Webpack configuration files"
+  }, {
+    "pathPattern" : ".*[.]csproj",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "C# repository files"
+  }, {
+    "pathPattern" : ".*[.]vbproj",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "VB repository files"
+  }, {
+    "pathPattern" : ".*/[.]gitignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Git ignore files"
+  }, {
+    "pathPattern" : ".*/[.]gitattributes",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Git attributes"
+  }, {
+    "pathPattern" : ".*/[.]gitconfig",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Git config"
+  }, {
+    "pathPattern" : ".*/[.]gitmodules",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Git modules"
+  }, {
+    "pathPattern" : ".*[.]manifest",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Manifest files"
+  }, {
+    "pathPattern" : ".*[.]mak",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Make files"
+  }, {
+    "pathPattern" : ".*[.]make",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Make files"
+  }, {
+    "pathPattern" : ".*[.]mk",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Make files"
+  }, {
+    "pathPattern" : ".*[.]mkfile",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Make files"
+  }, {
+    "pathPattern" : ".*[.]dotsettings",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : ".Net settings files"
+  }, {
+    "pathPattern" : ".*/jenkins/.*[.]groovy",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Jenkins files"
+  }, {
+    "pathPattern" : ".*/fastlane/.*[.]rb",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Fastlane files"
+  }, {
+    "pathPattern" : ".*[.]podspec",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Podspec files"
+  }, {
+    "pathPattern" : ".*/Jenkinsfile",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Jenkinsfile"
+  }, {
+    "pathPattern" : ".*/Jenkinsfile[.][a-zA-Z0-9]+",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Jenkinsfile"
+  }, {
+    "pathPattern" : ".*/Makefile",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Makefile"
+  }, {
+    "pathPattern" : ".*/buildscripts/*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Build scripts"
+  } ],
+  "otherFilesConventions" : [ {
+    "pathPattern" : ".*/vendor/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Vendor files"
+  }, {
+    "pathPattern" : ".*/sonatype-settings[.]xml",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Sonatype configuration"
+  }, {
+    "pathPattern" : ".*/config/checkstyle/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Checkstyle configuration"
+  }, {
+    "pathPattern" : ".*/checkstyle[.]xml",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Checkstyle configuration"
+  }, {
+    "pathPattern" : ".*/checkstyle.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Checkstyle configuration"
+  }, {
+    "pathPattern" : ".*[.]md",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Markdown files"
+  }, {
+    "pathPattern" : ".*[.]markdown",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Markdown files"
+  }, {
+    "pathPattern" : ".*[.]mdown",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Markdown files"
+  }, {
+    "pathPattern" : ".*[.]mdwn",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Markdown files"
+  }, {
+    "pathPattern" : ".*[.]mdx",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Markdown files"
+  }, {
+    "pathPattern" : ".*[.]mkd",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Markdown files"
+  }, {
+    "pathPattern" : ".*[.]mkdn",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Markdown files"
+  }, {
+    "pathPattern" : ".*[.]mkdown",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Markdown files"
+  }, {
+    "pathPattern" : ".*[.]adoc",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "AsciiDoc documentation"
+  }, {
+    "pathPattern" : ".*[.](rst|rest|resttxt|rsttxt)",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "reST files"
+  }, {
+    "pathPattern" : ".*[.]ronn",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Markdown files"
+  }, {
+    "pathPattern" : ".*[.]workbook",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Markdown files"
+  }, {
+    "pathPattern" : ".*[.]plist",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Property list files"
+  }, {
+    "pathPattern" : ".*[.]json",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "JSON files"
+  }, {
+    "pathPattern" : ".*[.]svg",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "SVG files"
+  }, {
+    "pathPattern" : ".*/[.]atomignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Ignore list"
+  }, {
+    "pathPattern" : ".*/[.]babelignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Ignore list"
+  }, {
+    "pathPattern" : ".*/[.]bzrignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Ignore list"
+  }, {
+    "pathPattern" : ".*/[.]coffeelintignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Ignore list"
+  }, {
+    "pathPattern" : ".*/[.]cvsignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Ignore list"
+  }, {
+    "pathPattern" : ".*/[.]dockerignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Ignore list"
+  }, {
+    "pathPattern" : ".*/[.]eslintignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Ignore list"
+  }, {
+    "pathPattern" : ".*/[.]gitignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Ignore list"
+  }, {
+    "pathPattern" : ".*/[.]nodemonignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Ignore list"
+  }, {
+    "pathPattern" : ".*/[.]npmignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Ignore list"
+  }, {
+    "pathPattern" : ".*/[.]prettierignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Ignore list"
+  }, {
+    "pathPattern" : ".*/[.]stylelintignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Ignore list"
+  }, {
+    "pathPattern" : ".*/[.]vscodeignore",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Ignore list"
+  }, {
+    "pathPattern" : ".*/[.]cpplint[.]py",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Linter"
+  }, {
+    "pathPattern" : ".*[.]storyboard",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Storyboard"
+  }, {
+    "pathPattern" : ".*[.]xib",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "XIB files"
+  }, {
+    "pathPattern" : ".*[.]bash_[a-z]+",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Bash files"
+  }, {
+    "pathPattern" : ".*[.]apacheconf",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Configuration"
+  }, {
+    "pathPattern" : ".*[.]vhost",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Configuration"
+  }, {
+    "pathPattern" : ".*/[.]htaccess",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Configuration"
+  }, {
+    "pathPattern" : ".*[.]csf",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Configuration"
+  }, {
+    "pathPattern" : ".*[.]diff",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Configuration"
+  }, {
+    "pathPattern" : ".*[.]patch",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Configuration"
+  }, {
+    "pathPattern" : ".*[.]editorconfig",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "NPM Config"
+  }, {
+    "pathPattern" : ".*[.]npmrc",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Editor configuration"
+  }, {
+    "pathPattern" : ".*[.]properties",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Properties"
+  }, {
+    "pathPattern" : ".*[.]po",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Properties"
+  }, {
+    "pathPattern" : ".*[.]dsp",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Microsoft Developer Studio repository"
+  }, {
+    "pathPattern" : ".*[.]txi",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Textinfo"
+  }, {
+    "pathPattern" : ".*[.]texi",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Textinfo"
+  }, {
+    "pathPattern" : ".*[.]texinfo",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Textinfo"
+  }, {
+    "pathPattern" : ".*[.]txt",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*[.]fr",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*[.]nb",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*[.]ncl",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*[.]no",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/COPYING",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/COPYING[.][a-z0-9]+",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/COPYRIGHT",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/COPYRIGHT[.][a-z0-9]+",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/FONTLOG",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/INSTALL",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/INSTALL[.][a-z0-9]+",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/LICENSE",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/LICENSE[.][a-z0-9]+",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/NEWS",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/README",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/README[.][a-z0-9]+",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/CHANGE(S|LOG)?(\\.|)",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Documentation"
+  }, {
+    "pathPattern" : ".*/CONTRIBUTING(\\.|)",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Documentation"
+  }, {
+    "pathPattern" : ".*/COPYING(\\.|)",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Documentation"
+  }, {
+    "pathPattern" : ".*/INSTALL(\\.|)",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Documentation"
+  }, {
+    "pathPattern" : ".*/LICEN[CS]E(\\.|)",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Documentation"
+  }, {
+    "pathPattern" : ".*/[Ll]icen[cs]e(\\.|)",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Documentation"
+  }, {
+    "pathPattern" : ".*/README(\\.|)",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Documentation"
+  }, {
+    "pathPattern" : ".*/[Rr]eadme(\\.|)",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Documentation"
+  }, {
+    "pathPattern" : ".*/click[.]me",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/delete[.]me",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/keep[.]me",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/read[.]me",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/test[.]me",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/go[.]mod",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/go[.]sum",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/package[.]mask",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/package[.]use[.]mask",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/package[.]use[.]stable[.]mask",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/readme[.]1st",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/use[.]mask",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*/use[.]stable[.]mask",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*[.]indent[.]pro",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Text files"
+  }, {
+    "pathPattern" : ".*[.]lock",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Locked files"
+  }, {
+    "pathPattern" : ".*[.]scm",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "SCM files"
+  }, {
+    "pathPattern" : ".*/[Dd]ocumentation/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Documentation"
+  }, {
+    "pathPattern" : ".*/asciidoc/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Documentation"
+  }, {
+    "pathPattern" : ".*/[Mm]an/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Documentation"
+  }, {
+    "pathPattern" : ".*/[Ee]xamples/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Documentation"
+  }, {
+    "pathPattern" : ".*/[Ss]amples/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Samples"
+  }, {
+    "pathPattern" : ".*/[Dd]emos?/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Documentation"
+  }, {
+    "pathPattern" : ".*[.]3pm",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Manual pages"
+  }, {
+    "pathPattern" : ".*[.]vim",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "vim editor config"
+  }, {
+    "pathPattern" : ".*[.]_js",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : ""
+  }, {
+    "pathPattern" : ".*[.]sublime-project",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : ""
+  }, {
+    "pathPattern" : ".*[.]ini",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "INI files"
+  }, {
+    "pathPattern" : ".*[.]libsonnet",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Libsonnet files"
+  }, {
+    "pathPattern" : ".*[.]tab",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Table files"
+  }, {
+    "pathPattern" : ".*[.]xmi",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "XMI files"
+  }, {
+    "pathPattern" : ".*changers[.]xml",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Changes documentation"
+  }, {
+    "pathPattern" : ".*/resources/.*[.]xsd",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "XSD files"
+  }, {
+    "pathPattern" : ".*/wp[-]includes/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "WordPress includes"
+  }, {
+    "pathPattern" : ".*/changes[.]xml",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Changes log"
+  }, {
+    "pathPattern" : ".*[.]pb",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Protocol buffer (protobuf) files"
+  }, {
+    "pathPattern" : ".*[.]obj",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Geometry definition files"
+  }, {
+    "pathPattern" : ".*[.]mtl",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "Material Template Library files"
+  }, {
+    "pathPattern" : ".*[.]urdf",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "URDF files"
+  }, {
+    "pathPattern" : ".*/site[-]packages/.*",
+    "contentPattern" : "",
+    "exception" : false,
+    "note" : "3rd party libraries and artifacts"
+  } ],
+  "concerns" : [ {
+    "name" : "TODOs",
+    "sourceFileFilters" : [ {
+      "pathPattern" : "",
+      "contentPattern" : ".*(TODO|FIXME)( |:|\t).*",
+      "exception" : false,
+      "note" : ""
+    } ],
+    "files" : [ ],
+    "textOperations" : [ ]
+  } ],
+  "ignoreContributors" : [ ],
+  "bots" : [ ],
+  "componentsFolderDepth" : 1,
+  "minComponentsCount" : 0,
+  "ignoreStandardControls" : false,
+  "goalsAndControls" : [ ],
+  "trendAnalysis" : {
+    "saveHistory" : false,
+    "frequency" : "weekly",
+    "maxReferencePointsForAnalysis" : 20,
+    "historyFolder" : "history"
+  },
+  "fileHistoryAnalysis" : {
+    "importPath" : "../git-history.txt",
+    "ignoreContributors" : [ ],
+    "bots" : [ ".*\\[bot\\].*", ".*[-]bot[@].*" ],
+    "anonymizeContributors" : false,
+    "transformContributorEmails" : [ ]
+  },
+  "analysis" : {
+    "skipDuplication" : false,
+    "skipCorrelations" : false,
+    "skipDependencies" : false,
+    "saveSourceFiles" : true,
+    "saveCodeFragments" : true,
+    "maxFileSizeBytes" : 1000000,
+    "maxLines" : 10000,
+    "maxLineLength" : 1000,
+    "maxTemporalDependenciesDepthDays" : 180,
+    "locDuplicationThreshold" : 10000000,
+    "minDuplicationBlockLoc" : 6,
+    "maxTopListSize" : 50,
+    "analyzerOverrides" : [ ],
+    "fileSizeThresholds" : {
+      "low" : 100,
+      "medium" : 200,
+      "high" : 500,
+      "veryHigh" : 1000
+    },
+    "fileAgeThresholds" : {
+      "low" : 30,
+      "medium" : 90,
+      "high" : 180,
+      "veryHigh" : 365
+    },
+    "fileUpdateFrequencyThresholds" : {
+      "low" : 5,
+      "medium" : 20,
+      "high" : 50,
+      "veryHigh" : 100
+    },
+    "fileContributorsCountThresholds" : {
+      "low" : 1,
+      "medium" : 5,
+      "high" : 10,
+      "veryHigh" : 25
+    },
+    "unitSizeThresholds" : {
+      "low" : 10,
+      "medium" : 20,
+      "high" : 50,
+      "veryHigh" : 100
+    },
+    "conditionalComplexityThresholds" : {
+      "low" : 5,
+      "medium" : 10,
+      "high" : 25,
+      "veryHigh" : 50
+    },
+    "fileConditionalComplexityThresholds" : {
+      "low" : 5,
+      "medium" : 10,
+      "high" : 25,
+      "veryHigh" : 50
+    },
+    "customHtmlReportHeaderFragment" : "",
+    "analyzeConcernOverlaps" : false
+  },
+  "tagRules" : [ ]
+}

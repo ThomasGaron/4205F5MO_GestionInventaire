@@ -1,10 +1,11 @@
-import { useEffect, useState, useContext, useCallback } from "react";
-import "./PageInventaire.css";
+import { useEffect, useState, useContext, useCallback, useMemo } from "react";
+import "../pagesCss/ManagementPages.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
 import ItemCard from "../components/ItemCard";
 import "../Bouton.css";
 import LowStockAlert from "../components/LowStockAlert";
+import { buildFetchJson } from "../utils/api";
 
 export default function PageInventaire() {
   const navigate = useNavigate();
@@ -25,22 +26,16 @@ export default function PageInventaire() {
   });
 
   const backend = import.meta.env.VITE_BACKEND_URI;
+  const fetchJson = useMemo(() => buildFetchJson(token, backend), [token, backend]);
 
   const getAllItems = useCallback(async () => {
     try {
-      const res = await fetch(`${backend}/api/produit/tousLesProduits`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const json = await res.json();
+      const json = await fetchJson("/api/produit/tousLesProduits");
       setItems(json.data || []);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }, [backend]);
+  }, [backend, fetchJson]);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -89,12 +84,8 @@ export default function PageInventaire() {
     try {
       setCreating(true);
       // même style que ton contrôleur: POST /api/produit
-      const res = await fetch(`${backend}/api/produit`, {
+      const json = await fetchJson("/api/produit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({
           produit_nom: nom,
           produit_prix: prix,
@@ -102,8 +93,7 @@ export default function PageInventaire() {
           disponible: form.disponible,
         }),
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.error || "Échec de la création.");
+      if (json?.error) throw new Error(json.error || "Échec de la création.");
 
       await getAllItems();
       closeModal();
@@ -140,7 +130,7 @@ export default function PageInventaire() {
           className="modal-overlay"
           onClick={(e) => e.target === e.currentTarget && closeModal()}
         >
-          <div className="modal-card">
+          <div className="modal-card modal-card--narrow">
             <div className="modal-header">
               <h2>Nouveau produit</h2>
               <button className="btn btn-danger" onClick={closeModal}>
