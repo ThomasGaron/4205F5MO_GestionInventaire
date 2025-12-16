@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import "./LoginForm.css";
+import "../pagesCss/AuthForms.css";
 import { AuthContext } from "../context/auth-context";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -56,7 +56,7 @@ export default function LoginForm() {
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
+    <form className="auth-form auth-form--narrow" onSubmit={handleSubmit}>
       <h2>Connexion</h2>
       <div>
         <label htmlFor="email">Nom d'utilisateur</label>
@@ -84,7 +84,7 @@ export default function LoginForm() {
         Connexion
       </button>
 
-      {error && <p className="error">{error}</p>}
+      {error && <p className="auth-form__error">{error}</p>}
     </form>
   );
 }

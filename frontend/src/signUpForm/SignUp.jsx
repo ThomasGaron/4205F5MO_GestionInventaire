@@ -1,14 +1,12 @@
 import { useContext } from "react";
 import { useState } from "react";
 import { AuthContext } from "../context/auth-context";
-import "./SignUp.css";
+import "../pagesCss/AuthForms.css";
 import "../Bouton.css";
 
 export default function SignUp() {
   const [mdpPasEgale, setMdpPasEgale] = useState(false);
-
   const [userExist, setUserExist] = useState(false);
-
   const { token } = useContext(AuthContext);
 
   async function handleSubmit(event) {
@@ -19,47 +17,49 @@ export default function SignUp() {
     if (data.mdp !== data["confirmer_mdp"]) {
       setMdpPasEgale(true);
       return;
-    } else {
-      setMdpPasEgale(false);
-      const nouveauUser = {
-        nom: data.nom,
-        email: data.email,
-        mdp: data.mdp,
-        role: data.role,
-      };
+    }
 
-      const response = await fetch(
-        import.meta.env.VITE_BACKEND_URI + "/api/user/signUp",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(nouveauUser),
-        }
-      );
-      const responseData = await response.json();
-      if (responseData.status == 409) {
-        event.target.reset();
-        console.log(responseData.message);
-        setUserExist(true);
-      } else {
-        setUserExist(false);
-        console.log("Utilisateur creer : ", responseData);
-        event.target.reset();
+    setMdpPasEgale(false);
+    const nouveauUser = {
+      nom: data.nom,
+      email: data.email,
+      mdp: data.mdp,
+      role: data.role,
+    };
+
+    const response = await fetch(
+      import.meta.env.VITE_BACKEND_URI + "/api/user/signUp",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(nouveauUser),
       }
+    );
+    const responseData = await response.json();
+    if (responseData.status == 409) {
+      event.target.reset();
+      console.log(responseData.message);
+      setUserExist(true);
+    } else {
+      setUserExist(false);
+      console.log("Utilisateur creer : ", responseData);
+      event.target.reset();
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="signup-form">
-      <h2>Ajouter un nouvel employé</h2>
+    <form onSubmit={handleSubmit} className="auth-form">
+      <h2>Ajouter un nouvel employÇ¸</h2>
 
       <div>
         <label htmlFor="email">Courriel</label>
         <input name="email" type="email" required />
-        {userExist && <p className="error">Ce courriel existe déjà</p>}
+        {userExist && (
+          <p className="auth-form__error">Ce courriel existe dÇ¸jÇÿ</p>
+        )}
       </div>
 
       <div>
@@ -71,7 +71,9 @@ export default function SignUp() {
         <label htmlFor="confirmer_mdp">Confirmer le mot de passe</label>
         <input type="password" name="confirmer_mdp" required />
         {mdpPasEgale && (
-          <p className="error">Les mots de passe doivent être identiques</p>
+          <p className="auth-form__error">
+            Les mots de passe doivent Ç¦tre identiques
+          </p>
         )}
       </div>
 
@@ -82,10 +84,10 @@ export default function SignUp() {
         <input type="text" name="nom" required />
       </div>
 
-      <div className="role-section">
-        <label>Choisissez le rôle :</label>
+      <div className="auth-form__role-section">
+        <label>Choisissez le rÇïle :</label>
         <label>
-          <input type="radio" name="role" value="emp" /> Employé
+          <input type="radio" name="role" value="emp" /> EmployÇ¸
         </label>
         <label>
           <input type="radio" name="role" value="admin" /> Admin
