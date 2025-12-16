@@ -8,6 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "test": "vitest",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
