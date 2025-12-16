@@ -1,14 +1,17 @@
-import { useEffect, useState, useContext } from "react";
-import "./PageCommandes.css";
+import { useEffect, useMemo, useState, useContext } from "react";
+import "../pagesCss/ManagementPages.css";
 import "../Bouton.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth-context";
+import { buildFetchJson } from "../utils/api";
 
 export default function PageCommandes() {
   const navigate = useNavigate();
   const { isLoggedIn } = useContext(AuthContext);
 
   const { token } = useContext(AuthContext);
+  const backend = import.meta.env.VITE_BACKEND_URI;
+  const fetchJson = useMemo(() => buildFetchJson(token, backend), [token, backend]);
 
   const [commandes, setCommandes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,30 +39,10 @@ export default function PageCommandes() {
   const getAllCommandesEtNomClient = async () => {
     try {
       setLoading(true);
-      const res = await fetch(
-        import.meta.env.VITE_BACKEND_URI + "/api/commandes",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const json = await res.json();
+      const json = await fetchJson("/api/commandes");
       setCommandes(json.data || []);
 
-      const reponse = await fetch(
-        import.meta.env.VITE_BACKEND_URI + "/api/clients",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await reponse.json();
+      const data = await fetchJson("/api/clients");
       setNomClients(data.data);
     } catch (error) {
       console.error("Erreur chargement commandes:", error);
@@ -70,17 +53,7 @@ export default function PageCommandes() {
 
   const getCommande = async (id) => {
     try {
-      const res = await fetch(
-        import.meta.env.VITE_BACKEND_URI + `/api/commandes/${id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const json = await res.json();
+      const json = await fetchJson(`/api/commandes/${id}`);
       setDetail(json || null);
     } catch (err) {
       console.error("Erreur chargement commande:", err);
@@ -91,21 +64,11 @@ export default function PageCommandes() {
   const patchStatut = async (id, statut) => {
     try {
       setUpdatingId(id);
-      const res = await fetch(
-        import.meta.env.VITE_BACKEND_URI + `/api/commandes/${id}/statut`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ statut }),
-        }
-      );
-      if (!res.ok) {
-        const j = await res.json().catch(() => ({}));
-        throw new Error(j?.error || "Échec de mise à jour du statut.");
-      }
+      const res = await fetchJson(`/api/commandes/${id}/statut`, {
+        method: "PATCH",
+        body: JSON.stringify({ statut }),
+      });
+      if (res?.error) throw new Error(res.error || "Échec de mise à jour du statut.");
       setCommandes((prev) =>
         prev.map((c) => (c.id === id ? { ...c, statut } : c))
       );
@@ -122,20 +85,8 @@ export default function PageCommandes() {
     if (!confirm("Supprimer cette commande ?")) return;
     try {
       setUpdatingId(id);
-      const res = await fetch(
-        import.meta.env.VITE_BACKEND_URI + `/api/commandes/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (!res.ok) {
-        const j = await res.json().catch(() => ({}));
-        throw new Error(j?.error || "Échec de suppression.");
-      }
+      const res = await fetchJson(`/api/commandes/${id}`, { method: "DELETE" });
+      if (res?.error) throw new Error(res.error || "Échec de suppression.");
       setCommandes((prev) => prev.filter((c) => c.id !== id));
       if (detail?.commande?.id === id) setDetail(null);
     } catch (err) {
@@ -151,17 +102,7 @@ export default function PageCommandes() {
     setOpenNew(true);
     if (clients.length === 0) {
       try {
-        const resC = await fetch(
-          import.meta.env.VITE_BACKEND_URI + "/api/clients",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const jC = await resC.json();
+        const jC = await fetchJson("/api/clients");
         setClients(jC.data || []);
       } catch (e) {
         console.warn("Impossible de charger les clients.", e);
@@ -170,17 +111,7 @@ export default function PageCommandes() {
     }
     if (produits.length === 0) {
       try {
-        const resP = await fetch(
-          import.meta.env.VITE_BACKEND_URI + "/api/produit/tousLesProduits",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const jP = await resP.json();
+        const jP = await fetchJson("/api/produit/tousLesProduits");
         setProduits(jP.data || []);
       } catch (e) {
         console.error("Impossible de charger les produits", e);

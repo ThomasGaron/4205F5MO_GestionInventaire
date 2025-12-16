@@ -25,3 +25,8 @@ dist-ssr
 
 # Environment variables
 .env
+
+# sockrates
+_sokrates/
+git-history.txt
+sokrates-LATEST.jar
