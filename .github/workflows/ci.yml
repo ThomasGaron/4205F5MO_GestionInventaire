@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  tests:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,7 +17,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: npm
 
+      # ===== BACKEND =====
+      - name: Install backend deps
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Run backend tests
+        working-directory: ./backend
+        run: npm test --if-present
+
+      # ===== FRONTEND =====
       - name: Install frontend deps
         working-directory: ./frontend
         run: npm ci
@@ -25,3 +36,7 @@ jobs:
       - name: Run unit tests (Vitest)
         working-directory: ./frontend
         run: npm test
+
+      - name: Build frontend (Vite)
+        working-directory: ./frontend
+        run: npm run build
