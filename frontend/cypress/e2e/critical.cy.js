@@ -9,8 +9,8 @@ describe("Parcours critiques - intégration", () => {
     cy.get('input[name="email"]').type("admin@admin.com");
     cy.get('input[name="password"]').type("admin{enter}");
 
-    cy.contains(/Inventaire/i).click();
-
+    cy.location("pathname").should("eq", "/acceuil");
+    cy.contains("Inventaire").click();
     cy.location("pathname").should("eq", "/inventaire");
     cy.contains("Pomme").should("be.visible");
   });
@@ -32,11 +32,12 @@ describe("Parcours critiques - intégration", () => {
   });
 
   it("création d'un employé via l'écran admin", () => {
-    cy.visit("/signUp", {
-      onBeforeLoad(win) {
-        win.localStorage.setItem("token", adminJwt);
-      },
-    });
+    // passer par un login pour que l'app bascule en mode admin
+    cy.visit("/login");
+    cy.get('input[name="email"]').type("admin@admin.com");
+    cy.get('input[name="password"]').type("admin{enter}");
+    cy.location("pathname").should("eq", "/acceuil");
+    cy.contains(/créer un compte/i).click();
 
     cy.location("pathname").should("eq", "/signUp");
     cy.get('input[name="email"]').type("nouveau@exemple.com");
